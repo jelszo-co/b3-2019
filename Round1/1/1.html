@@ -14,7 +14,7 @@
         @font-face {
         font-family: Open Sans;
         src: url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap");
-        font-weight: 400;
+        /* font-weight: 400; */
     }
 
     ::selection {background: #ffffff; color: #202020;}
@@ -22,11 +22,23 @@
 
         body {background-color: #202020; color: white; font-family: Open Sans;}
 
-        .header {  
+        .header {
+            letter-spacing: 1px;
+            margin: 10px 0;
             text-align: center;
+            font-weight: 700;
             }
 
-        img {position: absolute;
+        .header h1 {text-transform: uppercase}
+
+        .header hr {
+			width: 70%;
+			margin: 0 15%;
+			border: 1px solid white;
+			opacity: 0.75;
+		}
+
+        img { position: absolute;
             top: 40vh;
             width: 100%; 
             max-width: 300px;
@@ -72,6 +84,7 @@
         <h1> Jelszo Co.</h1>
         <h2>Nyíregyházi Kölcsey Ferenc Gimnázium</h2>
         <h4>Felkészítő tanár: Mikó Csaba</h4>
+        <hr>
     </div>
 
     <div class="members">
