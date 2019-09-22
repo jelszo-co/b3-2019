@@ -79,8 +79,8 @@
 					h = (Math.pow(v, 2) * Math.sin(2) * a) / (2 * g);
 					d = (Math.pow(v, 2) * Math.sin(2 * a)) / g;
 				}
-				document.getElementById("height").innerHTML = h + " m";
-				document.getElementById("length").innerHTML = d + " m";
+				document.getElementById("height").innerHTML = h.toFixed(3) + " m";
+				document.getElementById("length").innerHTML = d.toFixed(3) + " m";
 			};
 		</script>
 	</head>
