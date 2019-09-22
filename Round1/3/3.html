@@ -23,13 +23,12 @@
     body {
         font-family: Open Sans;
         color: #ffffff;
-        background: rgb(2,0,36);
-        background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,186,223,1) 100%); 
+        background: #202020
     }
 
     .header {
         position: absolute;
-        top: 1%;
+        top: 2%;
         left: 0;
         width: 100%;
         text-align: center;
@@ -49,14 +48,45 @@
         opacity: 0.75;
       }
 
-      .text, .jstime {
+      .text, #jstime {
           position: absolute;
           font-size: 2rem;
           top: 45%;
       }
 
-      .jstime {
+      #jstime {
           left: 50%;
+      }
+
+      .refresh-text {
+          position: absolute;
+          top: 65%;
+          font-size: 2rem;
+      }
+
+      button {
+          position: absolute;
+          left: 1%;
+          top: 77%;
+            background-color: #202020; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 24px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            font-family: Open Sans;
+            border: 2px solid white;
+            transition: all 0.2s;
+      }
+
+      button:hover {
+          background-color: white;
+          color: #202020;
+
       }
 
     footer {position: absolute;
@@ -69,22 +99,21 @@
 
 <script>
         function displayDate() {
-         alert("Hello...\n\nMost a böngésző értelmezi a JavaScript kódot.");
          var d=new Date();
-         document.getElementById("jstime").innerHTML=d.toLocaleDateString();
+         document.getElementById("jstime").innerHTML = d.getFullYear()+". "+(new Date().getMonth()+ 1)+". "+d.getDate()+". "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
         }
        </script>
 </head>
-<body>
+<body onload="displayDate()">
 
     <div class="header">
     <h1>Pontos idő kiíratása JavaScript használatával</h1> <hr>
     </div> 
 
-    <p class="text">A pontos idő a böngésző betöltésekor: <p class="jstime"> <b> 13:11:42 </b></p></p>
+    <p class="text">A pontos idő a böngésző betöltésekor: <p id="jstime">asd</p></p>
 
-    <button type="button" onclick="displayDate()">Idő</button>
-    
+        <p class="refresh-text">Ezzel a gombbal tudod frissíteni az időt:</p> <button type="button" onclick="displayDate()">Frissít</button>
+
     <footer>
         Jelszo Co. <br> 2019 &copy;
     </footer>
