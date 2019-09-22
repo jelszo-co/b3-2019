@@ -1,148 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-		<link
-			href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap"
-			rel="stylesheet"
-		/>
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap"
+      rel="stylesheet"
+    />
 
-		<link rel="shortcut icon" href="../../favicon.png" />
+    <link rel="shortcut icon" href="../../favicon.png" />
 
-		<title>B3 | 4. feladat</title>
-		<style>
-			@font-face {
-				font-family: Open Sans;
-				src: url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap");
-				/* font-weight: 400; */
-			}
+    <title>B3 | 4. feladat</title>
+    <style>
+      @font-face {
+        font-family: Open Sans;
+        src: url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap");
+        /* font-weight: 400; */
+      }
 
-			::selection {
-				background: #ffffff;
-				color: #202020;
-			}
-			::-moz-selection {
-				background: #ffffff;
-				color: #202020;
-			}
+      ::selection {
+        background: #ffffff;
+        color: #202020;
+      }
+      ::-moz-selection {
+        background: #ffffff;
+        color: #202020;
+      }
 
-			body {
-				background-color: #202020;
-				color: white;
-				font-family: Open Sans;
-			}
+      body {
+        background-color: #202020;
+        color: white;
+        font-family: Open Sans;
+      }
 
-			.header {
-				position: absolute;
-				top: 2%;
-				left: 0;
-				width: 100%;
-				text-align: center;
-				text-transform: uppercase;
-			}
+      .header {
+        position: absolute;
+        top: 2%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        text-transform: uppercase;
+      }
 
-			.header h1 {
-				letter-spacing: 1px;
-				font-size: 1.5rem;
-				margin: 10px 0;
-			}
-			.header hr {
-				width: 70%;
-				margin: 0 15%;
-				border: 1px solid white;
-				opacity: 0.75;
-			}
+      .header h1 {
+        letter-spacing: 1px;
+        font-size: 1.5rem;
+        margin: 10px 0;
+      }
+      .header hr {
+        width: 70%;
+        margin: 0 15%;
+        border: 1px solid white;
+        opacity: 0.75;
+      }
 
-			button {
-				position: absolute;
-				left: 50%;
-				top: 20%;
-				background-color: #202020;
-				border: none;
-				color: white;
-				padding: 10px 24px;
-				text-align: center;
-				text-decoration: none;
-				display: inline-block;
-				font-size: 16px;
-				margin: 4px 2px;
-				cursor: pointer;
-				font-family: Open Sans;
-				border: 2px solid white;
-				transition: all 0.2s;
-				transform: translate(-50%, -50%);
-			}
+      button {
+        position: absolute;
+        left: 50%;
+        top: 20%;
+        background-color: #202020;
+        color: white;
+        padding: 10px 24px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        font-family: Open Sans;
+        border: 2px solid white;
+        transition: all 0.2s;
+        transform: translate(-50%, -50%);
+      }
 
-			button:hover {
-				background-color: white;
-				color: #202020;
-			}
+      button:hover {
+        background-color: white;
+        color: #202020;
+      }
 
-			.container {
-				position: absolute;
-				left: 50%;
-				top: 60%;
-				transform: translate(-50%, -50%);
-				border: 2px dashed white;
-				margin: 0;
-			}
+      .container {
+        position: absolute;
+        left: 50%;
+        top: 60%;
+        transform: translate(-50%, -50%);
+        border: 2px dashed white;
+        margin: 0;
+      }
 
-			.container p {
-				position: absolute;
-				top: 50%;
-				left: 50%;
-				transform: translate(-50%, -50%);
-				margin: 0;
-				padding: 0;
-				font-size: 1.5rem;
-				white-space: nowrap;
-				z-index: -1;
-			}
+      .container p {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin: 0;
+        padding: 0;
+        font-size: 1.5rem;
+        white-space: nowrap;
+        z-index: -1;
+      }
 
-			.container img {
-				z-index: 1;
-				margin: 0;
-			}
+      .container img {
+        z-index: 1;
+        margin: 0;
+      }
 
-			footer {
-				position: absolute;
-				right: 0;
-				bottom: 0;
-				margin: 20px;
-				text-align: right;
-			}
-		</style>
+      footer {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        margin: 20px;
+        text-align: right;
+      }
+    </style>
 
-		<script>
-			function PicToggle() {
-				var x = document.getElementById("chess");
-				if (x.style.opacity === "0") {
-					x.style.opacity = "1";
-				} else {
-					x.style.opacity = "0";
-				}
-			}
-		</script>
-	</head>
-	<body>
-		<div class="header">
-			<h1>Sakktábla</h1>
-			<hr />
-		</div>
+    <script>
+      function PicToggle() {
+        var x = document.getElementById("chess");
+        if (x.style.opacity === "0") {
+          x.style.opacity = "1";
+        } else {
+          x.style.opacity = "0";
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="header">
+      <h1>Sakktábla</h1>
+      <hr />
+    </div>
 
-		<div class="container">
-			<p>Itt fog megjelenni a kép</p>
-			<img src="./chess.jpg" alt="chess-pic" id="chess" style="opacity: 0" />
-		</div>
+    <div class="container">
+      <p>Itt fog megjelenni a kép</p>
+      <img src="./chess.jpg" alt="chess-pic" id="chess" style="opacity: 0" />
+    </div>
 
-		<button type="button" onclick="PicToggle()" id="hide">Sakktábla</button>
+    <button type="button" onclick="PicToggle()" id="hide">Sakktábla</button>
 
-		<footer>
-			Jelszo Co. <br />
-			2019 &copy;
-		</footer>
-	</body>
+    <footer>
+      Jelszo Co. <br />
+      2019 &copy;
+    </footer>
+  </body>
 </html>
