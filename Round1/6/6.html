@@ -12,7 +12,7 @@
 
 		<link rel="shortcut icon" href="../../favicon.png" />
 
-		<title>B3 | X. feladat</title>
+		<title>B3 | 6. feladat</title>
 		<style>
 			@font-face {
 				font-family: Open Sans;
@@ -56,6 +56,37 @@
 				opacity: 0.75;
 			}
 
+			#prompt {
+				position: absolute;
+				top: 30%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				border: 2px solid white;
+				background: #202020;
+				color: white;
+				cursor: pointer;
+				font-family: Open Sans;
+				border: 2px solid white;
+				transition: all 0.2s;
+				padding: 10px 24px;
+				text-align: center;
+				text-decoration: none;
+				display: inline-block;
+				font-size: 16px;
+			}
+
+			#prompt:hover {
+				background-color: white;
+				color: #202020;
+			}
+
+			.roundNum {
+				position: absolute;
+				top: 45%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			}
+
 			footer {
 				position: absolute;
 				right: 0;
@@ -64,12 +95,23 @@
 				text-align: right;
 			}
 		</style>
+		<script>
+			const promptFloat = () => {
+				let float = prompt("Adj meg egy lebegőpontos számot:"),
+					el = document.getElementById("round");
+				el.innerHTML = Math.round(float);
+			};
+		</script>
 	</head>
 	<body>
 		<div class="header">
-			<h1>Bakonyi Bitfaragó Bajnokság - X. feladat</h1>
+			<h1>Javascript változók használata</h1>
 			<hr />
 		</div>
+
+		<button id="prompt" onclick="promptFloat()">Szám bekérése</button>
+
+		<p class="roundNum">Kerekített szám: <span id="round"></span></p>
 
 		<footer>
 			Jelszo Co. <br />
