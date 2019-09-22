@@ -117,13 +117,13 @@
 		</style>
 
 		<script>
-			function displayDate() {
+			const displayDate = () => {
 				var d = new Date();
 				document.getElementById(
 					"jstime"
 				).innerHTML = `${d.getFullYear()}. ${d.getMonth() +
 					1}. ${d.getDate()}. ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
-			}
+			};
 		</script>
 	</head>
 	<body onload="displayDate()">
