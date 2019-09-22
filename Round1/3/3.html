@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>B3 | 3. feladat</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap" rel="stylesheet">
+
+    <link rel="shortcut icon" href="../../favicon.png">
+
+    <style>
+        @font-face {
+        font-family: Open Sans;
+        src: url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap");
+        /* font-weight: 400; */
+    }
+
+    ::selection {background: #ffffff; color: #090979;}
+    ::-moz-selection {background: #ffffff; color: #090979;}
+
+    body {
+        font-family: Open Sans;
+        color: #ffffff;
+        background: rgb(2,0,36);
+        background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,186,223,1) 100%); 
+    }
+
+    .header {
+        position: absolute;
+        top: 1%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        text-transform: uppercase;
+      }
+
+      .header h1 {
+        letter-spacing: 1px;
+        font-size: 1.5rem;
+        margin: 10px 0;
+      }
+
+      .header hr {
+        width: 70%;
+        margin: 0 15%;
+        border: 1px solid white;
+        opacity: 0.75;
+      }
+
+      .text, .jstime {
+          position: absolute;
+          font-size: 2rem;
+          top: 45%;
+      }
+
+      .jstime {
+          left: 50%;
+      }
+
+    footer {position: absolute;
+        right: 0;
+        bottom: 0;
+		margin: 20px;
+		text-align: right;
+	}
+    </style>
+
+<script>
+        function displayDate() {
+         alert("Hello...\n\nMost a böngésző értelmezi a JavaScript kódot.");
+         var d=new Date();
+         document.getElementById("jstime").innerHTML=d.toLocaleDateString();
+        }
+       </script>
+</head>
+<body>
+
+    <div class="header">
+    <h1>Pontos idő kiíratása JavaScript használatával</h1> <hr>
+    </div> 
+
+    <p class="text">A pontos idő a böngésző betöltésekor: <p class="jstime"> <b> 13:11:42 </b></p></p>
+
+    <button type="button" onclick="displayDate()">Idő</button>
+    
+    <footer>
+        Jelszo Co. <br> 2019 &copy;
+    </footer>
+</body>
+</html>
