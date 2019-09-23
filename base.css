@@ -69,7 +69,7 @@ input[type="submit"] {
   color: white;
   padding: 10px 24px;
   text-decoration: none;
-  margin: 0 1s0px;
+  margin: 0 50px;
   cursor: pointer;
   font-family: Open Sans;
   transition: all 0.2s;
@@ -80,7 +80,7 @@ input[type="submit"]:hover {
   color: #202020;
 }
 
-#result {
+.result {
   position: absolute;
   font-size: 1.5rem;
   top: 50%;
