@@ -15,7 +15,7 @@
     <title>B3 | 5. feladat</title>
     <style>
       @font-face {
-        font-family: Open Sans;
+        font-family: "Open Sans";
         src: url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap");
         /* font-weight: 400; */
       }
@@ -32,7 +32,7 @@
       body {
         background-color: #202020;
         color: white;
-        font-family: Open Sans;
+        font-family: "Open Sans";
       }
 
       .header {
@@ -72,7 +72,7 @@
         text-align: center;
         text-decoration: none;
         display: inline-block;
-        font-size: 1rem;
+        font-size: 16px;
       }
 
       #prompt:hover {
@@ -117,9 +117,14 @@
         let num = new Array(0),
           li,
           liContent,
-          el = document.getElementById("numdouble");
+          el = document.getElementById("numdouble"),
+          child = el.lastElementChild;
+        while (child) {
+          el.removeChild(child);
+          child = el.lastElementChild;
+        }
         for (let i = 0; i < 5; i++) {
-          num[i] = prompt(`${i + 1}. szám:`, "Írjon be egy számot...");
+          num[i] = prompt(`${i + 1}. szám:`);
           li = document.createElement("LI");
           liContent = document.createTextNode(num[i] * 2);
           li.appendChild(liContent);
