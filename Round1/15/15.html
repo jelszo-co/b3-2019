@@ -68,8 +68,8 @@
 			const filterNums = () => {
 				event.preventDefault();
 				let txt = document.getElementById("input").value,
-					el = document.getElementById("result");
-				count = 0;
+					el = document.getElementById("result"),
+					count = 0;
 				for (let i = 0; i < txt.length; i++) {
 					if (txt.charAt(i) >= "0" && txt.charAt(i) <= "9") {
 						count++;
