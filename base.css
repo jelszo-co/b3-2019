@@ -95,3 +95,7 @@ footer {
   margin: 20px;
   text-align: right;
 }
+
+.dc-webhook-test {
+  color: white;
+}
