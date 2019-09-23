@@ -12,7 +12,7 @@
 
 		<link rel="shortcut icon" href="../../favicon.png" />
 
-		<title>B3 | X. feladat</title>
+		<title>B3 | 13. feladat</title>
 		<style>
 			@font-face {
 				font-family: "Open Sans";
@@ -64,13 +64,25 @@
 				text-align: right;
 			}
 		</style>
+		<script>
+			const startLoop = () => {
+				let n = 0,
+					parsed = 0;
+				do {
+					parsed = parseInt(prompt("Adj meg egy számot!"));
+					console.log(parsed);
+					n += parsed;
+				} while (n < 1000);
+			};
+		</script>
 	</head>
 	<body>
 		<div class="header">
-			<h1>Bakonyi Bitfaragó Bajnokság - X. feladat</h1>
+			<h1>Javascript vezérlőszerkezetek | iteráció</h1>
 			<hr />
 		</div>
 
+		<button onclick="startLoop()">Számok bekérése</button>
 		<footer>
 			Jelszo Co. <br />
 			2019 &copy;
