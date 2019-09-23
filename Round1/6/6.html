@@ -1,121 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-		<link
-			href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap"
-			rel="stylesheet"
-		/>
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap"
+      rel="stylesheet"
+    />
 
-		<link rel="shortcut icon" href="../../favicon.png" />
+    <link rel="shortcut icon" href="../../favicon.png" />
 
-		<title>B3 | 6. feladat</title>
-		<style>
-			@font-face {
-				font-family: Open Sans;
-				src: url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap");
-				/* font-weight: 400; */
-			}
+    <title>B3 | 6. feladat</title>
+    <style>
+      @font-face {
+        font-family: Open Sans;
+        src: url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap");
+        /* font-weight: 400; */
+      }
 
-			::selection {
-				background: #ffffff;
-				color: #202020;
-			}
-			::-moz-selection {
-				background: #ffffff;
-				color: #202020;
-			}
+      ::selection {
+        background: #ffffff;
+        color: #202020;
+      }
+      ::-moz-selection {
+        background: #ffffff;
+        color: #202020;
+      }
 
-			body {
-				background-color: #202020;
-				color: white;
-				font-family: Open Sans;
-			}
+      body {
+        background-color: #202020;
+        color: white;
+        font-family: Open Sans;
+      }
 
-			.header {
-				position: absolute;
-				top: 2%;
-				left: 0;
-				width: 100%;
-				text-align: center;
-				text-transform: uppercase;
-			}
+      .header {
+        position: absolute;
+        top: 2%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        text-transform: uppercase;
+      }
 
-			.header h1 {
-				letter-spacing: 1px;
-				font-size: 1.5rem;
-				margin: 10px 0;
-			}
-			.header hr {
-				width: 70%;
-				margin: 0 15%;
-				border: 1px solid white;
-				opacity: 0.75;
-			}
+      .header h1 {
+        letter-spacing: 1px;
+        font-size: 1.5rem;
+        margin: 10px 0;
+      }
+      .header hr {
+        width: 70%;
+        margin: 0 15%;
+        border: 1px solid white;
+        opacity: 0.75;
+      }
 
-			#prompt {
-				position: absolute;
-				top: 30%;
-				left: 50%;
-				transform: translate(-50%, -50%);
-				border: 2px solid white;
-				background: #202020;
-				color: white;
-				cursor: pointer;
-				font-family: Open Sans;
-				border: 2px solid white;
-				transition: all 0.2s;
-				padding: 10px 24px;
-				text-align: center;
-				text-decoration: none;
-				display: inline-block;
-				font-size: 16px;
-			}
+      #prompt {
+        position: absolute;
+        top: 30%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 2px solid white;
+        background: #202020;
+        color: white;
+        cursor: pointer;
+        font-family: Open Sans;
+        border: 2px solid white;
+        transition: all 0.2s;
+        padding: 10px 24px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 1rem;
+      }
 
-			#prompt:hover {
-				background-color: white;
-				color: #202020;
-			}
+      #prompt:hover {
+        background-color: white;
+        color: #202020;
+      }
 
-			.roundNum {
-				position: absolute;
-				top: 45%;
-				left: 50%;
-				transform: translate(-50%, -50%);
-			}
+      .roundNum {
+        position: absolute;
+        top: 45%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
 
-			footer {
-				position: absolute;
-				right: 0;
-				bottom: 0;
-				margin: 20px;
-				text-align: right;
-			}
-		</style>
-		<script>
-			const promptFloat = () => {
-				let float = prompt("Adj meg egy lebegőpontos számot:"),
-					el = document.getElementById("round");
-				el.innerHTML = Math.round(float);
-			};
-		</script>
-	</head>
-	<body>
-		<div class="header">
-			<h1>Javascript változók használata</h1>
-			<hr />
-		</div>
+      footer {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        margin: 20px;
+        text-align: right;
+      }
+    </style>
+    <script>
+      const promptFloat = () => {
+        let float = prompt("Adj meg egy lebegőpontos számot:"),
+          el = document.getElementById("round");
+        el.innerHTML = Math.round(float);
+      };
+    </script>
+  </head>
+  <body>
+    <div class="header">
+      <h1>Javascript változók használata</h1>
+      <hr />
+    </div>
 
-		<button id="prompt" onclick="promptFloat()">Szám bekérése</button>
+    <button id="prompt" onclick="promptFloat()">Szám bekérése</button>
 
-		<p class="roundNum">Kerekített szám: <span id="round"></span></p>
+    <p class="roundNum">Kerekített szám: <span id="round"></span></p>
 
-		<footer>
-			Jelszo Co. <br />
-			2019 &copy;
-		</footer>
-	</body>
+    <footer>
+      Jelszo Co. <br />
+      2019 &copy;
+    </footer>
+  </body>
 </html>
