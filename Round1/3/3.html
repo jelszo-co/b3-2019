@@ -1,147 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>B3 | 3. feladat</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>B3 | 3. feladat</title>
 
-		<link
-			href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap"
-			rel="stylesheet"
-		/>
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap"
+      rel="stylesheet"
+    />
 
-		<link rel="shortcut icon" href="../../favicon.png" />
+    <link rel="shortcut icon" href="../../favicon.png" />
 
-		<style>
-			@font-face {
-				font-family: Open Sans;
-				src: url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap");
-				/* font-weight: 400; */
-			}
+    <style>
+      @font-face {
+        font-family: "Open Sans";
+        src: url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap");
+        /* font-weight: 400; */
+      }
 
-			::selection {
-				background: #ffffff;
-				color: #090979;
-			}
-			::-moz-selection {
-				background: #ffffff;
-				color: #090979;
-			}
+      ::selection {
+        background: #ffffff;
+        color: #090979;
+      }
+      ::-moz-selection {
+        background: #ffffff;
+        color: #090979;
+      }
 
-			body {
-				font-family: Open Sans;
-				color: #ffffff;
-				background: #202020;
-			}
+      body {
+        font-family: "Open Sans";
+        color: #ffffff;
+        background: #202020;
+      }
 
-			.header {
-				position: absolute;
-				top: 2%;
-				left: 0;
-				width: 100%;
-				text-align: center;
-				text-transform: uppercase;
-			}
+      .header {
+        position: absolute;
+        top: 2%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        text-transform: uppercase;
+      }
 
-			.header h1 {
-				letter-spacing: 1px;
-				font-size: 1.5rem;
-				margin: 10px 0;
-			}
+      .header h1 {
+        letter-spacing: 1px;
+        font-size: 1.5rem;
+        margin: 10px 0;
+      }
 
-			.header hr {
-				width: 70%;
-				margin: 0 15%;
-				border: 1px solid white;
-				opacity: 0.75;
-			}
+      .header hr {
+        width: 70%;
+        margin: 0 15%;
+        border: 1px solid white;
+        opacity: 0.75;
+      }
 
-			.text {
-				position: absolute;
-				font-size: 2rem;
-				top: 50%;
-				left: 50%;
-				width: auto;
-				transform: translate(-50%, -50%);
-				margin: 0;
-				white-space: nowrap;
-			}
+      .text {
+        position: absolute;
+        font-size: 2rem;
+        top: 50%;
+        left: 50%;
+        width: auto;
+        transform: translate(-50%, -50%);
+        margin: 0;
+        white-space: nowrap;
+      }
 
-			#jstime {
-				display: inline;
-			}
+      #jstime {
+        display: inline;
+      }
 
-			.refresh-text {
-				position: absolute;
-				top: 65%;
-				left: 50%;
-				transform: translate(-50%, -50%);
-				margin: 0;
-				font-size: 2rem;
-			}
+      .refresh-text {
+        position: absolute;
+        top: 65%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin: 0;
+        font-size: 2rem;
+      }
 
-			button {
-				position: absolute;
-				left: 50%;
-				top: 77%;
-				margin: 0;
-				transform: translate(-50%, -50%);
-				background-color: #202020; /* Green */
-				border: none;
-				color: white;
-				padding: 10px 24px;
-				text-align: center;
-				text-decoration: none;
-				display: inline-block;
-				font-size: 16px;
-				margin: 4px 2px;
-				cursor: pointer;
-				font-family: Open Sans;
-				border: 2px solid white;
-				transition: all 0.2s;
-			}
+      button {
+        position: absolute;
+        left: 50%;
+        top: 77%;
+        margin: 0;
+        transform: translate(-50%, -50%);
+        background-color: #202020; /* Green */
+        border: none;
+        color: white;
+        padding: 10px 24px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        font-family: Open Sans;
+        border: 2px solid white;
+        transition: all 0.2s;
+      }
 
-			button:hover {
-				background-color: white;
-				color: #202020;
-			}
+      button:hover {
+        background-color: white;
+        color: #202020;
+      }
 
-			footer {
-				position: absolute;
-				right: 0;
-				bottom: 0;
-				margin: 20px;
-				text-align: right;
-			}
-		</style>
+      footer {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        margin: 20px;
+        text-align: right;
+      }
+    </style>
 
-		<script>
-			const displayDate = () => {
-				var d = new Date();
-				document.getElementById(
-					"jstime"
-				).innerHTML = `${d.getFullYear()}. ${d.getMonth() +
-					1}. ${d.getDate()}. ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
-			};
-		</script>
-	</head>
-	<body onload="displayDate()">
-		<div class="header">
-			<h1>Pontos idő kiíratása JavaScript használatával</h1>
-			<hr />
-		</div>
+    <script>
+      const displayDate = () => {
+        var d = new Date();
+        document.getElementById(
+          "jstime"
+        ).innerHTML = `${d.getFullYear()}. ${d.getMonth() +
+          1}. ${d.getDate()}. ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
+      };
+    </script>
+  </head>
+  <body onload="displayDate()">
+    <div class="header">
+      <h1>Pontos idő kiíratása JavaScript használatával</h1>
+      <hr />
+    </div>
 
-		<p class="text">
-			A pontos idő a böngésző betöltésekor: <span id="jstime"></span>
-		</p>
+    <p class="text">
+      A pontos idő a böngésző betöltésekor: <span id="jstime"></span>
+    </p>
 
-		<p class="refresh-text">Ezzel a gombbal tudod frissíteni az időt:</p>
-		<button type="button" onclick="displayDate()">Frissít</button>
+    <p class="refresh-text">Ezzel a gombbal tudod frissíteni az időt:</p>
+    <button type="button" onclick="displayDate()">Frissít</button>
 
-		<footer>
-			Jelszo Co. <br />
-			2019 &copy;
-		</footer>
-	</body>
+    <footer>
+      Jelszo Co. <br />
+      2019 &copy;
+    </footer>
+  </body>
 </html>
