@@ -12,7 +12,7 @@
 
 		<link rel="shortcut icon" href="../../favicon.png" />
 
-		<title>B3 | 16. feladat</title>
+		<title>B3 | 20. feladat</title>
 		<style>
 			@font-face {
 				font-family: "Open Sans";
@@ -48,6 +48,7 @@
 				letter-spacing: 1px;
 				font-size: 1.5rem;
 				margin: 10px 0;
+				display: none;
 			}
 			.header hr {
 				width: 70%;
@@ -55,7 +56,11 @@
 				border: 1px solid white;
 				opacity: 0.75;
 			}
-
+			td {
+				height: 20px;
+				width: 20px;
+				background: pink;
+			}
 			footer {
 				position: absolute;
 				right: 0;
@@ -65,39 +70,55 @@
 			}
 		</style>
 		<script>
-			const getEvenNumbers = (arr) => {
-				let even = [],
-					counter = 0;
-				for (let i = 0; i < arr.length; i++) {
-					if (arr[i] % 2 === 0) {
-						even[counter] = arr[i];
-						counter++;
-					}
-				}
-				return even;
+			const paintBlack = (col, row) => {
+				let td = document.getElementsByTagName("td");
+				td.style.backgroundColor = "white";
+				console.log(col + " " + row);
 			};
-			const getInput = () => {
-				let input = [],
-					el_orig = document.getElementById("result-orig"),
-					el_even = document.getElementById("result-even");
-				for (let i = 0; i < 20; i++) {
-					input[i] = Math.floor(Math.random() * 100);
+
+			const genTable = () => {
+				event.preventDefault();
+				let row = parseInt(document.getElementById("row").value),
+					col = parseInt(document.getElementById("col").value),
+					el = document.getElementById("table"),
+					table = [];
+				// clear table
+				while (el.firstChild) {
+					el.removeChild(el.firstChild);
 				}
-				el_orig.innerHTML = input;
-				el_even.innerHTML = getEvenNumbers(input);
+				for (let i = 0; i < row; i++) {
+					table[i] = new Array(col);
+					table[i].fill(false);
+				}
+				table.map((row) => {
+					let rowElement = el.insertRow();
+					row.map((cell) => {
+						let cellElement = rowElement.insertCell(),
+							cellIndex = this.cellIndex,
+							rowIndex = this.parentNode.rowIndex;
+						cellElement.onclick = paintBlack(cellIndex, rowIndex);
+					});
+				});
 			};
 		</script>
 	</head>
-	<body onload="getInput()">
+	<body>
 		<div class="header">
-			<h1>Függvényhívások</h1>
+			<h1>Egy kis kiegészítés</h1>
 			<hr />
 		</div>
 
-		<p>
-			Eredeti számok: <span id="result-orig"></span><br />Páros számok:
-			<span id="result-even"></span>
-		</p>
+		<form onsubmit="genTable()">
+			<p>
+				<input type="text" id="col" placeholder="Oszlop" required />
+				X
+				<input type="text" id="row" placeholder="Sor" required />
+				<input type="submit" value="Csináld!" />
+			</p>
+		</form>
+
+		<table id="table"></table>
+
 		<footer>
 			Jelszo Co. <br />
 			2019 &copy;
