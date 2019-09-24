@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+		<link
+			href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap"
+			rel="stylesheet"
+		/>
+
+		<link rel="shortcut icon" href="../../favicon.png" />
+
+		<title>B3 | 16. feladat</title>
+		<style>
+			@font-face {
+				font-family: "Open Sans";
+				src: url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap");
+				/* font-weight: 400; */
+			}
+
+			::selection {
+				background: #ffffff;
+				color: #202020;
+			}
+			::-moz-selection {
+				background: #ffffff;
+				color: #202020;
+			}
+
+			body {
+				background-color: #202020;
+				color: white;
+				font-family: "Open Sans";
+			}
+
+			.header {
+				position: absolute;
+				top: 2%;
+				left: 0;
+				width: 100%;
+				text-align: center;
+				text-transform: uppercase;
+			}
+
+			.header h1 {
+				letter-spacing: 1px;
+				font-size: 1.5rem;
+				margin: 10px 0;
+			}
+			.header hr {
+				width: 70%;
+				margin: 0 15%;
+				border: 1px solid white;
+				opacity: 0.75;
+			}
+
+			footer {
+				position: absolute;
+				right: 0;
+				bottom: 0;
+				margin: 20px;
+				text-align: right;
+			}
+		</style>
+		<script>
+			const getEvenNumbers = (arr) => {
+				let even = [],
+					counter = 0,
+					el_even = document.getElementById("result-even");
+				for (let i = 0; i < arr.length; i++) {
+					if (arr[i] % 2 === 0) {
+						even[counter] = arr[i];
+						counter++;
+					}
+				}
+				el_even.innerHTML = even;
+			};
+			const getInput = () => {
+				let input = [],
+					el_orig = document.getElementById("result-orig");
+				for (let i = 0; i < 20; i++) {
+					input[i] = Math.floor(Math.random() * 100);
+				}
+				el_orig.innerHTML = input;
+				getEvenNumbers(input);
+			};
+		</script>
+	</head>
+	<body onload="getInput()">
+		<div class="header">
+			<h1>Függvényhívások</h1>
+			<hr />
+		</div>
+
+		<p>
+			Eredeti számok: <span id="result-orig"></span><br />Páros számok:
+			<span id="result-even"></span>
+		</p>
+		<footer>
+			Jelszo Co. <br />
+			2019 &copy;
+		</footer>
+	</body>
+</html>
