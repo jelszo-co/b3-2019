@@ -59,7 +59,8 @@
 			td {
 				height: 20px;
 				width: 20px;
-				background: pink;
+				background: white;
+				margin: 0 10px;
 			}
 			footer {
 				position: absolute;
@@ -70,47 +71,162 @@
 			}
 		</style>
 		<script>
-			const paintBlack = (col, row) => {
-				let td = document.getElementsByTagName("td");
-				td.style.backgroundColor = "white";
-				console.log(col + " " + row);
+			const getElement = () => {
+				return document.getElementById("table");
 			};
 
-			const genTable = () => {
-				event.preventDefault();
-				let row = parseInt(document.getElementById("row").value),
-					col = parseInt(document.getElementById("col").value),
-					el = document.getElementById("table"),
-					table = [];
-				// clear table
-				while (el.firstChild) {
-					el.removeChild(el.firstChild);
+			const tableStore = (newTable) => {
+				if (newTable) {
+					table = newTable;
+				} else {
+					return table;
 				}
+			};
+
+			const printStorage = () => {
+				let count = parseInt(localStorage.getItem("saveCount"));
+				if (!count) {
+					localStorage.setItem("saveCount", 0);
+				}
+
+				let list = document.getElementById("saveditems");
+				while (list.firstChild) {
+					list.removeChild(list.firstChild);
+				}
+
+				for (let i = 1; i < count + 1; i++) {
+					let data = JSON.parse(localStorage.getItem(`save_${i}`));
+					let li = document.createElement("LI");
+					liContent = document.createTextNode(`Rajz ${i}`);
+					li.onclick = () => {
+						clearNodes();
+						buildDOM(data);
+					};
+					li.appendChild(liContent);
+					list.appendChild(li);
+				}
+			};
+
+			const dumpStorage = () => {
+				localStorage.clear();
+				printStorage();
+				window.location.reload();
+			};
+
+			const save = () => {
+				let table = tableStore();
+				let count = localStorage.getItem("saveCount");
+				localStorage.setItem("saveCount", JSON.parse(count) + 1);
+				count = localStorage.getItem("saveCount");
+				localStorage.setItem(`save_${count}`, JSON.stringify(table));
+				printStorage();
+			};
+
+			const buildDOM = (table) => {
+				let el = getElement();
+				// Add nodes
+				table.map((row) => {
+					el.insertRow(table.indexOf(row));
+
+					row.map((cell) => {
+						el.rows[table.indexOf(row)].insertCell(row.indexOf(cell));
+					});
+				});
+
+				// Add onclick event
+				table.map((row) => {
+					let rowIndex = el.rows[table.indexOf(row)].rowIndex;
+
+					for (let i = 0; i < row.length; i++) {
+						let cellIndex = el.rows[table.indexOf(row)].cells[i].cellIndex;
+						el.rows[table.indexOf(row)].cells[i].onclick = function() {
+							if (table[table.indexOf(row)][i] === false) {
+								el.rows[table.indexOf(row)].cells[i].style.backgroundColor =
+									"black";
+								table[table.indexOf(row)][i] = true;
+							} else {
+								el.rows[table.indexOf(row)].cells[i].style.backgroundColor =
+									"white";
+								table[table.indexOf(row)][i] = false;
+							}
+						};
+					}
+				});
+				tableStore(table);
+
+				// Sync with array
+				for (let i = 0; i < table.length; i++) {
+					for (let j = 0; j < table[i].length; j++) {
+						if (table[i][j]) {
+							el.rows[i].cells[j].style.backgroundColor = "black";
+						} else {
+							el.rows[i].cells[j].style.backgroundColor = "white";
+						}
+					}
+				}
+			};
+
+			// Generate a table
+			const genTable = () => {
+				let row = parseInt(document.getElementById("row").value),
+					col = parseInt(document.getElementById("col").value);
+				let table = [];
+
 				for (let i = 0; i < row; i++) {
 					table[i] = new Array(col);
 					table[i].fill(false);
 				}
-				table.map((row) => {
-					let rowElement = el.insertRow();
-					row.map((cell) => {
-						let cellElement = rowElement.insertCell(),
-							cellIndex = this.cellIndex,
-							rowIndex = this.parentNode.rowIndex;
-						cellElement.onclick = paintBlack(cellIndex, rowIndex);
-					});
-				});
+
+				buildDOM(table);
+			};
+
+			// empty table node before generating new
+			const clearNodes = () => {
+				el = getElement();
+				while (el.firstChild) {
+					el.removeChild(el.firstChild);
+				}
+			};
+
+			// Make new board
+			const Init = () => {
+				event.preventDefault();
+				clearNodes();
+				genTable();
+			};
+
+			// Painter functions
+			const paintBlack = () => {
+				let table = tableStore();
+				for (let i = 0; i < table.length; i++) {
+					for (let j = 0; j < table[i].length; j++) {
+						el.rows[i].cells[j].style.backgroundColor = "black";
+						table[i][j] = true;
+					}
+				}
+				tableStore(table);
+			};
+			const paintWhite = () => {
+				let table = tableStore();
+				for (let i = 0; i < table.length; i++) {
+					for (let j = 0; j < table[i].length; j++) {
+						el.rows[i].cells[j].style.backgroundColor = "white";
+						table[i][j] = false;
+					}
+				}
+				tableStore(table);
 			};
 		</script>
 	</head>
-	<body>
+	<body onload="printStorage()">
 		<div class="header">
 			<h1>Egy kis kiegészítés</h1>
 			<hr />
 		</div>
 
-		<form onsubmit="genTable()">
+		<form onsubmit="Init()">
 			<p>
-				<input type="text" id="col" placeholder="Oszlop" required />
+				<input type="text" id="col" name="col" placeholder="Oszlop" required />
 				X
 				<input type="text" id="row" placeholder="Sor" required />
 				<input type="submit" value="Csináld!" />
@@ -118,6 +234,14 @@
 		</form>
 
 		<table id="table"></table>
+
+		<button onclick="paintBlack()">Feketére</button>
+		<button onclick="paintWhite()">Fehérre</button>
+
+		<button onclick="save()">Mentés</button>
+		<button onclick="dumpStorage()">Törlés</button>
+
+		<ul id="saveditems"></ul>
 
 		<footer>
 			Jelszo Co. <br />
