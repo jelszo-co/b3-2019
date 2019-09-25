@@ -115,7 +115,7 @@
     </style>
 
     <script>
-      const getDigits = n => {
+      const getDigits = (event, n) => {
         event.preventDefault();
         let sNumber = n.toString(),
           output = new Array(),
@@ -137,7 +137,7 @@
       <hr />
     </div>
 
-    <form onsubmit="getDigits(document.getElementById('number').value)">
+    <form onsubmit="getDigits(event, document.getElementById('number').value)">
       <input type="number" id="number" placeholder="Bemeneti szám" required />
       <input type="submit" value="Kiszámolom!" />
     </form>
