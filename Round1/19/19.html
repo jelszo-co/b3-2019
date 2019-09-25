@@ -12,7 +12,7 @@
 
 		<link rel="shortcut icon" href="../../favicon.png" />
 
-		<title>B3 | X. feladat</title>
+		<title>B3 | 19. feladat</title>
 		<style>
 			@font-face {
 				font-family: "Open Sans";
@@ -64,6 +64,25 @@
 				text-align: right;
 			}
 		</style>
+
+		<script>
+			const countdown = (event) => {
+				event.preventDefault();
+				const el = document.getElementById("result");
+				let sec = parseInt(document.getElementById("sec").value);
+				el.innerHTML = sec + "mp";
+				let timer = setInterval(() => {
+					if (sec === 0) {
+						clearInterval(timer);
+						el.innerHTML = "Lejárt!";
+						alert("Lejárt!");
+					} else {
+						sec--;
+						el.innerHTML = sec + "s";
+					}
+				}, 1000);
+			};
+		</script>
 	</head>
 	<body>
 		<div class="header">
@@ -72,9 +91,11 @@
 		</div>
 
 		<form onsubmit="countdown(event)">
-			<input type="number" name="sec" placeholder="Másodperc" required />
+			<input type="number" name="sec" id="sec" placeholder="Másodperc" required />
 			<input type="submit" value="Visszaszámol!" />
 		</form>
+
+		<p>Fennmaradó idő: <span id="result"></span></p>
 
 		<footer>
 			Jelszo Co. <br />
