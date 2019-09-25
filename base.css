@@ -71,7 +71,7 @@ input[type="submit"] {
   text-decoration: none;
   margin: 0 50px;
   cursor: pointer;
-  font-family: Open Sans;
+  font-family: "Open Sans";
   transition: all 0.2s;
 }
 

@@ -56,6 +56,43 @@
 				opacity: 0.75;
 			}
 
+			button {
+        position: absolute;
+        top: 30%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #202020;
+        border: 2px solid white;
+        color: white;
+        padding: 10px 24px;
+        text-decoration: none;
+        cursor: pointer;
+        font-family: Open Sans;
+        transition: all 0.2s;
+        font-size: 1.5rem;
+      }
+
+	  table {
+		  position: absolute;
+		  transform: translate(-50%, 0);
+		  top: 40%;
+		  left: 50%;
+		  margin: 0;
+	  }
+
+      button:hover {
+        background-color: white;
+        color: #202020;
+      }
+
+	  .result {
+		  position: absolute;
+		  transform: translate(-50%, -50%);
+		  top: 80%;
+		  left: 50%;
+		  font-size: 1.5rem;
+	  }
+
 			td {
 				width: 30px;
 				height: 30px;
@@ -146,7 +183,7 @@
 				</tr>
 			</tbody>
 		</table>
-		<p>Eredmény: <span id="result"></span></p>
+		<p class="result">Eredmény: <b> <span id="result"></span> </b> </p>
 		<footer>
 			Jelszo Co. <br />
 			2019 &copy;
