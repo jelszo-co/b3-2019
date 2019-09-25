@@ -1,175 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-    <link
-      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap"
-      rel="stylesheet"
-    />
+		<link
+			href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap"
+			rel="stylesheet"
+		/>
 
-    <link rel="shortcut icon" href="../../favicon.png" />
+		<link rel="shortcut icon" href="../../favicon.png" />
 
-    <title>B3 | 7. feladat</title>
-    <style>
-      @font-face {
-        font-family: "Open Sans";
-        src: url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap");
-        /* font-weight: 400; */
-      }
+		<title>B3 | 7. feladat</title>
+		<style>
+			@font-face {
+				font-family: "Open Sans";
+				src: url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap");
+				/* font-weight: 400; */
+			}
 
-      ::selection {
-        background: #ffffff;
-        color: #202020;
-      }
-      ::-moz-selection {
-        background: #ffffff;
-        color: #202020;
-      }
+			::selection {
+				background: #ffffff;
+				color: #202020;
+			}
+			::-moz-selection {
+				background: #ffffff;
+				color: #202020;
+			}
 
-      body {
-        background-color: #202020;
-        color: white;
-        font-family: "Open Sans";
-      }
+			body {
+				background-color: #202020;
+				color: white;
+				font-family: "Open Sans";
+			}
 
-      .header {
-        position: absolute;
-        top: 2%;
-        left: 0;
-        width: 100%;
-        text-align: center;
-        text-transform: uppercase;
-      }
+			.header {
+				position: absolute;
+				top: 2%;
+				left: 0;
+				width: 100%;
+				text-align: center;
+				text-transform: uppercase;
+			}
 
-      .header h1 {
-        letter-spacing: 1px;
-        font-size: 1.5rem;
-        margin: 10px 0;
-      }
-      .header hr {
-        width: 70%;
-        margin: 0 15%;
-        border: 1px solid white;
-        opacity: 0.75;
-      }
+			.header h1 {
+				letter-spacing: 1px;
+				font-size: 1.5rem;
+				margin: 10px 0;
+			}
+			.header hr {
+				width: 70%;
+				margin: 0 15%;
+				border: 1px solid white;
+				opacity: 0.75;
+			}
 
-      input[type="number"]::-webkit-inner-spin-button,
-      input[type="number"]::-webkit-outer-spin-button {
-        display: none;
-        margin: 0;
-      }
+			input[type="number"]::-webkit-inner-spin-button,
+			input[type="number"]::-webkit-outer-spin-button {
+				display: none;
+				margin: 0;
+			}
 
-      form {
-        position: absolute;
-        top: 30%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
+			form {
+				position: absolute;
+				top: 30%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			}
 
-      input[type="number"] {
-        position: relative;
-        margin: 0 10px;
-        border: none;
-        border-bottom: 2px solid white;
-        background: none;
-        color: white;
-        font-style: italic;
-      }
+			input[type="number"] {
+				position: relative;
+				margin: 0 10px;
+				border: none;
+				border-bottom: 2px solid white;
+				background: none;
+				color: white;
+				font-style: italic;
+			}
 
-      input[type="submit"] {
-        background-color: #202020;
-        border: 2px solid white;
-        color: white;
-        padding: 10px 24px;
-        text-decoration: none;
-        margin: 0 1s0px;
-        cursor: pointer;
-        font-family: Open Sans;
-        transition: all 0.2s;
-      }
+			input[type="submit"] {
+				background-color: #202020;
+				border: 2px solid white;
+				color: white;
+				padding: 10px 24px;
+				text-decoration: none;
+				margin: 0 1s0px;
+				cursor: pointer;
+				font-family: Open Sans;
+				transition: all 0.2s;
+			}
 
-      input[type="submit"]:hover {
-        background-color: white;
-        color: #202020;
-      }
+			input[type="submit"]:hover {
+				background-color: white;
+				color: #202020;
+			}
 
-      #result {
-        position: absolute;
-        font-size: 1.5rem;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
+			#result {
+				position: absolute;
+				font-size: 1.5rem;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			}
 
-      footer {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        margin: 20px;
-        text-align: right;
-      }
-    </style>
-    <script>
-      const getCoinCount = () => {
-        event.preventDefault();
-        let w = document.getElementById("form-coinbox-width").value,
-          l = document.getElementById("form-coinbox-length").value,
-          h = document.getElementById("form-coinbox-height").value * 10,
-          coins;
-        if (Math.floor(w) % 2 === 1) {
-          w -= 1;
-        }
-        if (Math.floor(l) % 2 === 1) {
-          l -= 1;
-        }
-        coins = (Math.floor(w) / 2) * (Math.floor(l) / 2) * (Math.floor(h) / 2);
-        document.getElementById("coinCount").innerHTML = coins + " érme";
-      };
-    </script>
-  </head>
-  <body>
-    <div class="header">
-      <h1>JavaScript Vezérlőszerkezetek | Szekvencia</h1>
-      <hr />
-    </div>
+			footer {
+				position: absolute;
+				right: 0;
+				bottom: 0;
+				margin: 20px;
+				text-align: right;
+			}
+		</style>
+		<script>
+			const getCoinCount = (event) => {
+				event.preventDefault();
+				let w = document.getElementById("form-coinbox-width").value,
+					l = document.getElementById("form-coinbox-length").value,
+					h = document.getElementById("form-coinbox-height").value * 10,
+					coins;
+				if (Math.floor(w) % 2 === 1) {
+					w -= 1;
+				}
+				if (Math.floor(l) % 2 === 1) {
+					l -= 1;
+				}
+				coins = (Math.floor(w) / 2) * (Math.floor(l) / 2) * (Math.floor(h) / 2);
+				document.getElementById("coinCount").innerHTML = coins + " érme";
+			};
+		</script>
+	</head>
+	<body>
+		<div class="header">
+			<h1>JavaScript Vezérlőszerkezetek | Szekvencia</h1>
+			<hr />
+		</div>
 
-    <!-- input: only alsó fehér border, light szöveg, a tekerőket töntesd el pls köszi; submit: mint a többi gomb -->
-    <form onsubmit="getCoinCount()">
-      <input
-        type="number"
-        name="width"
-        placeholder="Szélesség (cm)"
-        id="form-coinbox-width"
-        required
-      />
-      <input
-        type="number"
-        name="length"
-        placeholder="Hosszúság (cm)"
-        id="form-coinbox-length"
-        required
-      />
-      <input
-        type="number"
-        name="height"
-        placeholder="Magasság (cm)"
-        id="form-coinbox-height"
-        required
-      />
-      <input type="submit" value="Kiszámolom!" id="form-coinbox-submit" />
-    </form>
+		<!-- input: only alsó fehér border, light szöveg, a tekerőket töntesd el pls köszi; submit: mint a többi gomb -->
+		<form onsubmit="getCoinCount(event)">
+			<input
+				type="number"
+				name="width"
+				placeholder="Szélesség (cm)"
+				id="form-coinbox-width"
+				required
+			/>
+			<input
+				type="number"
+				name="length"
+				placeholder="Hosszúság (cm)"
+				id="form-coinbox-length"
+				required
+			/>
+			<input
+				type="number"
+				name="height"
+				placeholder="Magasság (cm)"
+				id="form-coinbox-height"
+				required
+			/>
+			<input type="submit" value="Kiszámolom!" id="form-coinbox-submit" />
+		</form>
 
-    <p id="result">
-      <!-- Span legyen bold -->
-      A doboz tárolókapacitása: <b> <span id="coinCount"></span> </b>
-    </p>
+		<p id="result">
+			<!-- Span legyen bold -->
+			A doboz tárolókapacitása: <b> <span id="coinCount"></span> </b>
+		</p>
 
-    <footer>
-      Jelszo Co. <br />
-      2019
-    </footer>
-  </body>
+		<footer>
+			Jelszo Co. <br />
+			2019
+		</footer>
+	</body>
 </html>

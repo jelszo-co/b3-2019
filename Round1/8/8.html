@@ -15,7 +15,7 @@
     <title>B3 | 8. feladat</title>
     <style>
       @font-face {
-        font-family: Open Sans;
+        font-family: "Open Sans";
         src: url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap");
         /* font-weight: 400; */
       }
@@ -32,7 +32,7 @@
       body {
         background-color: #202020;
         color: white;
-        font-family: Open Sans;
+        font-family: "Open Sans";
       }
 
       .header {
@@ -112,7 +112,7 @@
       }
     </style>
     <script>
-      const getBall = () => {
+      const getBall = (event) => {
         event.preventDefault();
         let v = document.getElementById("strength").value;
         let a = document.getElementById("angle").value;
@@ -138,7 +138,7 @@
     </div>
 
     <!-- Ugyanaz, mint az előző form -->
-    <form onsubmit="getBall()">
+    <form onsubmit="getBall(event)">
       <input type="number" placeholder="Erősség" id="strength" required />
       <input type="number" placeholder="Szög" id="angle" required />
       <input type="submit" value="Kiszámolom!" />

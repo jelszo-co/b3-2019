@@ -114,7 +114,7 @@
       }
     </style>
     <script>
-      const getLondonTime = () => {
+      const getLondonTime = (event) => {
         event.preventDefault();
         let h = parseInt(document.getElementById("input-h").value, 10),
           m = parseInt(document.getElementById("input-m").value, 10),
@@ -146,7 +146,7 @@
     </div>
 
     <!--rövid, 2jegyű ugyanolyan inputok -->
-    <form onsubmit="getLondonTime()">
+    <form onsubmit="getLondonTime(event)">
       <input type="number" id="input-h" placeholder="óra" required />
       <input type="number" id="input-m" placeholder="perc" required />
       <input type="submit" value="Kiszámolom!" />

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+		<link
+			href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap"
+			rel="stylesheet"
+		/>
+
+		<link rel="shortcut icon" href="../../favicon.png" />
+
+		<title>B3 | 18. feladat</title>
+		<style>
+			@font-face {
+				font-family: "Open Sans";
+				src: url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap");
+				/* font-weight: 400; */
+			}
+
+			::selection {
+				background: #ffffff;
+				color: #202020;
+			}
+			::-moz-selection {
+				background: #ffffff;
+				color: #202020;
+			}
+
+			body {
+				background-color: #202020;
+				color: white;
+				font-family: "Open Sans";
+			}
+
+			.header {
+				position: absolute;
+				top: 2%;
+				left: 0;
+				width: 100%;
+				text-align: center;
+				text-transform: uppercase;
+			}
+
+			.header h1 {
+				letter-spacing: 1px;
+				font-size: 1.5rem;
+				margin: 10px 0;
+			}
+			.header hr {
+				width: 70%;
+				margin: 0 15%;
+				border: 1px solid white;
+				opacity: 0.75;
+			}
+
+			td {
+				width: 30px;
+				height: 30px;
+				margin: 10px;
+				background: white;
+			}
+
+			footer {
+				position: absolute;
+				right: 0;
+				bottom: 0;
+				margin: 20px;
+				text-align: right;
+			}
+		</style>
+		<script>
+			const start = () => {
+				const el = document.getElementById("table");
+				for (let i = 0; i < 5; i++) {
+					for (let j = 0; j < 5; j++) {
+						el.rows[i].cells[j].style.backgroundColor = "white";
+					}
+				}
+				let min = 2,
+					max = 5;
+				let rnd = Math.random() * (max - min + 1) + min,
+					col = Math.floor(Math.random() * 5),
+					row = Math.floor(Math.random() * 5);
+
+				let startDate, endDate;
+				let result;
+				let resultContainer = document.getElementById("result");
+				setTimeout(() => {
+					el.rows[row].cells[col].style.backgroundColor = "black";
+					startDate = new Date();
+					el.rows[row].cells[col].onclick = () => {
+						el.rows[row].cells[col].style.backgroundColor = "white";
+						endDate = new Date();
+						result = (endDate - startDate) / 1000;
+						resultContainer.innerHTML = `${result} másodperc`;
+					};
+				}, rnd * 1000);
+			};
+		</script>
+	</head>
+	<body>
+		<div class="header">
+			<h1>Eseménykezelés</h1>
+			<hr />
+		</div>
+		<button onclick="start()">Indítás</button>
+		<table id="table">
+			<tbody>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+		<p>Eredmény: <span id="result"></span></p>
+		<footer>
+			Jelszo Co. <br />
+			2019 &copy;
+		</footer>
+	</body>
+</html>
