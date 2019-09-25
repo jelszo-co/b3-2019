@@ -71,6 +71,7 @@
       }
 
       input[type="number"] {
+        display: inline-block;
         position: relative;
         margin: 0 40px;
         border: none;
@@ -81,6 +82,7 @@
       }
 
       input[type="submit"] {
+        display: inline-block;
         background-color: #202020;
         border: 2px solid white;
         color: white;
@@ -88,7 +90,7 @@
         text-decoration: none;
         margin: 0 40px;
         cursor: pointer;
-        font-family: Open Sans;
+        font-family: "Open Sans";
         transition: all 0.2s;
       }
 
@@ -146,12 +148,13 @@
     </div>
 
     <!--rövid, 2jegyű ugyanolyan inputok -->
+    <div class="input"> 
     <form onsubmit="getLondonTime(event)">
       <input type="number" id="input-h" placeholder="óra" required />
       <input type="number" id="input-m" placeholder="perc" required />
       <input type="submit" value="Kiszámolom!" />
     </form>
-
+    </div>
     <p id="result">Angol idő: <b> <span id="time"></span></p> </b>
 
     <footer>
