@@ -65,16 +65,44 @@
 			}
 		</style>
 		<script>
+			const getEl = () => {
+				return document.getElementById("img");
+			};
 			const getComic = () => {
-				const el = document.getElementById("img");
+				let el = getEl();
+				localStorage.setItem("page", 0);
+				el.innerHTML = `<img src="./img-0.png" onclick="nextComic()"></img>`;
+			};
+
+			const nextComic = () => {
+				let el = getEl();
+				let exComic = JSON.parse(localStorage.getItem("page"));
+				if (exComic !== 3) {
+					el.innerHTML = `<img src="./img-${exComic +
+						1}.png" onclick="nextComic()"></img>`;
+					localStorage.setItem("page", exComic + 1);
+				}
+			};
+
+			const prevComic = () => {
+				let el = getEl();
+				let exComic = JSON.parse(localStorage.getItem("page"));
+				if (exComic !== 0) {
+					el.innerHTML = `<img src="./img-${exComic -
+						1}.png" onclick="nextComic()"></img>`;
+					localStorage.setItem("page", exComic - 1);
+				}
 			};
 		</script>
 	</head>
 	<body onload="getComic()">
 		<div class="header">
-			<h1>Bakonyi Bitfaragó Bajnokság - X. feladat</h1>
+			<h1>Eseménykezelés</h1>
 			<hr />
 		</div>
+		<img src="./angle-up-solid.svg" onclick="prevComic()" />
+		<div id="img"></div>
+		<img src="./angle-down-solid.svg" onclick="nextComic()" />
 
 		<footer>
 			Jelszo Co. <br />
