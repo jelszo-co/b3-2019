@@ -64,24 +64,9 @@
 				text-align: right;
 			}
 		</style>
-		<script src="./md5.min.js"></script>
 		<script>
 			const getComic = () => {
-				let ts = Date.now();
-				let hash = md5(
-					ts + "626bf83a0cb7d49d522055d2c5736532e681fc31" + "074fc148b6fd658a847a075b14ea7c44"
-				);
-				console.log(ts);
-
-				fetch(
-					`https://gateway.marvel.com/v1/public/comics/1332?apikey=074fc148b6fd658a847a075b14ea7c44&ts=${ts}&hash=${hash}`
-				)
-					.then((res) => {
-						console.log(res.status);
-					})
-					.catch((err) => {
-						err;
-					});
+				const el = document.getElementById("img");
 			};
 		</script>
 	</head>
