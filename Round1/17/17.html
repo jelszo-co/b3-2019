@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+		<link
+			href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap"
+			rel="stylesheet"
+		/>
+
+		<link rel="shortcut icon" href="../../favicon.png" />
+
+		<title>B3 | X. feladat</title>
+		<style>
+			@font-face {
+				font-family: "Open Sans";
+				src: url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap");
+				/* font-weight: 400; */
+			}
+
+			::selection {
+				background: #ffffff;
+				color: #202020;
+			}
+			::-moz-selection {
+				background: #ffffff;
+				color: #202020;
+			}
+
+			body {
+				background-color: #202020;
+				color: white;
+				font-family: "Open Sans";
+			}
+
+			.header {
+				position: absolute;
+				top: 2%;
+				left: 0;
+				width: 100%;
+				text-align: center;
+				text-transform: uppercase;
+			}
+
+			.header h1 {
+				letter-spacing: 1px;
+				font-size: 1.5rem;
+				margin: 10px 0;
+			}
+			.header hr {
+				width: 70%;
+				margin: 0 15%;
+				border: 1px solid white;
+				opacity: 0.75;
+			}
+
+			footer {
+				position: absolute;
+				right: 0;
+				bottom: 0;
+				margin: 20px;
+				text-align: right;
+			}
+		</style>
+		<script src="./md5.min.js"></script>
+		<script>
+			const getComic = () => {
+				let ts = Date.now();
+				let hash = md5(
+					ts + "626bf83a0cb7d49d522055d2c5736532e681fc31" + "074fc148b6fd658a847a075b14ea7c44"
+				);
+				console.log(ts);
+
+				fetch(
+					`https://gateway.marvel.com/v1/public/comics/1332?apikey=074fc148b6fd658a847a075b14ea7c44&ts=${ts}&hash=${hash}`
+				)
+					.then((res) => {
+						console.log(res.status);
+					})
+					.catch((err) => {
+						err;
+					});
+			};
+		</script>
+	</head>
+	<body onload="getComic()">
+		<div class="header">
+			<h1>Bakonyi Bitfaragó Bajnokság - X. feladat</h1>
+			<hr />
+		</div>
+
+		<footer>
+			Jelszo Co. <br />
+			2019 &copy;
+		</footer>
+	</body>
+</html>
