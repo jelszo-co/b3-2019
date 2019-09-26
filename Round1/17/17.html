@@ -12,7 +12,7 @@
 
 		<link rel="shortcut icon" href="../../favicon.png" />
 
-		<title>B3 | X. feladat</title>
+		<title>B3 | 17. feladat</title>
 		<style>
 			@font-face {
 				font-family: "Open Sans";
@@ -54,6 +54,36 @@
 				margin: 0 15%;
 				border: 1px solid white;
 				opacity: 0.75;
+			}
+
+			#prev {
+				position: absolute;
+				transform: translate(-50%,  -50%) rotate(-90deg);
+				width: 100px;
+				height: 100px;
+				top: 50%;
+				left: 35%;
+				margin: 0;
+				
+			}
+
+			#img {
+				position: absolute;
+				transform: translate(-50%, -50%);
+				left: 50%;
+				top: 50%;
+				margin: 0;
+			}
+
+			#next {
+				position: absolute;
+				transform: translate(-50%, -50%) rotate(-90deg);
+				width: 100px;
+				height: 100px;
+				top: 50%;
+				left: 65%;
+				margin: 0;
+				color: white;
 			}
 
 			footer {
@@ -100,9 +130,9 @@
 			<h1>Eseménykezelés</h1>
 			<hr />
 		</div>
-		<img src="./angle-up-solid.svg" onclick="prevComic()" />
+		<img src="./angle-up-solid.svg" onclick="prevComic()" id="prev" />
 		<div id="img"></div>
-		<img src="./angle-down-solid.svg" onclick="nextComic()" />
+		<img src="./angle-down-solid.svg" onclick="nextComic()" id="next" />
 
 		<footer>
 			Jelszo Co. <br />
