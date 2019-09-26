@@ -58,9 +58,9 @@
 
 			#prev {
 				position: absolute;
-				transform: translate(-50%,  -50%) rotate(-90deg);
-				width: 100px;
-				height: 100px;
+				transform: translate(-50%, -50%);
+				width: 60px;
+				height: 60px;
 				top: 50%;
 				left: 35%;
 				margin: 0;
@@ -76,9 +76,9 @@
 
 			#next {
 				position: absolute;
-				transform: translate(-50%, -50%) rotate(-90deg);
-				width: 100px;
-				height: 100px;
+				transform: translate(-50%, -50%);
+				width: 60px;
+				height: 60px;
 				top: 50%;
 				left: 65%;
 				margin: 0;
@@ -106,8 +106,7 @@
 				let el = getEl();
 				let exComic = JSON.parse(localStorage.getItem("page"));
 				if (exComic !== 3) {
-					el.innerHTML = `<img src="./img-${exComic +
-						1}.png" onclick="nextComic()"></img>`;
+					el.innerHTML = `<img src="./img-${exComic + 1}.png" onclick="nextComic()"></img>`;
 					localStorage.setItem("page", exComic + 1);
 				}
 			};
@@ -116,8 +115,7 @@
 				let el = getEl();
 				let exComic = JSON.parse(localStorage.getItem("page"));
 				if (exComic !== 0) {
-					el.innerHTML = `<img src="./img-${exComic -
-						1}.png" onclick="nextComic()"></img>`;
+					el.innerHTML = `<img src="./img-${exComic - 1}.png" onclick="nextComic()"></img>`;
 					localStorage.setItem("page", exComic - 1);
 				}
 			};
@@ -128,9 +126,9 @@
 			<h1>Eseménykezelés</h1>
 			<hr />
 		</div>
-		<img src="./angle-up-solid.svg" onclick="prevComic()" id="prev" />
+		<img src="./left.png" onclick="prevComic()" id="prev" />
 		<div id="img"></div>
-		<img src="./angle-down-solid.svg" onclick="nextComic()" id="next" />
+		<img src="./right.png" onclick="nextComic()" id="next" />
 
 		<footer>
 			Jelszo Co. <br />
