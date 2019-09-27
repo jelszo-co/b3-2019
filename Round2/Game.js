@@ -25,18 +25,10 @@ var Game = function (_React$Component) {
 	_createClass(Game, [{
 		key: "render",
 		value: function render() {
-			var _this2 = this;
-
-			if (this.state.liked) {
-				return "You liked this.";
-			}
-
 			return React.createElement(
-				"button",
-				{ onClick: function onClick() {
-						return _this2.setState({ liked: true });
-					} },
-				"Likes"
+				"p",
+				null,
+				"Ap\xE1dat"
 			);
 		}
 	}]);

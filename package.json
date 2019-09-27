@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"jsx": "npx babel --watch Round2/game_readable --out-dir Round2 --presets react-app/prod"
+		"jsx": "npx babel --watch Round2/readable --out-dir Round2 --presets react-app/prod"
 	},
 	"repository": {
 		"type": "git",

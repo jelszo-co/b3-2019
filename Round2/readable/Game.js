@@ -9,13 +9,7 @@ class Game extends React.Component {
 	}
 
 	render() {
-		if (this.state.liked) {
-			return "You liked this.";
-		}
-
-		return (
-			<button onClick={() => this.setState({ liked: true })}>Likes</button>
-		);
+		return <p>Apádat</p>;
 	}
 }
 
