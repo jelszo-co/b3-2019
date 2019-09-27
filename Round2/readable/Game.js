@@ -2,6 +2,18 @@
 
 const e = React.createElement;
 
+class CubeComponent extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {};
+	}
+	render() {
+		return <span>{this.props.text}</span>;
+	}
+}
+
+// export default CubeComponent
+
 class Game extends React.Component {
 	constructor(props) {
 		super(props);
@@ -37,10 +49,16 @@ class Game extends React.Component {
 			this.setState({ [e.target.name]: e.target.value });
 		};
 		if (gameStarted) {
-			let table = [];
-			for (let i = 0; i < formRows; i++) {
-				table.push("asd ");
+			let table = [],
+				row = [];
+			for (let j = 0; j < formCols; j++) {
+				row.push(<CubeComponent text="asdf " />);
 			}
+			row.push(<br />);
+			for (let i = 0; i < formRows; i++) {
+				table.push(row);
+			}
+			console.log(table);
 			return <div>{table}</div>;
 		} else {
 			return (

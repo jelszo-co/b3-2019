@@ -12,28 +12,56 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var e = React.createElement;
 
-var Game = function (_React$Component) {
-	_inherits(Game, _React$Component);
+var CubeComponent = function (_React$Component) {
+	_inherits(CubeComponent, _React$Component);
+
+	function CubeComponent(props) {
+		_classCallCheck(this, CubeComponent);
+
+		var _this = _possibleConstructorReturn(this, (CubeComponent.__proto__ || Object.getPrototypeOf(CubeComponent)).call(this, props));
+
+		_this.state = {};
+		return _this;
+	}
+
+	_createClass(CubeComponent, [{
+		key: "render",
+		value: function render() {
+			return React.createElement(
+				"span",
+				null,
+				this.props.text
+			);
+		}
+	}]);
+
+	return CubeComponent;
+}(React.Component);
+
+// export default CubeComponent
+
+var Game = function (_React$Component2) {
+	_inherits(Game, _React$Component2);
 
 	function Game(props) {
 		_classCallCheck(this, Game);
 
-		var _this = _possibleConstructorReturn(this, (Game.__proto__ || Object.getPrototypeOf(Game)).call(this, props));
+		var _this2 = _possibleConstructorReturn(this, (Game.__proto__ || Object.getPrototypeOf(Game)).call(this, props));
 
-		_this.state = {
+		_this2.state = {
 			gameStarted: false,
 			formRows: "",
 			formCols: "",
 			minValue: 5,
 			maxValue: 20
 		};
-		return _this;
+		return _this2;
 	}
 
 	_createClass(Game, [{
 		key: "render",
 		value: function render() {
-			var _this2 = this;
+			var _this3 = this;
 
 			var _state = this.state,
 			    gameStarted = _state.gameStarted,
@@ -47,19 +75,25 @@ var Game = function (_React$Component) {
 				if (formRows < minValue || formRows > maxValue || formCols < minValue || formCols > maxValue) {
 					alert("Hopsz! Az \xE9rt\xE9keknek " + minValue + " \xE9s " + maxValue + " k\xF6z\xF6tt kell lenni\xFCk.");
 				} else {
-					_this2.setState({ gameStarted: true });
+					_this3.setState({ gameStarted: true });
 				}
 				console.log("submitted");
 			};
 
 			var onChange = function onChange(e) {
-				_this2.setState(_defineProperty({}, e.target.name, e.target.value));
+				_this3.setState(_defineProperty({}, e.target.name, e.target.value));
 			};
 			if (gameStarted) {
-				var table = [];
-				for (var i = 0; i < formRows; i++) {
-					table.push("asd ");
+				var table = [],
+				    row = [];
+				for (var j = 0; j < formCols; j++) {
+					row.push(React.createElement(CubeComponent, { text: "asdf " }));
 				}
+				row.push(React.createElement("br", null));
+				for (var i = 0; i < formRows; i++) {
+					table.push(row);
+				}
+				console.log(table);
 				return React.createElement(
 					"div",
 					null,
