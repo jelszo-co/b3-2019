@@ -2,7 +2,6 @@
 	"name": "b3-2019",
 	"version": "1.0.0",
 	"description": "",
-	"main": "index.js",
 	"scripts": {
 		"jsx": "npx babel --watch Round2/readable --out-dir Round2 --presets react-app/prod"
 	},
