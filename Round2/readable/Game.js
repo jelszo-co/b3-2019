@@ -8,11 +8,21 @@ class CubeComponent extends React.Component {
 		this.state = {};
 	}
 	render() {
-		return <span>{this.props.text}</span>;
+		return (
+			<div
+				className={`cube`}
+				onClick={this.props.startCube ? null : this.props.clickCube}
+			>
+				<span
+					className={`${this.props.startCube ? "cube-x" : ""}`}
+					onClick={this.props.startCube ? this.props.toggleStart : null}
+				>
+					{this.props.text}
+				</span>
+			</div>
+		);
 	}
 }
-
-// export default CubeComponent
 
 class Game extends React.Component {
 	constructor(props) {
@@ -22,12 +32,14 @@ class Game extends React.Component {
 			formRows: "",
 			formCols: "",
 			minValue: 5,
-			maxValue: 20
+			maxValue: 15,
+			startCube: true
 		};
 	}
 
 	render() {
 		const { gameStarted, formRows, formCols, minValue, maxValue } = this.state;
+		const { startCube } = this.state;
 		const onSubmit = (e) => {
 			e.preventDefault();
 			if (
@@ -48,21 +60,58 @@ class Game extends React.Component {
 		const onChange = (e) => {
 			this.setState({ [e.target.name]: e.target.value });
 		};
-		if (gameStarted) {
-			let table = [],
-				row = [];
-			for (let j = 0; j < formCols; j++) {
-				row.push(<CubeComponent text="asdf " />);
-			}
-			row.push(<br />);
+		const clickCube = (table, row, col) => {
 			for (let i = 0; i < formRows; i++) {
-				table.push(row);
+				for (let j = 0; j < formCols; j++) {
+					if (i !== row && j !== col) {
+						table[i][j].text = "";
+					}
+				}
+			}
+			console.log(`${row};${col}`);
+		};
+		if (gameStarted) {
+			let table = [];
+			for (let i = 0; i < formRows; i++) {
+				table[i] = [];
+				for (let j = 0; j < formCols; j++) {
+					table[i][j] = {
+						row: i,
+						col: j,
+						text: "x"
+					};
+				}
 			}
 			console.log(table);
-			return <div>{table}</div>;
+			return (
+				<div className="game-container">
+					{table.map((row) => {
+						return (
+							<div className="row">
+								{row.map((cube) => {
+									return (
+										<CubeComponent
+											key={cube.row * formCols + cube.col}
+											text={cube.text}
+											startCube={startCube}
+											clickCube={clickCube.bind(
+												this,
+												table,
+												cube.row,
+												cube.col
+											)}
+											toggleStart={() => this.setState({ startCube: false })}
+										/>
+									);
+								})}
+							</div>
+						);
+					})}
+				</div>
+			);
 		} else {
 			return (
-				<div>
+				<div className="input">
 					<h2>Tábla generálása</h2>
 					<p>
 						Minimum <b>{minValue + "x" + minValue}</b>, maximum{" "}

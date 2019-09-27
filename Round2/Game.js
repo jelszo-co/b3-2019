@@ -28,17 +28,25 @@ var CubeComponent = function (_React$Component) {
 		key: "render",
 		value: function render() {
 			return React.createElement(
-				"span",
-				null,
-				this.props.text
+				"div",
+				{
+					className: "cube",
+					onClick: this.props.startCube ? null : this.props.clickCube
+				},
+				React.createElement(
+					"span",
+					{
+						className: "" + (this.props.startCube ? "cube-x" : ""),
+						onClick: this.props.startCube ? this.props.toggleStart : null
+					},
+					this.props.text
+				)
 			);
 		}
 	}]);
 
 	return CubeComponent;
 }(React.Component);
-
-// export default CubeComponent
 
 var Game = function (_React$Component2) {
 	_inherits(Game, _React$Component2);
@@ -53,7 +61,8 @@ var Game = function (_React$Component2) {
 			formRows: "",
 			formCols: "",
 			minValue: 5,
-			maxValue: 20
+			maxValue: 15,
+			startCube: true
 		};
 		return _this2;
 	}
@@ -69,6 +78,7 @@ var Game = function (_React$Component2) {
 			    formCols = _state.formCols,
 			    minValue = _state.minValue,
 			    maxValue = _state.maxValue;
+			var startCube = this.state.startCube;
 
 			var onSubmit = function onSubmit(e) {
 				e.preventDefault();
@@ -83,26 +93,54 @@ var Game = function (_React$Component2) {
 			var onChange = function onChange(e) {
 				_this3.setState(_defineProperty({}, e.target.name, e.target.value));
 			};
-			if (gameStarted) {
-				var table = [],
-				    row = [];
-				for (var j = 0; j < formCols; j++) {
-					row.push(React.createElement(CubeComponent, { text: "asdf " }));
-				}
-				row.push(React.createElement("br", null));
+			var clickCube = function clickCube(table, row, col) {
 				for (var i = 0; i < formRows; i++) {
-					table.push(row);
+					for (var j = 0; j < formCols; j++) {
+						if (i !== row && j !== col) {
+							table[i][j].text = "";
+						}
+					}
+				}
+				console.log(row + ";" + col);
+			};
+			if (gameStarted) {
+				var table = [];
+				for (var i = 0; i < formRows; i++) {
+					table[i] = [];
+					for (var j = 0; j < formCols; j++) {
+						table[i][j] = {
+							row: i,
+							col: j,
+							text: "x"
+						};
+					}
 				}
 				console.log(table);
 				return React.createElement(
 					"div",
-					null,
-					table
+					{ className: "game-container" },
+					table.map(function (row) {
+						return React.createElement(
+							"div",
+							{ className: "row" },
+							row.map(function (cube) {
+								return React.createElement(CubeComponent, {
+									key: cube.row * formCols + cube.col,
+									text: cube.text,
+									startCube: startCube,
+									clickCube: clickCube.bind(_this3, table, cube.row, cube.col),
+									toggleStart: function toggleStart() {
+										return _this3.setState({ startCube: false });
+									}
+								});
+							})
+						);
+					})
 				);
 			} else {
 				return React.createElement(
 					"div",
-					null,
+					{ className: "input" },
 					React.createElement(
 						"h2",
 						null,

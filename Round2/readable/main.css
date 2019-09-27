@@ -1,0 +1,145 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap");
+
+::selection {
+	background: #ffffff;
+	color: #202020;
+}
+::-moz-selection {
+	background: #ffffff;
+	color: #202020;
+}
+
+body {
+	background-color: #202020;
+	color: white;
+	font-family: "Open Sans";
+}
+
+.header {
+	position: absolute;
+	top: 2%;
+	left: 0;
+	width: 100%;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.header h1 {
+	letter-spacing: 1px;
+	font-size: 1.5rem;
+	margin: 10px 0;
+}
+
+.header h2 {
+	position: absolute;
+	margin: 0;
+	padding: 0;
+}
+
+.header hr {
+	width: 70%;
+	margin: 0 15%;
+	border: 1px solid white;
+	opacity: 0.75;
+}
+
+.game-container {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: auto;
+}
+
+.cube {
+	display: inline-block;
+	height: 35px;
+	width: 35px;
+	border-left: 3px solid #dbdb1a;
+	margin: 0;
+	padding: 0;
+	background: #202020;
+}
+.cube:last-child {
+	border-right: 3px solid #dbdb1a;
+}
+.cube-x {
+	opacity: 0;
+	transition: 0.1s all ease-in-out;
+	text-align: center;
+	width: 100%;
+	display: inline-block;
+	height: 100%;
+	line-height: 28px;
+	text-transform: lowercase;
+	font-size: 1.5rem;
+	font-weight: 600;
+}
+.cube:hover > .cube-x {
+	opacity: 1;
+	cursor: pointer;
+}
+.row {
+	display: block;
+	margin: 0;
+	padding: 0;
+	height: 35px;
+	border-top: 3px solid #dbdb1a;
+}
+
+.row:last-child {
+	border-bottom: 3px solid #dbdb1a;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+	display: none;
+	margin: 0;
+}
+
+.input {
+	position: absolute;
+	top: 30%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+}
+
+form {
+	margin-top: 40px;
+}
+
+input[type="number"] {
+	margin: 0 20px;
+	border: none;
+	border-bottom: 2px solid white;
+	background: none;
+	color: white;
+	font-style: italic;
+	-moz-appearance: textfield;
+}
+
+input[type="submit"] {
+	background-color: #202020;
+	border: 2px solid white;
+	color: white;
+	padding: 10px 24px;
+	text-decoration: none;
+	margin: 0 50px;
+	cursor: pointer;
+	font-family: "Open Sans";
+	transition: all 0.2s;
+}
+
+input[type="submit"]:hover {
+	background-color: white;
+	color: #202020;
+}
+
+footer {
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	margin: 20px;
+	text-align: right;
+}
