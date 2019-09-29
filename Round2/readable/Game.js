@@ -54,35 +54,36 @@ class Game extends React.Component {
 			} else {
 				this.setState({ gameStarted: true });
 			}
-			console.log("submitted");
 		};
-
 		const onChange = (e) => {
 			this.setState({ [e.target.name]: e.target.value });
 		};
-		const clickCube = (table, row, col) => {
-			for (let i = 0; i < formRows; i++) {
-				for (let j = 0; j < formCols; j++) {
-					if (i !== row && j !== col) {
-						table[i][j].text = "";
-					}
-				}
-			}
-			console.log(`${row};${col}`);
+		const toggleStart = () => {
+			console.log("startCube clicked");
+		};
+		const clickCube = (row, col) => {
+			// for (let i = 0; i < formRows; i++) {
+			// 	for (let j = 0; j < formCols; j++) {
+			// 		if (i !== row && j !== col) {
+			// 			table[i][j].text = "";
+			// 		}
+			// 	}
+			// }
+			console.log(`GameCube clicked: ${row};${col}`);
 		};
 		if (gameStarted) {
-			let table = [];
+			const { table } = this.state;
+			let newTable = [];
 			for (let i = 0; i < formRows; i++) {
-				table[i] = [];
+				newTable[i] = [];
 				for (let j = 0; j < formCols; j++) {
-					table[i][j] = {
+					newTable[i][j] = {
 						row: i,
 						col: j,
 						text: "x"
 					};
 				}
 			}
-			console.log(table);
 			return (
 				<div className="game-container">
 					{table.map((row) => {
@@ -94,13 +95,8 @@ class Game extends React.Component {
 											key={cube.row * formCols + cube.col}
 											text={cube.text}
 											startCube={startCube}
-											clickCube={clickCube.bind(
-												this,
-												table,
-												cube.row,
-												cube.col
-											)}
-											toggleStart={() => this.setState({ startCube: false })}
+											clickCube={clickCube.bind(this, cube.row, cube.col)}
+											toggleStart={toggleStart.bind(this, cube.row, cube.col)}
 										/>
 									);
 								})}

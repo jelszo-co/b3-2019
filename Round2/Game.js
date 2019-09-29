@@ -87,35 +87,37 @@ var Game = function (_React$Component2) {
 				} else {
 					_this3.setState({ gameStarted: true });
 				}
-				console.log("submitted");
 			};
-
 			var onChange = function onChange(e) {
 				_this3.setState(_defineProperty({}, e.target.name, e.target.value));
 			};
-			var clickCube = function clickCube(table, row, col) {
-				for (var i = 0; i < formRows; i++) {
-					for (var j = 0; j < formCols; j++) {
-						if (i !== row && j !== col) {
-							table[i][j].text = "";
-						}
-					}
-				}
-				console.log(row + ";" + col);
+			var toggleStart = function toggleStart() {
+				console.log("startCube clicked");
+			};
+			var clickCube = function clickCube(row, col) {
+				// for (let i = 0; i < formRows; i++) {
+				// 	for (let j = 0; j < formCols; j++) {
+				// 		if (i !== row && j !== col) {
+				// 			table[i][j].text = "";
+				// 		}
+				// 	}
+				// }
+				console.log("GameCube clicked: " + row + ";" + col);
 			};
 			if (gameStarted) {
-				var table = [];
+				var table = this.state.table;
+
+				var newTable = [];
 				for (var i = 0; i < formRows; i++) {
-					table[i] = [];
+					newTable[i] = [];
 					for (var j = 0; j < formCols; j++) {
-						table[i][j] = {
+						newTable[i][j] = {
 							row: i,
 							col: j,
 							text: "x"
 						};
 					}
 				}
-				console.log(table);
 				return React.createElement(
 					"div",
 					{ className: "game-container" },
@@ -128,10 +130,8 @@ var Game = function (_React$Component2) {
 									key: cube.row * formCols + cube.col,
 									text: cube.text,
 									startCube: startCube,
-									clickCube: clickCube.bind(_this3, table, cube.row, cube.col),
-									toggleStart: function toggleStart() {
-										return _this3.setState({ startCube: false });
-									}
+									clickCube: clickCube.bind(_this3, cube.row, cube.col),
+									toggleStart: toggleStart.bind(_this3, cube.row, cube.col)
 								});
 							})
 						);
