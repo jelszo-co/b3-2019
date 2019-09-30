@@ -12,65 +12,28 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var e = React.createElement;
 
-var CubeComponent = function (_React$Component) {
-	_inherits(CubeComponent, _React$Component);
+var App = function (_React$Component) {
+	_inherits(App, _React$Component);
 
-	function CubeComponent(props) {
-		_classCallCheck(this, CubeComponent);
+	function App(props) {
+		_classCallCheck(this, App);
 
-		var _this = _possibleConstructorReturn(this, (CubeComponent.__proto__ || Object.getPrototypeOf(CubeComponent)).call(this, props));
+		var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
-		_this.state = {};
-		return _this;
-	}
-
-	_createClass(CubeComponent, [{
-		key: "render",
-		value: function render() {
-			return React.createElement(
-				"div",
-				{
-					className: "cube",
-					onClick: this.props.startCube ? null : this.props.clickCube
-				},
-				React.createElement(
-					"span",
-					{
-						className: "" + (this.props.startCube ? "cube-x" : ""),
-						onClick: this.props.startCube ? this.props.toggleStart : null
-					},
-					this.props.text
-				)
-			);
-		}
-	}]);
-
-	return CubeComponent;
-}(React.Component);
-
-var Game = function (_React$Component2) {
-	_inherits(Game, _React$Component2);
-
-	function Game(props) {
-		_classCallCheck(this, Game);
-
-		var _this2 = _possibleConstructorReturn(this, (Game.__proto__ || Object.getPrototypeOf(Game)).call(this, props));
-
-		_this2.state = {
-			gameStarted: false,
+		_this.state = {
 			formRows: "",
 			formCols: "",
 			minValue: 5,
 			maxValue: 15,
-			startCube: true
+			gameStarted: false
 		};
-		return _this2;
+		return _this;
 	}
 
-	_createClass(Game, [{
+	_createClass(App, [{
 		key: "render",
 		value: function render() {
-			var _this3 = this;
+			var _this2 = this;
 
 			var _state = this.state,
 			    gameStarted = _state.gameStarted,
@@ -78,65 +41,20 @@ var Game = function (_React$Component2) {
 			    formCols = _state.formCols,
 			    minValue = _state.minValue,
 			    maxValue = _state.maxValue;
-			var startCube = this.state.startCube;
 
 			var onSubmit = function onSubmit(e) {
 				e.preventDefault();
 				if (formRows < minValue || formRows > maxValue || formCols < minValue || formCols > maxValue) {
 					alert("Hopsz! Az \xE9rt\xE9keknek " + minValue + " \xE9s " + maxValue + " k\xF6z\xF6tt kell lenni\xFCk.");
 				} else {
-					_this3.setState({ gameStarted: true });
+					_this2.setState({ gameStarted: true });
 				}
 			};
 			var onChange = function onChange(e) {
-				_this3.setState(_defineProperty({}, e.target.name, e.target.value));
-			};
-			var toggleStart = function toggleStart() {
-				console.log("startCube clicked");
-			};
-			var clickCube = function clickCube(row, col) {
-				// for (let i = 0; i < formRows; i++) {
-				// 	for (let j = 0; j < formCols; j++) {
-				// 		if (i !== row && j !== col) {
-				// 			table[i][j].text = "";
-				// 		}
-				// 	}
-				// }
-				console.log("GameCube clicked: " + row + ";" + col);
+				_this2.setState(_defineProperty({}, e.target.name, e.target.value));
 			};
 			if (gameStarted) {
-				var table = this.state.table;
-
-				var newTable = [];
-				for (var i = 0; i < formRows; i++) {
-					newTable[i] = [];
-					for (var j = 0; j < formCols; j++) {
-						newTable[i][j] = {
-							row: i,
-							col: j,
-							text: "x"
-						};
-					}
-				}
-				return React.createElement(
-					"div",
-					{ className: "game-container" },
-					table.map(function (row) {
-						return React.createElement(
-							"div",
-							{ className: "row" },
-							row.map(function (cube) {
-								return React.createElement(CubeComponent, {
-									key: cube.row * formCols + cube.col,
-									text: cube.text,
-									startCube: startCube,
-									clickCube: clickCube.bind(_this3, cube.row, cube.col),
-									toggleStart: toggleStart.bind(_this3, cube.row, cube.col)
-								});
-							})
-						);
-					})
-				);
+				return React.createElement(Game, { rows: formRows, cols: formCols });
 			} else {
 				return React.createElement(
 					"div",
@@ -191,8 +109,134 @@ var Game = function (_React$Component2) {
 		}
 	}]);
 
+	return App;
+}(React.Component);
+
+var Game = function (_React$Component2) {
+	_inherits(Game, _React$Component2);
+
+	function Game(props) {
+		_classCallCheck(this, Game);
+
+		var _this3 = _possibleConstructorReturn(this, (Game.__proto__ || Object.getPrototypeOf(Game)).call(this, props));
+
+		_this3.state = {
+			table: [],
+			startCube: true
+		};
+		return _this3;
+	}
+
+	_createClass(Game, [{
+		key: "UNSAFE_componentWillMount",
+		value: function UNSAFE_componentWillMount() {
+			var initTable = [];
+			for (var i = 0; i < this.props.rows; i++) {
+				initTable[i] = [];
+				for (var j = 0; j < this.props.cols; j++) {
+					initTable[i][j] = {
+						row: i,
+						col: j,
+						text: "x"
+					};
+				}
+			}
+			this.setState({ table: initTable });
+		}
+	}, {
+		key: "render",
+		value: function render() {
+			var _this4 = this;
+
+			var _state2 = this.state,
+			    startCube = _state2.startCube,
+			    table = _state2.table;
+			var _props = this.props,
+			    rows = _props.rows,
+			    cols = _props.cols;
+
+
+			var toggleStart = function toggleStart(row, col) {
+				console.log("startCube clicked:" + row + ":" + col);
+				var newTable = _this4.state.table;
+				for (var i = 0; i < rows; i++) {
+					for (var j = 0; j < cols; j++) {
+						if (i !== row || j !== col) {
+							newTable[i][j].text = "";
+						}
+						if (i === row && j === col) {
+							newTable[i][j].text = "1";
+						}
+					}
+				}
+
+				_this4.setState({ table: newTable });
+				console.log(newTable);
+				console.log(_this4.state.table);
+			};
+			var clickCube = function clickCube(row, col) {
+				console.log("GameCube clicked: " + row + ";" + col);
+			};
+			return React.createElement(
+				"div",
+				{ className: "game-container" },
+				table.map(function (row) {
+					return React.createElement(
+						"div",
+						{ className: "row" },
+						row.map(function (cube) {
+							return React.createElement(CubeComponent, {
+								key: cube.row * rows + cube.col,
+								text: cube.text,
+								startCube: startCube,
+								clickCube: clickCube.bind(_this4, cube.row, cube.col),
+								toggleStart: toggleStart.bind(_this4, cube.row, cube.col)
+							});
+						})
+					);
+				})
+			);
+		}
+	}]);
+
 	return Game;
 }(React.Component);
 
-var domContainer = document.querySelector("#game");
-ReactDOM.render(e(Game), domContainer);
+var CubeComponent = function (_React$Component3) {
+	_inherits(CubeComponent, _React$Component3);
+
+	function CubeComponent(props) {
+		_classCallCheck(this, CubeComponent);
+
+		var _this5 = _possibleConstructorReturn(this, (CubeComponent.__proto__ || Object.getPrototypeOf(CubeComponent)).call(this, props));
+
+		_this5.state = {};
+		return _this5;
+	}
+
+	_createClass(CubeComponent, [{
+		key: "render",
+		value: function render() {
+			return React.createElement(
+				"div",
+				{
+					className: "cube",
+					onClick: this.props.startCube ? null : this.props.clickCube
+				},
+				React.createElement(
+					"span",
+					{
+						className: "" + (this.props.startCube ? "cube-x" : "cube-num"),
+						onClick: this.props.startCube ? this.props.toggleStart : null
+					},
+					this.props.text
+				)
+			);
+		}
+	}]);
+
+	return CubeComponent;
+}(React.Component);
+
+var domContainer = document.querySelector("#app");
+ReactDOM.render(e(App), domContainer);
