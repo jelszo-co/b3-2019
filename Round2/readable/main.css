@@ -45,7 +45,7 @@ body {
 	opacity: 0.75;
 }
 
-.game-container {
+.game {
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -62,7 +62,7 @@ body {
 	margin: 0;
 	padding: 0;
 	background: #202020;
-	vertical-align: middle;
+	transition: 0.2s all ease-in-out;
 }
 .cube:last-child {
 	border-right: 3px solid #dbdb1a;

@@ -42,7 +42,7 @@ class App extends React.Component {
 					<h2>Tábla generálása</h2>
 					<p>
 						Minimum <b>{minValue + "x" + minValue}</b>, maximum{" "}
-						<b>{maxValue + "x" + maxValue}</b> négyzet
+						<b>{maxValue + "x" + maxValue}</b> négyzet.
 					</p>
 					<form onSubmit={onSubmit}>
 						<input
@@ -76,7 +76,8 @@ class Game extends React.Component {
 		this.state = {
 			table: [],
 			currentStep: 2,
-			startCube: true
+			startCube: true,
+			clock: 0
 		};
 	}
 	UNSAFE_componentWillMount() {
@@ -96,7 +97,7 @@ class Game extends React.Component {
 		this.setState({ table: initTable });
 	}
 	render() {
-		const { startCube, currentStep, table } = this.state;
+		const { startCube, currentStep, table, clock } = this.state;
 		const { rows, cols } = this.props;
 
 		const toggleStart = (row, col) => {
@@ -130,9 +131,14 @@ class Game extends React.Component {
 				}
 			}
 			this.setState({ table: newTable, startCube: false });
+			var clockInterval = setInterval(() => {
+				this.setState({ clock: this.state.clock + 1 });
+			}, 1000);
 		};
 		const clickCube = (row, col) => {
 			let newTable = this.state.table;
+			let eventCount;
+			eventCount = 0;
 			console.log(`GameCube clicked: ${row};${col}`);
 			for (let i = 0; i < rows; i++) {
 				for (let j = 0; j < cols; j++) {
@@ -160,31 +166,40 @@ class Game extends React.Component {
 					) {
 						if (newTable[i][j].occup === false) {
 							newTable[i][j].avail = true;
+							eventCount++;
 						}
 					}
 				}
 			}
+			if (eventCount === 0) {
+				// It works!
+				console.log("fucked.");
+				clearInterval(clockInterval);
+			}
 		};
 		return (
-			<div className="game-container">
-				{table.map((row) => {
-					return (
-						<div className="row">
-							{row.map((cube) => {
-								return (
-									<CubeComponent
-										key={cube.row * rows + cube.col}
-										text={cube.text}
-										avail={cube.avail}
-										startCube={startCube}
-										clickCube={clickCube.bind(this, cube.row, cube.col)}
-										toggleStart={toggleStart.bind(this, cube.row, cube.col)}
-									/>
-								);
-							})}
-						</div>
-					);
-				})}
+			<div className="game">
+				<div className="game-container">
+					{table.map((row) => {
+						return (
+							<div className="row">
+								{row.map((cube) => {
+									return (
+										<CubeComponent
+											key={cube.row * rows + cube.col}
+											text={cube.text}
+											avail={cube.avail}
+											startCube={startCube}
+											clickCube={clickCube.bind(this, cube.row, cube.col)}
+											toggleStart={toggleStart.bind(this, cube.row, cube.col)}
+										/>
+									);
+								})}
+							</div>
+						);
+					})}
+				</div>
+				<p id="clock">{clock}</p>
 			</div>
 		);
 	}

@@ -80,7 +80,7 @@ var App = function (_React$Component) {
 							null,
 							maxValue + "x" + maxValue
 						),
-						" n\xE9gyzet"
+						" n\xE9gyzet."
 					),
 					React.createElement(
 						"form",
@@ -123,7 +123,8 @@ var Game = function (_React$Component2) {
 		_this3.state = {
 			table: [],
 			currentStep: 2,
-			startCube: true
+			startCube: true,
+			clock: 0
 		};
 		return _this3;
 	}
@@ -154,7 +155,8 @@ var Game = function (_React$Component2) {
 			var _state2 = this.state,
 			    startCube = _state2.startCube,
 			    currentStep = _state2.currentStep,
-			    table = _state2.table;
+			    table = _state2.table,
+			    clock = _state2.clock;
 			var _props = this.props,
 			    rows = _props.rows,
 			    cols = _props.cols;
@@ -184,9 +186,14 @@ var Game = function (_React$Component2) {
 					}
 				}
 				_this4.setState({ table: newTable, startCube: false });
+				var clockInterval = setInterval(function () {
+					_this4.setState({ clock: _this4.state.clock + 1 });
+				}, 1000);
 			};
 			var clickCube = function clickCube(row, col) {
 				var newTable = _this4.state.table;
+				var eventCount = void 0;
+				eventCount = 0;
 				console.log("GameCube clicked: " + row + ";" + col);
 				for (var i = 0; i < rows; i++) {
 					for (var j = 0; j < cols; j++) {
@@ -207,30 +214,45 @@ var Game = function (_React$Component2) {
 						_i === row + 2 && _j === col + 1 || _i === row - 2 && _j === col + 1 || _i === row + 2 && _j === col - 1 || _i === row - 2 && _j === col - 1) {
 							if (newTable[_i][_j].occup === false) {
 								newTable[_i][_j].avail = true;
+								eventCount++;
 							}
 						}
 					}
 				}
+				if (eventCount === 0) {
+					// It works!
+					console.log("fucked.");
+					clearInterval(clockInterval);
+				}
 			};
 			return React.createElement(
 				"div",
-				{ className: "game-container" },
-				table.map(function (row) {
-					return React.createElement(
-						"div",
-						{ className: "row" },
-						row.map(function (cube) {
-							return React.createElement(CubeComponent, {
-								key: cube.row * rows + cube.col,
-								text: cube.text,
-								avail: cube.avail,
-								startCube: startCube,
-								clickCube: clickCube.bind(_this4, cube.row, cube.col),
-								toggleStart: toggleStart.bind(_this4, cube.row, cube.col)
-							});
-						})
-					);
-				})
+				{ className: "game" },
+				React.createElement(
+					"div",
+					{ className: "game-container" },
+					table.map(function (row) {
+						return React.createElement(
+							"div",
+							{ className: "row" },
+							row.map(function (cube) {
+								return React.createElement(CubeComponent, {
+									key: cube.row * rows + cube.col,
+									text: cube.text,
+									avail: cube.avail,
+									startCube: startCube,
+									clickCube: clickCube.bind(_this4, cube.row, cube.col),
+									toggleStart: toggleStart.bind(_this4, cube.row, cube.col)
+								});
+							})
+						);
+					})
+				),
+				React.createElement(
+					"p",
+					{ id: "clock" },
+					clock
+				)
 			);
 		}
 	}]);
