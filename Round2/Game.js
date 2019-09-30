@@ -122,6 +122,7 @@ var Game = function (_React$Component2) {
 
 		_this3.state = {
 			table: [],
+			currentStep: 2,
 			startCube: true
 		};
 		return _this3;
@@ -137,6 +138,8 @@ var Game = function (_React$Component2) {
 					initTable[i][j] = {
 						row: i,
 						col: j,
+						avail: false,
+						occup: false,
 						text: "x"
 					};
 				}
@@ -150,6 +153,7 @@ var Game = function (_React$Component2) {
 
 			var _state2 = this.state,
 			    startCube = _state2.startCube,
+			    currentStep = _state2.currentStep,
 			    table = _state2.table;
 			var _props = this.props,
 			    rows = _props.rows,
@@ -166,13 +170,47 @@ var Game = function (_React$Component2) {
 						}
 						if (i === row && j === col) {
 							newTable[i][j].text = "1";
+							newTable[i][j].occup = true;
+						}
+						if (
+						// horzontal steps
+						i === row + 1 && j === col + 2 || i === row - 1 && j === col + 2 || i === row + 1 && j === col - 2 || i === row - 1 && j === col - 2 ||
+						// vertical steps
+						i === row + 2 && j === col + 1 || i === row - 2 && j === col + 1 || i === row + 2 && j === col - 1 || i === row - 2 && j === col - 1) {
+							if (newTable[i][j].occup === false) {
+								newTable[i][j].avail = true;
+							}
 						}
 					}
 				}
 				_this4.setState({ table: newTable, startCube: false });
 			};
 			var clickCube = function clickCube(row, col) {
+				var newTable = _this4.state.table;
 				console.log("GameCube clicked: " + row + ";" + col);
+				for (var i = 0; i < rows; i++) {
+					for (var j = 0; j < cols; j++) {
+						newTable[i][j].avail = false;
+					}
+				}
+				for (var _i = 0; _i < rows; _i++) {
+					for (var _j = 0; _j < cols; _j++) {
+						if (_i === row && _j === col) {
+							newTable[_i][_j].occup = true;
+							_this4.setState({ currentStep: currentStep + 1 });
+							newTable[_i][_j].text = currentStep;
+						}
+						if (
+						// horzontal steps
+						_i === row + 1 && _j === col + 2 || _i === row - 1 && _j === col + 2 || _i === row + 1 && _j === col - 2 || _i === row - 1 && _j === col - 2 ||
+						// vertical steps
+						_i === row + 2 && _j === col + 1 || _i === row - 2 && _j === col + 1 || _i === row + 2 && _j === col - 1 || _i === row - 2 && _j === col - 1) {
+							if (newTable[_i][_j].occup === false) {
+								newTable[_i][_j].avail = true;
+							}
+						}
+					}
+				}
 			};
 			return React.createElement(
 				"div",
@@ -185,6 +223,7 @@ var Game = function (_React$Component2) {
 							return React.createElement(CubeComponent, {
 								key: cube.row * rows + cube.col,
 								text: cube.text,
+								avail: cube.avail,
 								startCube: startCube,
 								clickCube: clickCube.bind(_this4, cube.row, cube.col),
 								toggleStart: toggleStart.bind(_this4, cube.row, cube.col)
@@ -214,16 +253,23 @@ var CubeComponent = function (_React$Component3) {
 	_createClass(CubeComponent, [{
 		key: "render",
 		value: function render() {
+			var _props2 = this.props,
+			    text = _props2.text,
+			    avail = _props2.avail,
+			    startCube = _props2.startCube,
+			    toggleStart = _props2.toggleStart,
+			    clickCube = _props2.clickCube;
+
 			return React.createElement(
 				"div",
 				{
-					className: "cube",
-					onClick: this.props.startCube ? this.props.toggleStart : this.props.clickCube
+					className: "cube " + (avail ? "cube-avail" : ""),
+					onClick: startCube ? toggleStart : avail ? clickCube : null
 				},
 				React.createElement(
 					"span",
-					{ className: "" + (this.props.startCube ? "cube-x" : "cube-num") },
-					this.props.text
+					{ className: "" + (startCube ? "cube-x" : "cube-num") },
+					text
 				)
 			);
 		}

@@ -75,6 +75,7 @@ class Game extends React.Component {
 		super(props);
 		this.state = {
 			table: [],
+			currentStep: 2,
 			startCube: true
 		};
 	}
@@ -86,6 +87,8 @@ class Game extends React.Component {
 				initTable[i][j] = {
 					row: i,
 					col: j,
+					avail: false,
+					occup: false,
 					text: "x"
 				};
 			}
@@ -93,7 +96,7 @@ class Game extends React.Component {
 		this.setState({ table: initTable });
 	}
 	render() {
-		const { startCube, table } = this.state;
+		const { startCube, currentStep, table } = this.state;
 		const { rows, cols } = this.props;
 
 		const toggleStart = (row, col) => {
@@ -106,13 +109,61 @@ class Game extends React.Component {
 					}
 					if (i === row && j === col) {
 						newTable[i][j].text = "1";
+						newTable[i][j].occup = true;
+					}
+					if (
+						// horzontal steps
+						(i === row + 1 && j === col + 2) ||
+						(i === row - 1 && j === col + 2) ||
+						(i === row + 1 && j === col - 2) ||
+						(i === row - 1 && j === col - 2) ||
+						// vertical steps
+						(i === row + 2 && j === col + 1) ||
+						(i === row - 2 && j === col + 1) ||
+						(i === row + 2 && j === col - 1) ||
+						(i === row - 2 && j === col - 1)
+					) {
+						if (newTable[i][j].occup === false) {
+							newTable[i][j].avail = true;
+						}
 					}
 				}
 			}
 			this.setState({ table: newTable, startCube: false });
 		};
 		const clickCube = (row, col) => {
+			let newTable = this.state.table;
 			console.log(`GameCube clicked: ${row};${col}`);
+			for (let i = 0; i < rows; i++) {
+				for (let j = 0; j < cols; j++) {
+					newTable[i][j].avail = false;
+				}
+			}
+			for (let i = 0; i < rows; i++) {
+				for (let j = 0; j < cols; j++) {
+					if (i === row && j === col) {
+						newTable[i][j].occup = true;
+						this.setState({ currentStep: currentStep + 1 });
+						newTable[i][j].text = currentStep;
+					}
+					if (
+						// horzontal steps
+						(i === row + 1 && j === col + 2) ||
+						(i === row - 1 && j === col + 2) ||
+						(i === row + 1 && j === col - 2) ||
+						(i === row - 1 && j === col - 2) ||
+						// vertical steps
+						(i === row + 2 && j === col + 1) ||
+						(i === row - 2 && j === col + 1) ||
+						(i === row + 2 && j === col - 1) ||
+						(i === row - 2 && j === col - 1)
+					) {
+						if (newTable[i][j].occup === false) {
+							newTable[i][j].avail = true;
+						}
+					}
+				}
+			}
 		};
 		return (
 			<div className="game-container">
@@ -124,6 +175,7 @@ class Game extends React.Component {
 									<CubeComponent
 										key={cube.row * rows + cube.col}
 										text={cube.text}
+										avail={cube.avail}
 										startCube={startCube}
 										clickCube={clickCube.bind(this, cube.row, cube.col)}
 										toggleStart={toggleStart.bind(this, cube.row, cube.col)}
@@ -144,16 +196,13 @@ class CubeComponent extends React.Component {
 		this.state = {};
 	}
 	render() {
+		const { text, avail, startCube, toggleStart, clickCube } = this.props;
 		return (
 			<div
-				className={`cube`}
-				onClick={
-					this.props.startCube ? this.props.toggleStart : this.props.clickCube
-				}
+				className={`cube ${avail ? "cube-avail" : ""}`}
+				onClick={startCube ? toggleStart : avail ? clickCube : null}
 			>
-				<span className={`${this.props.startCube ? "cube-x" : "cube-num"}`}>
-					{this.props.text}
-				</span>
+				<span className={`${startCube ? "cube-x" : "cube-num"}`}>{text}</span>
 			</div>
 		);
 	}
