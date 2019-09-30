@@ -169,10 +169,7 @@ var Game = function (_React$Component2) {
 						}
 					}
 				}
-
-				_this4.setState({ table: newTable });
-				console.log(newTable);
-				console.log(_this4.state.table);
+				_this4.setState({ table: newTable, startCube: false });
 			};
 			var clickCube = function clickCube(row, col) {
 				console.log("GameCube clicked: " + row + ";" + col);
@@ -221,14 +218,11 @@ var CubeComponent = function (_React$Component3) {
 				"div",
 				{
 					className: "cube",
-					onClick: this.props.startCube ? null : this.props.clickCube
+					onClick: this.props.startCube ? this.props.toggleStart : this.props.clickCube
 				},
 				React.createElement(
 					"span",
-					{
-						className: "" + (this.props.startCube ? "cube-x" : "cube-num"),
-						onClick: this.props.startCube ? this.props.toggleStart : null
-					},
+					{ className: "" + (this.props.startCube ? "cube-x" : "cube-num") },
 					this.props.text
 				)
 			);

@@ -53,31 +53,61 @@ body {
 
 .cube {
 	display: inline-block;
+	position: relative;
 	height: 35px;
 	width: 35px;
 	border-left: 3px solid #dbdb1a;
 	margin: 0;
 	padding: 0;
 	background: #202020;
+	vertical-align: middle;
 }
 .cube:last-child {
 	border-right: 3px solid #dbdb1a;
 }
 .cube-x {
-	opacity: 0;
-	transition: 0.1s all ease-in-out;
-	text-align: center;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	margin: 0;
+	margin-top: -7px;
+	padding: 0;
 	width: 100%;
-	display: inline-block;
 	height: 100%;
-	line-height: 28px;
-	text-transform: lowercase;
-	font-size: 1.5rem;
+	color: white;
 	font-weight: 600;
-}
-.cube:hover > .cube-x {
-	opacity: 1;
+	font-size: 2rem;
+	text-transform: lowercase;
+	text-align: center;
 	cursor: pointer;
+	transition: 0.2s all ease-in-out;
+	opacity: 0;
+}
+
+.cube-num {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	margin: 0;
+	margin-top: -16px;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	color: #999999;
+	font-weight: 600;
+	font-size: 3rem;
+	text-align: center;
+}
+
+.cube-avail {
+	cursor: pointer;
+	background: white;
+}
+
+.cube-x:hover {
+	opacity: 1;
 }
 .row {
 	display: block;

@@ -109,10 +109,7 @@ class Game extends React.Component {
 					}
 				}
 			}
-
-			this.setState({ table: newTable });
-			console.log(newTable);
-			console.log(this.state.table);
+			this.setState({ table: newTable, startCube: false });
 		};
 		const clickCube = (row, col) => {
 			console.log(`GameCube clicked: ${row};${col}`);
@@ -150,12 +147,11 @@ class CubeComponent extends React.Component {
 		return (
 			<div
 				className={`cube`}
-				onClick={this.props.startCube ? null : this.props.clickCube}
+				onClick={
+					this.props.startCube ? this.props.toggleStart : this.props.clickCube
+				}
 			>
-				<span
-					className={`${this.props.startCube ? "cube-x" : "cube-num"}`}
-					onClick={this.props.startCube ? this.props.toggleStart : null}
-				>
+				<span className={`${this.props.startCube ? "cube-x" : "cube-num"}`}>
 					{this.props.text}
 				</span>
 			</div>
