@@ -51,6 +51,7 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   width: auto;
+  margin: 0;
 }
 
 .cube {
@@ -172,6 +173,18 @@ input[type="submit"]:hover {
   left: 50%;
   font-size: 3rem;
   font-weight: bold;
+  margin: inherit;
+  margin-top: 50px;
+  padding: 0;
+}
+
+#result-text {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  margin: inherit;
+  margin-top: 100px;
+  font-size: 2rem;
 }
 
 footer {
