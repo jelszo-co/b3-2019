@@ -73,14 +73,14 @@ var App = function (_React$Component) {
 							null,
 							minValue + "x" + minValue
 						),
-						", maximum",
-						" ",
+						", maximum ",
 						React.createElement(
 							"b",
 							null,
 							maxValue + "x" + maxValue
 						),
-						" n\xE9gyzet."
+						" ",
+						"n\xE9gyzet."
 					),
 					React.createElement(
 						"form",
@@ -124,7 +124,11 @@ var Game = function (_React$Component2) {
 			table: [],
 			currentStep: 2,
 			startCube: true,
-			clock: 0
+			clock: {
+				passing: false,
+				s: 0,
+				m: 0
+			}
 		};
 		return _this3;
 	}
@@ -185,9 +189,15 @@ var Game = function (_React$Component2) {
 						}
 					}
 				}
-				_this4.setState({ table: newTable, startCube: false });
-				var clockInterval = setInterval(function () {
-					_this4.setState({ clock: _this4.state.clock + 1 });
+				_this4.setState({
+					table: newTable,
+					startCube: false,
+					clock: Object.assign({}, _this4.state.clock, { passing: true })
+				});
+				setInterval(function () {
+					if (clock.passing === true) {
+						_this4.setState({});
+					}
 				}, 1000);
 			};
 			var clickCube = function clickCube(row, col) {
@@ -222,7 +232,6 @@ var Game = function (_React$Component2) {
 				if (eventCount === 0) {
 					// It works!
 					console.log("fucked.");
-					clearInterval(clockInterval);
 				}
 			};
 			return React.createElement(
@@ -251,7 +260,9 @@ var Game = function (_React$Component2) {
 				React.createElement(
 					"p",
 					{ id: "clock" },
-					clock
+					clock.m,
+					":",
+					clock.s
 				)
 			);
 		}

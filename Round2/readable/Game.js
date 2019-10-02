@@ -24,9 +24,7 @@ class App extends React.Component {
 				formCols < minValue ||
 				formCols > maxValue
 			) {
-				alert(
-					`Hopsz! Az értékeknek ${minValue} és ${maxValue} között kell lenniük.`
-				);
+				alert(`Hopsz! Az értékeknek ${minValue} és ${maxValue} között kell lenniük.`);
 			} else {
 				this.setState({ gameStarted: true });
 			}
@@ -41,8 +39,8 @@ class App extends React.Component {
 				<div className="input">
 					<h2>Tábla generálása</h2>
 					<p>
-						Minimum <b>{minValue + "x" + minValue}</b>, maximum{" "}
-						<b>{maxValue + "x" + maxValue}</b> négyzet.
+						Minimum <b>{minValue + "x" + minValue}</b>, maximum <b>{maxValue + "x" + maxValue}</b>{" "}
+						négyzet.
 					</p>
 					<form onSubmit={onSubmit}>
 						<input
@@ -77,7 +75,11 @@ class Game extends React.Component {
 			table: [],
 			currentStep: 2,
 			startCube: true,
-			clock: 0
+			clock: {
+				passing: false,
+				s: 0,
+				m: 0
+			}
 		};
 	}
 	UNSAFE_componentWillMount() {
@@ -130,9 +132,15 @@ class Game extends React.Component {
 					}
 				}
 			}
-			this.setState({ table: newTable, startCube: false });
-			var clockInterval = setInterval(() => {
-				this.setState({ clock: this.state.clock + 1 });
+			this.setState({
+				table: newTable,
+				startCube: false,
+				clock: { ...this.state.clock, passing: true }
+			});
+			setInterval(() => {
+				if (clock.passing === true) {
+					this.setState({});
+				}
 			}, 1000);
 		};
 		const clickCube = (row, col) => {
@@ -174,7 +182,6 @@ class Game extends React.Component {
 			if (eventCount === 0) {
 				// It works!
 				console.log("fucked.");
-				clearInterval(clockInterval);
 			}
 		};
 		return (
@@ -199,7 +206,9 @@ class Game extends React.Component {
 						);
 					})}
 				</div>
-				<p id="clock">{clock}</p>
+				<p id="clock">
+					{clock.m}:{clock.s}
+				</p>
 			</div>
 		);
 	}
