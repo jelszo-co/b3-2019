@@ -73,14 +73,14 @@ var App = function (_React$Component) {
 							null,
 							minValue + "x" + minValue
 						),
-						", maximum ",
+						", maximum",
+						" ",
 						React.createElement(
 							"b",
 							null,
 							maxValue + "x" + maxValue
 						),
-						" ",
-						"n\xE9gyzet."
+						" n\xE9gyzet."
 					),
 					React.createElement(
 						"form",
@@ -127,7 +127,9 @@ var Game = function (_React$Component2) {
 			clock: {
 				passing: false,
 				s: 0,
-				m: 0
+				m: 0,
+				sDisp: "00",
+				mDisp: "00"
 			}
 		};
 		return _this3;
@@ -195,8 +197,44 @@ var Game = function (_React$Component2) {
 					clock: Object.assign({}, _this4.state.clock, { passing: true })
 				});
 				setInterval(function () {
-					if (clock.passing === true) {
-						_this4.setState({});
+					if (_this4.state.clock.passing === true) {
+						if (_this4.state.clock.s === 59) {
+							if (_this4.state.clock.m < 9) {
+								_this4.setState({
+									clock: Object.assign({}, _this4.state.clock, {
+										m: _this4.state.clock.m + 1,
+										mDisp: "0" + (_this4.state.clock.m + 1),
+										s: 0,
+										sDisp: "00"
+									})
+								});
+							} else {
+								_this4.setState({
+									clock: Object.assign({}, _this4.state.clock, {
+										m: _this4.state.clock.m + 1,
+										mDisp: "" + (_this4.state.clock.m + 1),
+										s: 0,
+										sDisp: "00"
+									})
+								});
+							}
+						} else {
+							if (_this4.state.clock.s < 9) {
+								_this4.setState({
+									clock: Object.assign({}, _this4.state.clock, {
+										s: _this4.state.clock.s + 1,
+										sDisp: "0" + (_this4.state.clock.s + 1)
+									})
+								});
+							} else {
+								_this4.setState({
+									clock: Object.assign({}, _this4.state.clock, {
+										s: _this4.state.clock.s + 1,
+										sDisp: "" + (_this4.state.clock.s + 1)
+									})
+								});
+							}
+						}
 					}
 				}, 1000);
 			};
@@ -232,6 +270,7 @@ var Game = function (_React$Component2) {
 				if (eventCount === 0) {
 					// It works!
 					console.log("fucked.");
+					_this4.setState({ clock: Object.assign({}, _this4.state.clock, { passing: false }) });
 				}
 			};
 			return React.createElement(
@@ -260,9 +299,9 @@ var Game = function (_React$Component2) {
 				React.createElement(
 					"p",
 					{ id: "clock" },
-					clock.m,
+					clock.mDisp,
 					":",
-					clock.s
+					clock.sDisp
 				)
 			);
 		}

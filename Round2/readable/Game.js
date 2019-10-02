@@ -24,7 +24,9 @@ class App extends React.Component {
 				formCols < minValue ||
 				formCols > maxValue
 			) {
-				alert(`Hopsz! Az értékeknek ${minValue} és ${maxValue} között kell lenniük.`);
+				alert(
+					`Hopsz! Az értékeknek ${minValue} és ${maxValue} között kell lenniük.`
+				);
 			} else {
 				this.setState({ gameStarted: true });
 			}
@@ -39,8 +41,8 @@ class App extends React.Component {
 				<div className="input">
 					<h2>Tábla generálása</h2>
 					<p>
-						Minimum <b>{minValue + "x" + minValue}</b>, maximum <b>{maxValue + "x" + maxValue}</b>{" "}
-						négyzet.
+						Minimum <b>{minValue + "x" + minValue}</b>, maximum{" "}
+						<b>{maxValue + "x" + maxValue}</b> négyzet.
 					</p>
 					<form onSubmit={onSubmit}>
 						<input
@@ -78,7 +80,9 @@ class Game extends React.Component {
 			clock: {
 				passing: false,
 				s: 0,
-				m: 0
+				m: 0,
+				sDisp: "00",
+				mDisp: "00"
 			}
 		};
 	}
@@ -138,8 +142,48 @@ class Game extends React.Component {
 				clock: { ...this.state.clock, passing: true }
 			});
 			setInterval(() => {
-				if (clock.passing === true) {
-					this.setState({});
+				if (this.state.clock.passing === true) {
+					if (this.state.clock.s === 59) {
+						if (this.state.clock.m < 9) {
+							this.setState({
+								clock: {
+									...this.state.clock,
+									m: this.state.clock.m + 1,
+									mDisp: `0${this.state.clock.m + 1}`,
+									s: 0,
+									sDisp: "00"
+								}
+							});
+						} else {
+							this.setState({
+								clock: {
+									...this.state.clock,
+									m: this.state.clock.m + 1,
+									mDisp: `${this.state.clock.m + 1}`,
+									s: 0,
+									sDisp: "00"
+								}
+							});
+						}
+					} else {
+						if (this.state.clock.s < 9) {
+							this.setState({
+								clock: {
+									...this.state.clock,
+									s: this.state.clock.s + 1,
+									sDisp: `0${this.state.clock.s + 1}`
+								}
+							});
+						} else {
+							this.setState({
+								clock: {
+									...this.state.clock,
+									s: this.state.clock.s + 1,
+									sDisp: `${this.state.clock.s + 1}`
+								}
+							});
+						}
+					}
 				}
 			}, 1000);
 		};
@@ -182,6 +226,7 @@ class Game extends React.Component {
 			if (eventCount === 0) {
 				// It works!
 				console.log("fucked.");
+				this.setState({ clock: { ...this.state.clock, passing: false } });
 			}
 		};
 		return (
@@ -207,7 +252,7 @@ class Game extends React.Component {
 					})}
 				</div>
 				<p id="clock">
-					{clock.m}:{clock.s}
+					{clock.mDisp}:{clock.sDisp}
 				</p>
 			</div>
 		);
