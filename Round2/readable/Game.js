@@ -224,8 +224,19 @@ class Game extends React.Component {
 				}
 			}
 			if (eventCount === 0) {
-				// It works!
-				console.log("fucked.");
+				let freeCubeCount = 0;
+				for (let i = 0; i < rows; i++) {
+					for (let j = 0; j < cols; j++) {
+						if (newTable[i][j].occup === false) {
+							freeCubeCount++;
+						}
+					}
+				}
+				if (freeCubeCount === 0) {
+					console.log("win!");
+				} else {
+					console.log("fucked.");
+				}
 				this.setState({ clock: { ...this.state.clock, passing: false } });
 			}
 		};
@@ -254,6 +265,7 @@ class Game extends React.Component {
 				<p id="clock">
 					{clock.mDisp}:{clock.sDisp}
 				</p>
+				<p id="result-text"></p>
 			</div>
 		);
 	}

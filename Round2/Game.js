@@ -268,8 +268,19 @@ var Game = function (_React$Component2) {
 					}
 				}
 				if (eventCount === 0) {
-					// It works!
-					console.log("fucked.");
+					var freeCubeCount = 0;
+					for (var _i2 = 0; _i2 < rows; _i2++) {
+						for (var _j2 = 0; _j2 < cols; _j2++) {
+							if (newTable[_i2][_j2].occup === false) {
+								freeCubeCount++;
+							}
+						}
+					}
+					if (freeCubeCount === 0) {
+						console.log("win!");
+					} else {
+						console.log("fucked.");
+					}
 					_this4.setState({ clock: Object.assign({}, _this4.state.clock, { passing: false }) });
 				}
 			};
@@ -302,7 +313,8 @@ var Game = function (_React$Component2) {
 					clock.mDisp,
 					":",
 					clock.sDisp
-				)
+				),
+				React.createElement("p", { id: "result-text" })
 			);
 		}
 	}]);

@@ -67,40 +67,35 @@ body {
 .cube:last-child {
 	border-right: 3px solid #dbdb1a;
 }
-.cube-x {
+
+.cube span {
 	position: absolute;
 	top: 50%;
-	left: 50%;
 	transform: translate(-50%, -50%);
 	margin: 0;
-	margin-top: -7px;
 	padding: 0;
 	width: 100%;
 	height: 100%;
-	color: white;
 	font-weight: 600;
 	font-size: 2rem;
-	text-transform: lowercase;
 	text-align: center;
+}
+
+.cube-x {
+	left: 50%;
+	margin-top: -7px;
+	color: white;
+	text-transform: lowercase;
+	line-height: 34px;
 	cursor: pointer;
 	transition: 0.2s all ease-in-out;
 	opacity: 0;
 }
 
 .cube-num {
-	position: absolute;
-	top: 50%;
 	left: 45%;
-	transform: translate(-50%, -50%);
-	margin: 0;
 	margin-top: 0.4px;
-	padding: 0;
-	width: 100%;
-	height: 100%;
 	color: #999999;
-	font-weight: 600;
-	font-size: 2rem;
-	text-align: center;
 	line-height: 34px;
 	letter-spacing: -2px;
 }
