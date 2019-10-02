@@ -130,7 +130,8 @@ var Game = function (_React$Component2) {
 				m: 0,
 				sDisp: "00",
 				mDisp: "00"
-			}
+			},
+			result: ""
 		};
 		return _this3;
 	}
@@ -162,7 +163,8 @@ var Game = function (_React$Component2) {
 			    startCube = _state2.startCube,
 			    currentStep = _state2.currentStep,
 			    table = _state2.table,
-			    clock = _state2.clock;
+			    clock = _state2.clock,
+			    result = _state2.result;
 			var _props = this.props,
 			    rows = _props.rows,
 			    cols = _props.cols;
@@ -278,7 +280,9 @@ var Game = function (_React$Component2) {
 					}
 					if (freeCubeCount === 0) {
 						console.log("win!");
+						_this4.setState({ result: "Nyertél!" });
 					} else {
+						_this4.setState({ result: "Vesztettél." });
 						console.log("fucked.");
 					}
 					_this4.setState({ clock: Object.assign({}, _this4.state.clock, { passing: false }) });
@@ -314,7 +318,11 @@ var Game = function (_React$Component2) {
 					":",
 					clock.sDisp
 				),
-				React.createElement("p", { id: "result-text" })
+				React.createElement(
+					"p",
+					{ id: "result-text" },
+					result
+				)
 			);
 		}
 	}]);
