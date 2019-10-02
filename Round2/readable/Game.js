@@ -83,7 +83,8 @@ class Game extends React.Component {
 				m: 0,
 				sDisp: "00",
 				mDisp: "00"
-			}
+			},
+			result: ""
 		};
 	}
 	UNSAFE_componentWillMount() {
@@ -103,7 +104,7 @@ class Game extends React.Component {
 		this.setState({ table: initTable });
 	}
 	render() {
-		const { startCube, currentStep, table, clock } = this.state;
+		const { startCube, currentStep, table, clock, result } = this.state;
 		const { rows, cols } = this.props;
 
 		const toggleStart = (row, col) => {
@@ -234,7 +235,9 @@ class Game extends React.Component {
 				}
 				if (freeCubeCount === 0) {
 					console.log("win!");
+					this.setState({ result: "Nyertél!" });
 				} else {
+					this.setState({ result: "Vesztettél." });
 					console.log("fucked.");
 				}
 				this.setState({ clock: { ...this.state.clock, passing: false } });
@@ -265,7 +268,7 @@ class Game extends React.Component {
 				<p id="clock">
 					{clock.mDisp}:{clock.sDisp}
 				</p>
-				<p id="result-text"></p>
+				<p id="result-text">{result}</p>
 			</div>
 		);
 	}
