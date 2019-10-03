@@ -25,7 +25,8 @@ var App = function (_React$Component) {
 			formCols: "",
 			minValue: 5,
 			maxValue: 15,
-			gameStarted: false
+			gameStarted: false,
+			hardMode: false
 		};
 		return _this;
 	}
@@ -36,6 +37,7 @@ var App = function (_React$Component) {
 			var _this2 = this;
 
 			var _state = this.state,
+			    hardMode = _state.hardMode,
 			    gameStarted = _state.gameStarted,
 			    formRows = _state.formRows,
 			    formCols = _state.formCols,
@@ -53,8 +55,11 @@ var App = function (_React$Component) {
 			var onChange = function onChange(e) {
 				_this2.setState(_defineProperty({}, e.target.name, e.target.value));
 			};
+			var changeMode = function changeMode() {
+				_this2.setState({ hardMode: !_this2.state.hardMode });
+			};
 			if (gameStarted) {
-				return React.createElement(Game, { rows: formRows, cols: formCols });
+				return React.createElement(Game, { rows: formRows, cols: formCols, hardMode: hardMode });
 			} else {
 				return React.createElement(
 					"div",
@@ -102,6 +107,30 @@ var App = function (_React$Component) {
 							onChange: onChange,
 							required: true
 						}),
+						React.createElement(
+							"div",
+							{ className: "checkbox-wrapper" },
+							React.createElement(
+								"div",
+								{
+									className: "checkbox " + (hardMode ? "checkbox-hard" : ""),
+									onClick: changeMode
+								},
+								React.createElement("span", {
+									className: "checkbox__circle " + (hardMode ? "checkbox__circle-hard" : "")
+								})
+							),
+							React.createElement(
+								"p",
+								null,
+								"M\xF3d: ",
+								React.createElement(
+									"span",
+									null,
+									hardMode ? "Nehezített" : "Sima"
+								)
+							)
+						),
 						React.createElement("input", { type: "submit", value: "Gener\xE1l\xE1s!" })
 					)
 				);
@@ -120,8 +149,21 @@ var Game = function (_React$Component2) {
 
 		var _this3 = _possibleConstructorReturn(this, (Game.__proto__ || Object.getPrototypeOf(Game)).call(this, props));
 
+		var initTable = [];
+		for (var i = 0; i < props.rows; i++) {
+			initTable[i] = [];
+			for (var j = 0; j < props.cols; j++) {
+				initTable[i][j] = {
+					row: i,
+					col: j,
+					avail: false,
+					occup: false,
+					text: "x"
+				};
+			}
+		}
 		_this3.state = {
-			table: [],
+			table: initTable,
 			currentStep: 2,
 			startCube: true,
 			startCubePos: {
@@ -141,24 +183,6 @@ var Game = function (_React$Component2) {
 	}
 
 	_createClass(Game, [{
-		key: "UNSAFE_componentWillMount",
-		value: function UNSAFE_componentWillMount() {
-			var initTable = [];
-			for (var i = 0; i < this.props.rows; i++) {
-				initTable[i] = [];
-				for (var j = 0; j < this.props.cols; j++) {
-					initTable[i][j] = {
-						row: i,
-						col: j,
-						avail: false,
-						occup: false,
-						text: "x"
-					};
-				}
-			}
-			this.setState({ table: initTable });
-		}
-	}, {
 		key: "render",
 		value: function render() {
 			var _this4 = this;

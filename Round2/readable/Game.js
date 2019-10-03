@@ -10,12 +10,20 @@ class App extends React.Component {
 			formCols: "",
 			minValue: 5,
 			maxValue: 15,
-			gameStarted: false
+			gameStarted: false,
+			hardMode: false
 		};
 	}
 
 	render() {
-		const { gameStarted, formRows, formCols, minValue, maxValue } = this.state;
+		const {
+			hardMode,
+			gameStarted,
+			formRows,
+			formCols,
+			minValue,
+			maxValue
+		} = this.state;
 		const onSubmit = (e) => {
 			e.preventDefault();
 			if (
@@ -34,8 +42,11 @@ class App extends React.Component {
 		const onChange = (e) => {
 			this.setState({ [e.target.name]: e.target.value });
 		};
+		const changeMode = () => {
+			this.setState({ hardMode: !this.state.hardMode });
+		};
 		if (gameStarted) {
-			return <Game rows={formRows} cols={formCols} />;
+			return <Game rows={formRows} cols={formCols} hardMode={hardMode} />;
 		} else {
 			return (
 				<div className="input">
@@ -62,6 +73,21 @@ class App extends React.Component {
 							onChange={onChange}
 							required
 						/>
+						<div className="checkbox-wrapper">
+							<div
+								className={`checkbox ${hardMode ? "checkbox-hard" : ""}`}
+								onClick={changeMode}
+							>
+								<span
+									className={`checkbox__circle ${
+										hardMode ? "checkbox__circle-hard" : ""
+									}`}
+								></span>
+							</div>
+							<p>
+								Mód: <span>{hardMode ? "Nehezített" : "Sima"}</span>
+							</p>
+						</div>
 						<input type="submit" value="Generálás!" />
 					</form>
 				</div>
@@ -73,8 +99,21 @@ class App extends React.Component {
 class Game extends React.Component {
 	constructor(props) {
 		super(props);
+		let initTable = [];
+		for (let i = 0; i < props.rows; i++) {
+			initTable[i] = [];
+			for (let j = 0; j < props.cols; j++) {
+				initTable[i][j] = {
+					row: i,
+					col: j,
+					avail: false,
+					occup: false,
+					text: "x"
+				};
+			}
+		}
 		this.state = {
-			table: [],
+			table: initTable,
 			currentStep: 2,
 			startCube: true,
 			startCubePos: {
@@ -92,22 +131,6 @@ class Game extends React.Component {
 		};
 	}
 
-	UNSAFE_componentWillMount() {
-		let initTable = [];
-		for (let i = 0; i < this.props.rows; i++) {
-			initTable[i] = [];
-			for (let j = 0; j < this.props.cols; j++) {
-				initTable[i][j] = {
-					row: i,
-					col: j,
-					avail: false,
-					occup: false,
-					text: "x"
-				};
-			}
-		}
-		this.setState({ table: initTable });
-	}
 	render() {
 		const {
 			startCube,
