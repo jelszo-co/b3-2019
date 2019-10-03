@@ -112,6 +112,21 @@ class Game extends React.Component {
 				};
 			}
 		}
+		let sensorRow = Math.floor(Math.random() * props.rows);
+		let sensorCol = Math.floor(Math.random() * props.cols);
+
+		for (let i = 0; i < props.rows; i++) {
+			for (let j = 0; j < props.cols; j++) {
+				if (
+					initTable[i][j].row === sensorRow &&
+					initTable[i][j].col === sensorCol
+				) {
+					initTable[i][j].isSensorCenter = true;
+					initTable[i][j].isSensorArea = true;
+				}
+			}
+		}
+
 		this.state = {
 			table: initTable,
 			currentStep: 2,
@@ -141,7 +156,7 @@ class Game extends React.Component {
 			result,
 			bonus
 		} = this.state;
-		const { rows, cols } = this.props;
+		const { hardMode, rows, cols } = this.props;
 
 		const toggleStart = (row, col) => {
 			console.log("startCube clicked:" + row + ":" + col);
@@ -312,6 +327,7 @@ class Game extends React.Component {
 									return (
 										<CubeComponent
 											key={cube.row * rows + cube.col}
+											id={cube.row * rows + cube.col}
 											text={cube.text}
 											avail={cube.avail}
 											startCube={startCube}
@@ -340,9 +356,10 @@ class CubeComponent extends React.Component {
 		this.state = {};
 	}
 	render() {
-		const { text, avail, startCube, toggleStart, clickCube } = this.props;
+		const { id, text, avail, startCube, toggleStart, clickCube } = this.props;
 		return (
 			<div
+				id={id}
 				className={`cube ${avail ? "cube-avail" : ""}`}
 				onClick={startCube ? toggleStart : avail ? clickCube : null}
 			>

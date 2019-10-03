@@ -162,6 +162,18 @@ var Game = function (_React$Component2) {
 				};
 			}
 		}
+		var sensorRow = Math.floor(Math.random() * props.rows);
+		var sensorCol = Math.floor(Math.random() * props.cols);
+
+		for (var _i = 0; _i < props.rows; _i++) {
+			for (var _j = 0; _j < props.cols; _j++) {
+				if (initTable[_i][_j].row === sensorRow && initTable[_i][_j].col === sensorCol) {
+					initTable[_i][_j].isSensorCenter = true;
+					initTable[_i][_j].isSensorArea = true;
+				}
+			}
+		}
+
 		_this3.state = {
 			table: initTable,
 			currentStep: 2,
@@ -196,6 +208,7 @@ var Game = function (_React$Component2) {
 			    result = _state2.result,
 			    bonus = _state2.bonus;
 			var _props = this.props,
+			    hardMode = _props.hardMode,
 			    rows = _props.rows,
 			    cols = _props.cols;
 
@@ -281,20 +294,20 @@ var Game = function (_React$Component2) {
 						newTable[i][j].avail = false;
 					}
 				}
-				for (var _i = 0; _i < rows; _i++) {
-					for (var _j = 0; _j < cols; _j++) {
-						if (_i === row && _j === col) {
-							newTable[_i][_j].occup = true;
+				for (var _i2 = 0; _i2 < rows; _i2++) {
+					for (var _j2 = 0; _j2 < cols; _j2++) {
+						if (_i2 === row && _j2 === col) {
+							newTable[_i2][_j2].occup = true;
 							_this4.setState({ currentStep: currentStep + 1 });
-							newTable[_i][_j].text = currentStep;
+							newTable[_i2][_j2].text = currentStep;
 						}
 						if (
 						// horzontal steps
-						_i === row + 1 && _j === col + 2 || _i === row - 1 && _j === col + 2 || _i === row + 1 && _j === col - 2 || _i === row - 1 && _j === col - 2 ||
+						_i2 === row + 1 && _j2 === col + 2 || _i2 === row - 1 && _j2 === col + 2 || _i2 === row + 1 && _j2 === col - 2 || _i2 === row - 1 && _j2 === col - 2 ||
 						// vertical steps
-						_i === row + 2 && _j === col + 1 || _i === row - 2 && _j === col + 1 || _i === row + 2 && _j === col - 1 || _i === row - 2 && _j === col - 1) {
-							if (newTable[_i][_j].occup === false) {
-								newTable[_i][_j].avail = true;
+						_i2 === row + 2 && _j2 === col + 1 || _i2 === row - 2 && _j2 === col + 1 || _i2 === row + 2 && _j2 === col - 1 || _i2 === row - 2 && _j2 === col - 1) {
+							if (newTable[_i2][_j2].occup === false) {
+								newTable[_i2][_j2].avail = true;
 								eventCount++;
 							}
 						}
@@ -302,23 +315,23 @@ var Game = function (_React$Component2) {
 				}
 				if (eventCount === 0) {
 					var freeCubeCount = 0;
-					for (var _i2 = 0; _i2 < rows; _i2++) {
-						for (var _j2 = 0; _j2 < cols; _j2++) {
-							if (newTable[_i2][_j2].occup === false) {
+					for (var _i3 = 0; _i3 < rows; _i3++) {
+						for (var _j3 = 0; _j3 < cols; _j3++) {
+							if (newTable[_i3][_j3].occup === false) {
 								freeCubeCount++;
 							}
 						}
 					}
 					if (freeCubeCount === 0) {
 						_this4.setState({ result: "Nyertél!" });
-						for (var _i3 = 0; _i3 < rows; _i3++) {
-							for (var _j3 = 0; _j3 < cols; _j3++) {
+						for (var _i4 = 0; _i4 < rows; _i4++) {
+							for (var _j4 = 0; _j4 < cols; _j4++) {
 								if (
 								// horzontal steps
-								_i3 === row + 1 && _j3 === col + 2 || _i3 === row - 1 && _j3 === col + 2 || _i3 === row + 1 && _j3 === col - 2 || _i3 === row - 1 && _j3 === col - 2 ||
+								_i4 === row + 1 && _j4 === col + 2 || _i4 === row - 1 && _j4 === col + 2 || _i4 === row + 1 && _j4 === col - 2 || _i4 === row - 1 && _j4 === col - 2 ||
 								// vertical steps
-								_i3 === row + 2 && _j3 === col + 1 || _i3 === row - 2 && _j3 === col + 1 || _i3 === row + 2 && _j3 === col - 1 || _i3 === row - 2 && _j3 === col - 1) {
-									if (newTable[_i3][_j3].row === startCubePos.row && newTable[_i3][_j3].col === startCubePos.col) {
+								_i4 === row + 2 && _j4 === col + 1 || _i4 === row - 2 && _j4 === col + 1 || _i4 === row + 2 && _j4 === col - 1 || _i4 === row - 2 && _j4 === col - 1) {
+									if (newTable[_i4][_j4].row === startCubePos.row && newTable[_i4][_j4].col === startCubePos.col) {
 										_this4.setState({ bonus: true });
 									}
 								}
@@ -344,6 +357,7 @@ var Game = function (_React$Component2) {
 							row.map(function (cube) {
 								return React.createElement(CubeComponent, {
 									key: cube.row * rows + cube.col,
+									id: cube.row * rows + cube.col,
 									text: cube.text,
 									avail: cube.avail,
 									startCube: startCube,
@@ -394,6 +408,7 @@ var CubeComponent = function (_React$Component3) {
 		key: "render",
 		value: function render() {
 			var _props2 = this.props,
+			    id = _props2.id,
 			    text = _props2.text,
 			    avail = _props2.avail,
 			    startCube = _props2.startCube,
@@ -403,6 +418,7 @@ var CubeComponent = function (_React$Component3) {
 			return React.createElement(
 				"div",
 				{
+					id: id,
 					className: "cube " + (avail ? "cube-avail" : ""),
 					onClick: startCube ? toggleStart : avail ? clickCube : null
 				},
