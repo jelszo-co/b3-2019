@@ -115,7 +115,8 @@ class Game extends React.Component {
 			currentStep,
 			table,
 			clock,
-			result
+			result,
+			bonus
 		} = this.state;
 		const { rows, cols } = this.props;
 
@@ -247,8 +248,9 @@ class Game extends React.Component {
 					}
 				}
 				if (freeCubeCount === 0) {
+					this.setState({ result: "Nyertél!" });
 					for (let i = 0; i < rows; i++) {
-						for (let j = 0; j < rows; j++) {
+						for (let j = 0; j < cols; j++) {
 							if (
 								// horzontal steps
 								(i === row + 1 && j === col + 2) ||
@@ -265,15 +267,10 @@ class Game extends React.Component {
 									newTable[i][j].row === startCubePos.row &&
 									newTable[i][j].col === startCubePos.col
 								) {
-									this.setState({
-										result: "Nyertél! Bónusz: Körútvonalat találtál!"
-									});
+									this.setState({ bonus: true });
 								}
 							}
 						}
-					}
-					if (this.state.result === "") {
-						this.setState({ result: "Nyertél!" });
 					}
 				} else {
 					this.setState({ result: "Vesztettél." });
@@ -308,6 +305,7 @@ class Game extends React.Component {
 					{clock.mDisp}:{clock.sDisp}
 				</p>
 				<p id="result-text">{result}</p>
+				<p id="bonus-text">{bonus ? "Bónusz: Körútvonalat találtál!" : ""}</p>
 			</div>
 		);
 	}

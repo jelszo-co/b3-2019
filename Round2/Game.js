@@ -169,7 +169,8 @@ var Game = function (_React$Component2) {
 			    currentStep = _state2.currentStep,
 			    table = _state2.table,
 			    clock = _state2.clock,
-			    result = _state2.result;
+			    result = _state2.result,
+			    bonus = _state2.bonus;
 			var _props = this.props,
 			    rows = _props.rows,
 			    cols = _props.cols;
@@ -285,23 +286,19 @@ var Game = function (_React$Component2) {
 						}
 					}
 					if (freeCubeCount === 0) {
+						_this4.setState({ result: "Nyertél!" });
 						for (var _i3 = 0; _i3 < rows; _i3++) {
-							for (var _j3 = 0; _j3 < rows; _j3++) {
+							for (var _j3 = 0; _j3 < cols; _j3++) {
 								if (
 								// horzontal steps
 								_i3 === row + 1 && _j3 === col + 2 || _i3 === row - 1 && _j3 === col + 2 || _i3 === row + 1 && _j3 === col - 2 || _i3 === row - 1 && _j3 === col - 2 ||
 								// vertical steps
 								_i3 === row + 2 && _j3 === col + 1 || _i3 === row - 2 && _j3 === col + 1 || _i3 === row + 2 && _j3 === col - 1 || _i3 === row - 2 && _j3 === col - 1) {
 									if (newTable[_i3][_j3].row === startCubePos.row && newTable[_i3][_j3].col === startCubePos.col) {
-										_this4.setState({
-											result: "Nyertél! Bónusz: Körútvonalat találtál!"
-										});
+										_this4.setState({ bonus: true });
 									}
 								}
 							}
-						}
-						if (_this4.state.result === "") {
-							_this4.setState({ result: "Nyertél!" });
 						}
 					} else {
 						_this4.setState({ result: "Vesztettél." });
@@ -344,6 +341,11 @@ var Game = function (_React$Component2) {
 					"p",
 					{ id: "result-text" },
 					result
+				),
+				React.createElement(
+					"p",
+					{ id: "bonus-text" },
+					bonus ? "Bónusz: Körútvonalat találtál!" : ""
 				)
 			);
 		}
