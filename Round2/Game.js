@@ -124,6 +124,10 @@ var Game = function (_React$Component2) {
 			table: [],
 			currentStep: 2,
 			startCube: true,
+			startCubePos: {
+				row: 0,
+				col: 0
+			},
 			clock: {
 				passing: false,
 				s: 0,
@@ -161,6 +165,7 @@ var Game = function (_React$Component2) {
 
 			var _state2 = this.state,
 			    startCube = _state2.startCube,
+			    startCubePos = _state2.startCubePos,
 			    currentStep = _state2.currentStep,
 			    table = _state2.table,
 			    clock = _state2.clock,
@@ -172,6 +177,7 @@ var Game = function (_React$Component2) {
 
 			var toggleStart = function toggleStart(row, col) {
 				console.log("startCube clicked:" + row + ":" + col);
+				_this4.setState({ startCubePos: Object.assign({}, _this4.state.startCubePos, { row: row, col: col }) });
 				var newTable = _this4.state.table;
 				for (var i = 0; i < rows; i++) {
 					for (var j = 0; j < cols; j++) {
@@ -279,8 +285,24 @@ var Game = function (_React$Component2) {
 						}
 					}
 					if (freeCubeCount === 0) {
-						console.log("win!");
-						_this4.setState({ result: "Nyertél!" });
+						for (var _i3 = 0; _i3 < rows; _i3++) {
+							for (var _j3 = 0; _j3 < rows; _j3++) {
+								if (
+								// horzontal steps
+								_i3 === row + 1 && _j3 === col + 2 || _i3 === row - 1 && _j3 === col + 2 || _i3 === row + 1 && _j3 === col - 2 || _i3 === row - 1 && _j3 === col - 2 ||
+								// vertical steps
+								_i3 === row + 2 && _j3 === col + 1 || _i3 === row - 2 && _j3 === col + 1 || _i3 === row + 2 && _j3 === col - 1 || _i3 === row - 2 && _j3 === col - 1) {
+									if (newTable[_i3][_j3].row === startCubePos.row && newTable[_i3][_j3].col === startCubePos.col) {
+										_this4.setState({
+											result: "Nyertél! Bónusz: Körútvonalat találtál!"
+										});
+									}
+								}
+							}
+						}
+						if (_this4.state.result === "") {
+							_this4.setState({ result: "Nyertél!" });
+						}
 					} else {
 						_this4.setState({ result: "Vesztettél." });
 						console.log("fucked.");

@@ -1,6 +1,0 @@
-Az ebben a mappában található .js fájlok egy preprocessor program által kerülnek ki az eggyel feljebbi mappába.
-Ez a mappa tartalma olvasható és szerkeszthető.
-
-preprocessor: babel
-használt könyvtár: React
-használt nyelv: JSX

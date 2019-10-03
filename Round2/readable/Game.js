@@ -77,6 +77,10 @@ class Game extends React.Component {
 			table: [],
 			currentStep: 2,
 			startCube: true,
+			startCubePos: {
+				row: 0,
+				col: 0
+			},
 			clock: {
 				passing: false,
 				s: 0,
@@ -87,6 +91,7 @@ class Game extends React.Component {
 			result: ""
 		};
 	}
+
 	UNSAFE_componentWillMount() {
 		let initTable = [];
 		for (let i = 0; i < this.props.rows; i++) {
@@ -104,11 +109,19 @@ class Game extends React.Component {
 		this.setState({ table: initTable });
 	}
 	render() {
-		const { startCube, currentStep, table, clock, result } = this.state;
+		const {
+			startCube,
+			startCubePos,
+			currentStep,
+			table,
+			clock,
+			result
+		} = this.state;
 		const { rows, cols } = this.props;
 
 		const toggleStart = (row, col) => {
 			console.log("startCube clicked:" + row + ":" + col);
+			this.setState({ startCubePos: { ...this.state.startCubePos, row, col } });
 			let newTable = this.state.table;
 			for (let i = 0; i < rows; i++) {
 				for (let j = 0; j < cols; j++) {
@@ -234,8 +247,34 @@ class Game extends React.Component {
 					}
 				}
 				if (freeCubeCount === 0) {
-					console.log("win!");
-					this.setState({ result: "Nyertél!" });
+					for (let i = 0; i < rows; i++) {
+						for (let j = 0; j < rows; j++) {
+							if (
+								// horzontal steps
+								(i === row + 1 && j === col + 2) ||
+								(i === row - 1 && j === col + 2) ||
+								(i === row + 1 && j === col - 2) ||
+								(i === row - 1 && j === col - 2) ||
+								// vertical steps
+								(i === row + 2 && j === col + 1) ||
+								(i === row - 2 && j === col + 1) ||
+								(i === row + 2 && j === col - 1) ||
+								(i === row - 2 && j === col - 1)
+							) {
+								if (
+									newTable[i][j].row === startCubePos.row &&
+									newTable[i][j].col === startCubePos.col
+								) {
+									this.setState({
+										result: "Nyertél! Bónusz: Körútvonalat találtál!"
+									});
+								}
+							}
+						}
+					}
+					if (this.state.result === "") {
+						this.setState({ result: "Nyertél!" });
+					}
 				} else {
 					this.setState({ result: "Vesztettél." });
 					console.log("fucked.");
