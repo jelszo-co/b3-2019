@@ -112,21 +112,35 @@ class Game extends React.Component {
 				};
 			}
 		}
-		let sensorRow = Math.floor(Math.random() * props.rows);
-		let sensorCol = Math.floor(Math.random() * props.cols);
-
-		for (let i = 0; i < props.rows; i++) {
-			for (let j = 0; j < props.cols; j++) {
-				if (
-					initTable[i][j].row === sensorRow &&
-					initTable[i][j].col === sensorCol
-				) {
-					initTable[i][j].isSensorCenter = true;
-					initTable[i][j].isSensorArea = true;
+		if (props.hardMode === true) {
+			let sensorRow = Math.floor(Math.random() * props.rows);
+			let sensorCol = Math.floor(Math.random() * props.cols);
+			for (let i = 0; i < props.rows; i++) {
+				for (let j = 0; j < props.cols; j++) {
+					if (props.rows >= 5 || props.cols >= 5) {
+						if (
+							(initTable[i][j].row === sensorRow + 1 &&
+								initTable[i][j].col === sensorCol) ||
+							(initTable[i][j].row === sensorRow - 1 &&
+								initTable[i][j].col === sensorCol) ||
+							(initTable[i][j].row === sensorRow &&
+								initTable[i][j].col === sensorCol + 1) ||
+							(initTable[i][j].row === sensorRow &&
+								initTable[i][j].col === sensorCol - 1)
+						) {
+							initTable[i][j].isSensorArea = true;
+						}
+					}
+					if (
+						initTable[i][j].row === sensorRow &&
+						initTable[i][j].col === sensorCol
+					) {
+						initTable[i][j].isSensorArea = true;
+						initTable[i][j].isSensorCenter = true;
+					}
 				}
 			}
 		}
-
 		this.state = {
 			table: initTable,
 			currentStep: 2,
@@ -156,7 +170,7 @@ class Game extends React.Component {
 			result,
 			bonus
 		} = this.state;
-		const { hardMode, rows, cols } = this.props;
+		const { rows, cols } = this.props;
 
 		const toggleStart = (row, col) => {
 			console.log("startCube clicked:" + row + ":" + col);
@@ -165,7 +179,9 @@ class Game extends React.Component {
 			for (let i = 0; i < rows; i++) {
 				for (let j = 0; j < cols; j++) {
 					if (i !== row || j !== col) {
-						newTable[i][j].text = "";
+						if (newTable[i][j].isSensorCenter !== true) {
+							newTable[i][j].text = "";
+						}
 					}
 					if (i === row && j === col) {
 						newTable[i][j].text = "1";
@@ -328,8 +344,7 @@ class Game extends React.Component {
 										<CubeComponent
 											key={cube.row * rows + cube.col}
 											id={cube.row * rows + cube.col}
-											text={cube.text}
-											avail={cube.avail}
+											cube={cube}
 											startCube={startCube}
 											clickCube={clickCube.bind(this, cube.row, cube.col)}
 											toggleStart={toggleStart.bind(this, cube.row, cube.col)}
@@ -356,14 +371,24 @@ class CubeComponent extends React.Component {
 		this.state = {};
 	}
 	render() {
-		const { id, text, avail, startCube, toggleStart, clickCube } = this.props;
+		const { id, startCube, toggleStart, clickCube } = this.props;
+
+		const { text, avail, isSensorArea, isSensorCenter } = this.props.cube;
 		return (
 			<div
 				id={id}
-				className={`cube ${avail ? "cube-avail" : ""}`}
+				className={`cube ${isSensorArea ? "cube-sensor" : ""} ${
+					avail ? "cube-avail" : ""
+				} `}
 				onClick={startCube ? toggleStart : avail ? clickCube : null}
 			>
-				<span className={`${startCube ? "cube-x" : "cube-num"}`}>{text}</span>
+				<span
+					className={`${startCube ? "cube-x" : "cube-num"} ${
+						isSensorCenter ? "cube-sensor-center" : ""
+					}`}
+				>
+					{text}
+				</span>
 			</div>
 		);
 	}

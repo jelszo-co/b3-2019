@@ -1,258 +1,269 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap");
 body {
-  margin: 0;
+	margin: 0;
 }
 ::selection {
-  background: #ffffff;
-  color: #202020;
+	background: #ffffff;
+	color: #202020;
 }
 ::-moz-selection {
-  background: #ffffff;
-  color: #202020;
+	background: #ffffff;
+	color: #202020;
 }
 
 body {
-  background-color: #202020;
-  color: white;
-  font-family: "Open Sans";
+	background-color: #202020;
+	color: white;
+	font-family: "Open Sans";
 }
 
 .header {
-  position: absolute;
-  top: 2%;
-  left: 0;
-  width: 100%;
-  text-align: center;
-  text-transform: uppercase;
+	position: absolute;
+	top: 2%;
+	left: 0;
+	width: 100%;
+	text-align: center;
+	text-transform: uppercase;
 }
 
 .header h1 {
-  letter-spacing: 1px;
-  font-size: 1.5rem;
-  margin: 10px 0;
+	letter-spacing: 1px;
+	font-size: 1.5rem;
+	margin: 10px 0;
 }
 
 .header h2 {
-  position: absolute;
-  margin: 0;
-  padding: 0;
+	position: absolute;
+	margin: 0;
+	padding: 0;
 }
 
 .header hr {
-  width: 70%;
-  margin: 0 15%;
-  border: 1px solid white;
-  opacity: 0.75;
+	width: 70%;
+	margin: 0 15%;
+	border: 1px solid white;
+	opacity: 0.75;
 }
 
 .game {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: auto;
-  margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: auto;
+	margin: 0;
 }
 
 .cube {
-  display: inline-block;
-  position: relative;
-  height: 35px;
-  width: 34px;
-  border-left: 3px solid #dbdb1a;
-  margin: 0;
-  padding: 0;
-  background: #202020;
-  transition: 0.2s all ease-in-out;
+	display: inline-block;
+	position: relative;
+	height: 35px;
+	width: 34px;
+	border-left: 3px solid #dbdb1a;
+	margin: 0;
+	padding: 0;
+	background: #202020;
+	transition: 0.2s all ease-in-out;
 }
 .cube:last-child {
-  border-right: 3px solid #dbdb1a;
+	border-right: 3px solid #dbdb1a;
 }
 
 .cube span {
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  font-weight: 600;
-  font-size: 2rem;
-  text-align: center;
+	position: absolute;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	font-weight: 600;
+	font-size: 2rem;
+	text-align: center;
 }
 
 .cube-x {
-  left: 50%;
-  margin-top: -7px;
-  color: white;
-  text-transform: lowercase;
-  line-height: 34px;
-  cursor: pointer;
-  transition: 0.2s all ease-in-out;
-  opacity: 0;
+	left: 50%;
+	margin-top: -7px;
+	color: white;
+	text-transform: lowercase;
+	line-height: 34px;
+	cursor: pointer;
+	transition: 0.2s all ease-in-out;
+	opacity: 0;
 }
 
 .cube-num {
-  left: 45%;
-  margin-top: 0.4px;
-  color: #999999;
-  line-height: 34px;
-  letter-spacing: -2px;
+	left: 45%;
+	margin-top: 0.4px;
+	color: #999999;
+	line-height: 34px;
+	letter-spacing: -2px;
+}
+
+.cube-sensor {
+	/* cursor: pointer; */
+	background: #9b1c31;
 }
 
 .cube-avail {
-  cursor: pointer;
-  z-index: 1;
-  background: white;
+	cursor: pointer;
+	z-index: 1;
+	background: white;
+}
+
+.cube-sensor-center {
+	color: #fff;
+	font-weight: 400;
+	opacity: 1;
 }
 
 .cube-x:hover {
-  opacity: 1;
+	opacity: 1;
 }
 .row {
-  display: block;
-  margin: 0;
-  padding: 0;
-  height: 35px;
-  border-top: 3px solid #dbdb1a;
+	display: block;
+	margin: 0;
+	padding: 0;
+	height: 35px;
+	border-top: 3px solid #dbdb1a;
 }
 
 .row:last-child {
-  border-bottom: 3px solid #dbdb1a;
+	border-bottom: 3px solid #dbdb1a;
 }
 
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
-  display: none;
-  margin: 0;
+	display: none;
+	margin: 0;
 }
 
 .input {
-  position: absolute;
-  top: 30%;
-  left: 50%;
-  width: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
+	position: absolute;
+	top: 30%;
+	left: 50%;
+	width: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
 }
 
 form {
-  margin-top: 40px;
-  width: 100%;
-  white-space: nowrap;
+	margin-top: 40px;
+	width: 100%;
+	white-space: nowrap;
 }
 
 input[type="number"] {
-  margin: 0 20px;
-  border: none;
-  border-bottom: 2px solid white;
-  background: none;
-  color: white;
-  font-style: italic;
-  -moz-appearance: textfield;
+	margin: 0 20px;
+	border: none;
+	border-bottom: 2px solid white;
+	background: none;
+	color: white;
+	font-style: italic;
+	-moz-appearance: textfield;
 }
 
 input[type="submit"] {
-  background-color: #202020;
-  border: 2px solid white;
-  color: white;
-  padding: 10px 24px;
-  text-decoration: none;
-  margin: 0 200px;
-  cursor: pointer;
-  font-family: "Open Sans";
-  transition: all 0.2s;
+	background-color: #202020;
+	border: 2px solid white;
+	color: white;
+	padding: 10px 24px;
+	text-decoration: none;
+	margin: 0 200px;
+	cursor: pointer;
+	font-family: "Open Sans";
+	transition: all 0.2s;
 }
 
 input[type="submit"]:hover {
-  background-color: white;
-  color: #202020;
+	background-color: white;
+	color: #202020;
 }
 
 .checkbox-wrapper {
-  position: relative;
-  display: inline-block;
-  white-space: nowrap;
-  text-align: left;
-  height: 25px;
+	position: relative;
+	display: inline-block;
+	white-space: nowrap;
+	text-align: left;
+	height: 25px;
 }
 
 .checkbox-wrapper p {
-  display: inline-block;
-  position: absolute;
-  padding: 0;
-  margin: 0;
-  left: 70px;
-  top: 20%;
+	display: inline-block;
+	position: absolute;
+	padding: 0;
+	margin: 0;
+	left: 70px;
+	top: 20%;
 }
 
 .checkbox {
-  position: absolute;
-  width: 50px;
-  height: 25px;
-  border: 2px solid #fff;
-  border-radius: 150px;
-  background: #202020;
-  cursor: pointer;
-  transition: 0.1s all ease-in-out;
+	position: absolute;
+	width: 50px;
+	height: 25px;
+	border: 2px solid #fff;
+	border-radius: 150px;
+	background: #202020;
+	cursor: pointer;
+	transition: 0.1s all ease-in-out;
 }
 
 .checkbox-hard {
-  background: #9b1c31;
+	background: #9b1c31;
 }
 
 .checkbox__circle {
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 25px;
-  width: 25px;
-  background: #fff;
-  border-radius: 150px;
-  transition: 0.1s all ease-in-out;
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 25px;
+	width: 25px;
+	background: #fff;
+	border-radius: 150px;
+	transition: 0.1s all ease-in-out;
 }
 
 .checkbox__circle-hard {
-  left: 100%;
-  transform: translateX(-100%);
+	left: 100%;
+	transform: translateX(-100%);
 }
 
 #clock {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  left: 50%;
-  font-size: 3rem;
-  font-weight: bold;
-  margin: inherit;
-  margin-top: 50px;
-  padding: 0;
+	position: absolute;
+	transform: translate(-50%, -50%);
+	left: 50%;
+	font-size: 3rem;
+	font-weight: bold;
+	margin: inherit;
+	margin-top: 50px;
+	padding: 0;
 }
 
 #result-text {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  left: 50%;
-  margin: inherit;
-  margin-top: 100px;
-  font-size: 2rem;
+	position: absolute;
+	transform: translate(-50%, -50%);
+	left: 50%;
+	margin: inherit;
+	margin-top: 100px;
+	font-size: 2rem;
 }
 
 #bonus-text {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  left: 50%;
-  margin: inherit;
-  margin-top: 150px;
-  font-size: 1.5rem;
-  white-space: nowrap;
+	position: absolute;
+	transform: translate(-50%, -50%);
+	left: 50%;
+	margin: inherit;
+	margin-top: 150px;
+	font-size: 1.5rem;
+	white-space: nowrap;
 }
 
 footer {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  margin: 20px;
-  text-align: right;
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	margin: 20px;
+	text-align: right;
 }

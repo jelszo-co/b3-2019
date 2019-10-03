@@ -162,18 +162,23 @@ var Game = function (_React$Component2) {
 				};
 			}
 		}
-		var sensorRow = Math.floor(Math.random() * props.rows);
-		var sensorCol = Math.floor(Math.random() * props.cols);
-
-		for (var _i = 0; _i < props.rows; _i++) {
-			for (var _j = 0; _j < props.cols; _j++) {
-				if (initTable[_i][_j].row === sensorRow && initTable[_i][_j].col === sensorCol) {
-					initTable[_i][_j].isSensorCenter = true;
-					initTable[_i][_j].isSensorArea = true;
+		if (props.hardMode === true) {
+			var sensorRow = Math.floor(Math.random() * props.rows);
+			var sensorCol = Math.floor(Math.random() * props.cols);
+			for (var _i = 0; _i < props.rows; _i++) {
+				for (var _j = 0; _j < props.cols; _j++) {
+					if (props.rows >= 5 || props.cols >= 5) {
+						if (initTable[_i][_j].row === sensorRow + 1 && initTable[_i][_j].col === sensorCol || initTable[_i][_j].row === sensorRow - 1 && initTable[_i][_j].col === sensorCol || initTable[_i][_j].row === sensorRow && initTable[_i][_j].col === sensorCol + 1 || initTable[_i][_j].row === sensorRow && initTable[_i][_j].col === sensorCol - 1) {
+							initTable[_i][_j].isSensorArea = true;
+						}
+					}
+					if (initTable[_i][_j].row === sensorRow && initTable[_i][_j].col === sensorCol) {
+						initTable[_i][_j].isSensorArea = true;
+						initTable[_i][_j].isSensorCenter = true;
+					}
 				}
 			}
 		}
-
 		_this3.state = {
 			table: initTable,
 			currentStep: 2,
@@ -208,7 +213,6 @@ var Game = function (_React$Component2) {
 			    result = _state2.result,
 			    bonus = _state2.bonus;
 			var _props = this.props,
-			    hardMode = _props.hardMode,
 			    rows = _props.rows,
 			    cols = _props.cols;
 
@@ -220,7 +224,9 @@ var Game = function (_React$Component2) {
 				for (var i = 0; i < rows; i++) {
 					for (var j = 0; j < cols; j++) {
 						if (i !== row || j !== col) {
-							newTable[i][j].text = "";
+							if (newTable[i][j].isSensorCenter !== true) {
+								newTable[i][j].text = "";
+							}
 						}
 						if (i === row && j === col) {
 							newTable[i][j].text = "1";
@@ -358,8 +364,7 @@ var Game = function (_React$Component2) {
 								return React.createElement(CubeComponent, {
 									key: cube.row * rows + cube.col,
 									id: cube.row * rows + cube.col,
-									text: cube.text,
-									avail: cube.avail,
+									cube: cube,
 									startCube: startCube,
 									clickCube: clickCube.bind(_this4, cube.row, cube.col),
 									toggleStart: toggleStart.bind(_this4, cube.row, cube.col)
@@ -409,22 +414,27 @@ var CubeComponent = function (_React$Component3) {
 		value: function render() {
 			var _props2 = this.props,
 			    id = _props2.id,
-			    text = _props2.text,
-			    avail = _props2.avail,
 			    startCube = _props2.startCube,
 			    toggleStart = _props2.toggleStart,
 			    clickCube = _props2.clickCube;
+			var _props$cube = this.props.cube,
+			    text = _props$cube.text,
+			    avail = _props$cube.avail,
+			    isSensorArea = _props$cube.isSensorArea,
+			    isSensorCenter = _props$cube.isSensorCenter;
 
 			return React.createElement(
 				"div",
 				{
 					id: id,
-					className: "cube " + (avail ? "cube-avail" : ""),
+					className: "cube " + (isSensorArea ? "cube-sensor" : "") + " " + (avail ? "cube-avail" : "") + " ",
 					onClick: startCube ? toggleStart : avail ? clickCube : null
 				},
 				React.createElement(
 					"span",
-					{ className: "" + (startCube ? "cube-x" : "cube-num") },
+					{
+						className: (startCube ? "cube-x" : "cube-num") + " " + (isSensorCenter ? "cube-sensor-center" : "")
+					},
 					text
 				)
 			);
