@@ -209,8 +209,10 @@ class Game extends React.Component {
 			} else if (props.rows >= 7 || props.cols >= 7) {
 				genSensors(sensorRow, sensorCol, 3, false);
 				genSensors(sensorRow2, sensorCol2, 3, false);
-			} else if (props.rows >= 5 || props.cols >= 5) {
+			} else if (props.rows >= 6 || props.cols >= 6) {
 				genSensors(sensorRow, sensorCol, 5, true);
+			} else if (props.rows >= 5 || props.cols >= 5) {
+				genSensors(sensorRow, sensorCol, 3, true);
 			}
 		}
 		this.state = {
