@@ -165,11 +165,33 @@ var Game = function (_React$Component2) {
 		if (props.hardMode === true) {
 			var sensorRow = Math.floor(Math.random() * props.rows);
 			var sensorCol = Math.floor(Math.random() * props.cols);
+			var sensorRow2 = Math.floor(Math.random() * props.rows);
+			var sensorCol2 = Math.floor(Math.random() * props.cols);
+			var genSensors = function genSensors(i, j, width, height, isCross) {
+				initTable[i][j].isSensorCenter = true;
+				initTable[i][j].isSensorArea = true;
+				var interval = (width - width % 2) / 2 - (width - width % 2);
+				for (var ii = 0; ii < height; ii++) {
+					for (var jj = 0; jj < width; jj++) {
+						console.group("SensorKocka");
+						console.log("Sorok: i" + i + " + ii" + ii + " + interval" + interval + " = " + (i + ii + interval));
+						console.log("Oszlop: j" + j + " + jj" + ii + " + interval" + interval + " = " + (j + jj + interval));
+						console.groupEnd();
+						if (i + ii + interval >= 0 && i + ii + interval < props.rows) {
+							if (j + jj + interval >= 0 && j + jj + interval < props.cols) {
+								initTable[i + ii + interval][j + jj + interval].isSensorArea = true;
+							}
+						}
+					}
+				}
+			};
 			for (var _i = 0; _i < props.rows; _i++) {
 				for (var _j = 0; _j < props.cols; _j++) {
 					if (props.rows >= 5 || props.cols >= 5) {
-						if (initTable[_i][_j].row === sensorRow + 1 && initTable[_i][_j].col === sensorCol || initTable[_i][_j].row === sensorRow - 1 && initTable[_i][_j].col === sensorCol || initTable[_i][_j].row === sensorRow && initTable[_i][_j].col === sensorCol + 1 || initTable[_i][_j].row === sensorRow && initTable[_i][_j].col === sensorCol - 1) {
-							initTable[_i][_j].isSensorArea = true;
+						if (_i === sensorRow && _j === sensorCol) {
+							console.log("Sensor: " + sensorRow + " " + sensorCol);
+							genSensors(_i, _j, 5, 5, true);
+							// initTable[i][j].isSensorArea = true;
 						}
 					}
 					if (initTable[_i][_j].row === sensorRow && initTable[_i][_j].col === sensorCol) {
