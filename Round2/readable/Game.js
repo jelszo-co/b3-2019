@@ -1,7 +1,14 @@
+// |**********************************|
+// Bakonyi Bitfaragó Bajnokság 2019
+// Jelszo csapat
+// Második forduló
+// |**********************************|
+
 "use strict";
 
 const e = React.createElement;
 
+// Adatbekérő űrlap
 class App extends React.Component {
 	constructor(props) {
 		super(props);
@@ -24,6 +31,8 @@ class App extends React.Component {
 			minValue,
 			maxValue
 		} = this.state;
+
+		// Bekérés gomb megnyomásakor ellenőrzés után Tábla megjelenítése
 		const onSubmit = (e) => {
 			e.preventDefault();
 			if (
@@ -96,9 +105,12 @@ class App extends React.Component {
 	}
 }
 
+// Játéktábla
 class Game extends React.Component {
 	constructor(props) {
 		super(props);
+
+		// Megjelenéskor adott méretű (úrlapról kapott adatok) kétdimenziós tömb generálása
 		let initTable = [];
 		for (let i = 0; i < props.rows; i++) {
 			initTable[i] = [];
@@ -113,12 +125,15 @@ class Game extends React.Component {
 			}
 		}
 		if (props.hardMode === true) {
+			// Nehezített mód esetén 6db véletlenszerű szenzorpozíció generálása
 			let sensorRow = Math.floor(Math.random() * props.rows);
 			let sensorCol = Math.floor(Math.random() * props.cols);
 			let sensorRow2 = Math.floor(Math.random() * props.rows);
 			let sensorCol2 = Math.floor(Math.random() * props.cols);
 			let sensorRow3 = Math.floor(Math.random() * props.rows);
 			let sensorCol3 = Math.floor(Math.random() * props.cols);
+
+			// Függvény szenzormezők generálására
 			const genSensors = (i, j, dim, isCross) => {
 				initTable[i][j].isSensorCenter = true;
 				initTable[i][j].isSensorArea = true;
@@ -180,6 +195,7 @@ class Game extends React.Component {
 					}
 				}
 			};
+			// Tábla méretétől függően szenzormezők generálása
 			if (props.rows >= 13 || props.cols >= 13) {
 				genSensors(sensorRow, sensorCol, 7, false);
 				genSensors(sensorRow2, sensorCol2, 7, true);
@@ -230,6 +246,7 @@ class Game extends React.Component {
 		} = this.state;
 		const { rows, cols } = this.props;
 
+		// Kezdő pozíció megválasztása után lefutó függvény
 		const toggleStart = (row, col, isSensor) => {
 			console.log("startCube clicked:" + row + ":" + col);
 			this.setState({ startCubePos: { ...this.state.startCubePos, row, col } });
@@ -246,12 +263,13 @@ class Game extends React.Component {
 						newTable[i][j].occup = true;
 					}
 					if (
-						// horzontal steps
+						// Lehetséges lépések mutatása, pozícióhoz képest relatívan
+						// Horizontal steps
 						(i === row + 1 && j === col + 2) ||
 						(i === row - 1 && j === col + 2) ||
 						(i === row + 1 && j === col - 2) ||
 						(i === row - 1 && j === col - 2) ||
-						// vertical steps
+						// Vertical steps
 						(i === row + 2 && j === col + 1) ||
 						(i === row - 2 && j === col + 1) ||
 						(i === row + 2 && j === col - 1) ||
@@ -263,11 +281,13 @@ class Game extends React.Component {
 					}
 				}
 			}
+			// Játék és óra indítása
 			this.setState({
 				table: newTable,
 				startCube: false,
 				clock: { ...this.state.clock, passing: true }
 			});
+			// Óra frisítése másodpercenként
 			setInterval(() => {
 				if (this.state.clock.passing === true) {
 					if (this.state.clock.s === 59) {
@@ -313,6 +333,7 @@ class Game extends React.Component {
 					}
 				}
 			}, 1000);
+			// Ha a játékos szenzormezőről indul, azonnal induljon el a számláló
 			if (isSensor === true) {
 				this.setState({
 					sensorWarn: "Vigyázz, szenzormező! Hátralévő idő: "
@@ -345,6 +366,8 @@ class Game extends React.Component {
 				this.setState({ sensorWarn: "", sensorRemain: null });
 			}
 		};
+
+		// Lehetséges kockára kattintáskor lefutó függvény
 		const clickCube = (row, col, isSensor) => {
 			let newTable = this.state.table;
 			let eventCount;
@@ -362,13 +385,14 @@ class Game extends React.Component {
 						this.setState({ currentStep: currentStep + 1 });
 						newTable[i][j].text = currentStep;
 					}
+					// Ha a játékos semerre sem tud lépni, ez a ha függvény érzékeli
 					if (
-						// horzontal steps
+						// Horizontal steps
 						(i === row + 1 && j === col + 2) ||
 						(i === row - 1 && j === col + 2) ||
 						(i === row + 1 && j === col - 2) ||
 						(i === row - 1 && j === col - 2) ||
-						// vertical steps
+						// Vertical steps
 						(i === row + 2 && j === col + 1) ||
 						(i === row - 2 && j === col + 1) ||
 						(i === row + 2 && j === col - 1) ||
@@ -381,6 +405,7 @@ class Game extends React.Component {
 					}
 				}
 			}
+			// Ha szenzormező, induljon el a visszaszámlálás
 			if (isSensor === true) {
 				this.setState({
 					sensorWarn: "Vigyázz, szenzormező! Hátralévő idő: "
@@ -412,6 +437,7 @@ class Game extends React.Component {
 			} else {
 				this.setState({ sensorWarn: "", sensorRemain: null });
 			}
+			// Ha a játékos beszorult, jelenjen meg az üzenet
 			if (eventCount === 0) {
 				let freeCubeCount = 0;
 				for (let i = 0; i < rows; i++) {
@@ -421,17 +447,19 @@ class Game extends React.Component {
 						}
 					}
 				}
+				// Ha semerre sem lehet lépni, de szabad kocka sincs, a játékos nyert
 				if (freeCubeCount === 0) {
 					this.setState({ result: "Nyertél!" });
+					// Ha a a kezdő kocka a lehetséges lépések között van, a játékos körútvonalatz talált
 					for (let i = 0; i < rows; i++) {
 						for (let j = 0; j < cols; j++) {
 							if (
-								// horzontal steps
+								// Horizontal steps
 								(i === row + 1 && j === col + 2) ||
 								(i === row - 1 && j === col + 2) ||
 								(i === row + 1 && j === col - 2) ||
 								(i === row - 1 && j === col - 2) ||
-								// vertical steps
+								// Vertical steps
 								(i === row + 2 && j === col + 1) ||
 								(i === row - 2 && j === col + 1) ||
 								(i === row + 2 && j === col - 1) ||
@@ -460,11 +488,13 @@ class Game extends React.Component {
 							<div className="row">
 								{row.map((cube) => {
 									return (
+										// A kétdimenziós tömb minden elemére jelenítsen meg egy kocka komponenst
 										<CubeComponent
 											key={cube.row * rows + cube.col}
 											id={cube.row * rows + cube.col}
 											cube={cube}
 											startCube={startCube}
+											// A "this" azért lett bindelve a függvényhez, mert nélküle a react semmilyen bindet nem érzékel
 											clickCube={clickCube.bind(
 												this,
 												cube.row,
@@ -499,6 +529,7 @@ class Game extends React.Component {
 	}
 }
 
+// A kocka komponens
 class CubeComponent extends React.Component {
 	constructor(props) {
 		super(props);

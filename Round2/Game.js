@@ -1,3 +1,9 @@
+// |**********************************|
+// Bakonyi Bitfaragó Bajnokság 2019
+// Jelszo csapat
+// Második forduló
+// |**********************************|
+
 "use strict";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -11,6 +17,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var e = React.createElement;
+
+// Adatbekérő űrlap
 
 var App = function (_React$Component) {
 	_inherits(App, _React$Component);
@@ -43,6 +51,8 @@ var App = function (_React$Component) {
 			    formCols = _state.formCols,
 			    minValue = _state.minValue,
 			    maxValue = _state.maxValue;
+
+			// Bekérés gomb megnyomásakor ellenőrzés után Tábla megjelenítése
 
 			var onSubmit = function onSubmit(e) {
 				e.preventDefault();
@@ -141,12 +151,16 @@ var App = function (_React$Component) {
 	return App;
 }(React.Component);
 
+// Játéktábla
+
+
 var Game = function (_React$Component2) {
 	_inherits(Game, _React$Component2);
 
 	function Game(props) {
 		_classCallCheck(this, Game);
 
+		// Megjelenéskor adott méretű (úrlapról kapott adatok) kétdimenziós tömb generálása
 		var _this3 = _possibleConstructorReturn(this, (Game.__proto__ || Object.getPrototypeOf(Game)).call(this, props));
 
 		var initTable = [];
@@ -163,12 +177,15 @@ var Game = function (_React$Component2) {
 			}
 		}
 		if (props.hardMode === true) {
+			// Nehezített mód esetén 6db véletlenszerű szenzorpozíció generálása
 			var sensorRow = Math.floor(Math.random() * props.rows);
 			var sensorCol = Math.floor(Math.random() * props.cols);
 			var sensorRow2 = Math.floor(Math.random() * props.rows);
 			var sensorCol2 = Math.floor(Math.random() * props.cols);
 			var sensorRow3 = Math.floor(Math.random() * props.rows);
 			var sensorCol3 = Math.floor(Math.random() * props.cols);
+
+			// Függvény szenzormezők generálására
 			var genSensors = function genSensors(i, j, dim, isCross) {
 				initTable[i][j].isSensorCenter = true;
 				initTable[i][j].isSensorArea = true;
@@ -213,6 +230,7 @@ var Game = function (_React$Component2) {
 					}
 				}
 			};
+			// Tábla méretétől függően szenzormezők generálása
 			if (props.rows >= 13 || props.cols >= 13) {
 				genSensors(sensorRow, sensorCol, 7, false);
 				genSensors(sensorRow2, sensorCol2, 7, true);
@@ -269,6 +287,7 @@ var Game = function (_React$Component2) {
 			    rows = _props.rows,
 			    cols = _props.cols;
 
+			// Kezdő pozíció megválasztása után lefutó függvény
 
 			var toggleStart = function toggleStart(row, col, isSensor) {
 				console.log("startCube clicked:" + row + ":" + col);
@@ -286,9 +305,10 @@ var Game = function (_React$Component2) {
 							newTable[i][j].occup = true;
 						}
 						if (
-						// horzontal steps
+						// Lehetséges lépések mutatása, pozícióhoz képest relatívan
+						// Horizontal steps
 						i === row + 1 && j === col + 2 || i === row - 1 && j === col + 2 || i === row + 1 && j === col - 2 || i === row - 1 && j === col - 2 ||
-						// vertical steps
+						// Vertical steps
 						i === row + 2 && j === col + 1 || i === row - 2 && j === col + 1 || i === row + 2 && j === col - 1 || i === row - 2 && j === col - 1) {
 							if (newTable[i][j].occup === false) {
 								newTable[i][j].avail = true;
@@ -296,11 +316,13 @@ var Game = function (_React$Component2) {
 						}
 					}
 				}
+				// Játék és óra indítása
 				_this4.setState({
 					table: newTable,
 					startCube: false,
 					clock: Object.assign({}, _this4.state.clock, { passing: true })
 				});
+				// Óra frisítése másodpercenként
 				setInterval(function () {
 					if (_this4.state.clock.passing === true) {
 						if (_this4.state.clock.s === 59) {
@@ -342,6 +364,7 @@ var Game = function (_React$Component2) {
 						}
 					}
 				}, 1000);
+				// Ha a játékos szenzormezőről indul, azonnal induljon el a számláló
 				if (isSensor === true) {
 					_this4.setState({
 						sensorWarn: "Vigyázz, szenzormező! Hátralévő idő: "
@@ -374,6 +397,8 @@ var Game = function (_React$Component2) {
 					_this4.setState({ sensorWarn: "", sensorRemain: null });
 				}
 			};
+
+			// Lehetséges kockára kattintáskor lefutó függvény
 			var clickCube = function clickCube(row, col, isSensor) {
 				var newTable = _this4.state.table;
 				var eventCount = void 0;
@@ -391,10 +416,11 @@ var Game = function (_React$Component2) {
 							_this4.setState({ currentStep: currentStep + 1 });
 							newTable[_i2][_j2].text = currentStep;
 						}
+						// Ha a játékos semerre sem tud lépni, ez a ha függvény érzékeli
 						if (
-						// horzontal steps
+						// Horizontal steps
 						_i2 === row + 1 && _j2 === col + 2 || _i2 === row - 1 && _j2 === col + 2 || _i2 === row + 1 && _j2 === col - 2 || _i2 === row - 1 && _j2 === col - 2 ||
-						// vertical steps
+						// Vertical steps
 						_i2 === row + 2 && _j2 === col + 1 || _i2 === row - 2 && _j2 === col + 1 || _i2 === row + 2 && _j2 === col - 1 || _i2 === row - 2 && _j2 === col - 1) {
 							if (newTable[_i2][_j2].occup === false) {
 								newTable[_i2][_j2].avail = true;
@@ -403,6 +429,7 @@ var Game = function (_React$Component2) {
 						}
 					}
 				}
+				// Ha szenzormező, induljon el a visszaszámlálás
 				if (isSensor === true) {
 					_this4.setState({
 						sensorWarn: "Vigyázz, szenzormező! Hátralévő idő: "
@@ -434,6 +461,7 @@ var Game = function (_React$Component2) {
 				} else {
 					_this4.setState({ sensorWarn: "", sensorRemain: null });
 				}
+				// Ha a játékos beszorult, jelenjen meg az üzenet
 				if (eventCount === 0) {
 					var freeCubeCount = 0;
 					for (var _i4 = 0; _i4 < rows; _i4++) {
@@ -443,14 +471,16 @@ var Game = function (_React$Component2) {
 							}
 						}
 					}
+					// Ha semerre sem lehet lépni, de szabad kocka sincs, a játékos nyert
 					if (freeCubeCount === 0) {
 						_this4.setState({ result: "Nyertél!" });
+						// Ha a a kezdő kocka a lehetséges lépések között van, a játékos körútvonalatz talált
 						for (var _i5 = 0; _i5 < rows; _i5++) {
 							for (var _j5 = 0; _j5 < cols; _j5++) {
 								if (
-								// horzontal steps
+								// Horizontal steps
 								_i5 === row + 1 && _j5 === col + 2 || _i5 === row - 1 && _j5 === col + 2 || _i5 === row + 1 && _j5 === col - 2 || _i5 === row - 1 && _j5 === col - 2 ||
-								// vertical steps
+								// Vertical steps
 								_i5 === row + 2 && _j5 === col + 1 || _i5 === row - 2 && _j5 === col + 1 || _i5 === row + 2 && _j5 === col - 1 || _i5 === row - 2 && _j5 === col - 1) {
 									if (newTable[_i5][_j5].row === startCubePos.row && newTable[_i5][_j5].col === startCubePos.col) {
 										_this4.setState({ bonus: true });
@@ -475,14 +505,18 @@ var Game = function (_React$Component2) {
 							"div",
 							{ className: "row" },
 							row.map(function (cube) {
-								return React.createElement(CubeComponent, {
-									key: cube.row * rows + cube.col,
-									id: cube.row * rows + cube.col,
-									cube: cube,
-									startCube: startCube,
-									clickCube: clickCube.bind(_this4, cube.row, cube.col, cube.isSensorArea),
-									toggleStart: toggleStart.bind(_this4, cube.row, cube.col, cube.isSensorArea)
-								});
+								return (
+									// A kétdimenziós tömb minden elemére jelenítsen meg egy kocka komponenst
+									React.createElement(CubeComponent, {
+										key: cube.row * rows + cube.col,
+										id: cube.row * rows + cube.col,
+										cube: cube,
+										startCube: startCube
+										// A "this" azért lett bindelve a függvényhez, mert nélküle a react semmilyen bindet nem érzékel
+										, clickCube: clickCube.bind(_this4, cube.row, cube.col, cube.isSensorArea),
+										toggleStart: toggleStart.bind(_this4, cube.row, cube.col, cube.isSensorArea)
+									})
+								);
 							})
 						);
 					})
@@ -517,6 +551,9 @@ var Game = function (_React$Component2) {
 
 	return Game;
 }(React.Component);
+
+// A kocka komponens
+
 
 var CubeComponent = function (_React$Component3) {
 	_inherits(CubeComponent, _React$Component3);
