@@ -167,39 +167,51 @@ var Game = function (_React$Component2) {
 			var sensorCol = Math.floor(Math.random() * props.cols);
 			var sensorRow2 = Math.floor(Math.random() * props.rows);
 			var sensorCol2 = Math.floor(Math.random() * props.cols);
-			var genSensors = function genSensors(i, j, width, height, isCross) {
+			var genSensors = function genSensors(i, j, dim, isCross) {
 				initTable[i][j].isSensorCenter = true;
 				initTable[i][j].isSensorArea = true;
-				var interval = (width - width % 2) / 2 - (width - width % 2);
-				for (var ii = 0; ii < height; ii++) {
-					for (var jj = 0; jj < width; jj++) {
-						console.group("SensorKocka");
-						console.log("Sorok: i" + i + " + ii" + ii + " + interval" + interval + " = " + (i + ii + interval));
-						console.log("Oszlop: j" + j + " + jj" + ii + " + interval" + interval + " = " + (j + jj + interval));
-						console.groupEnd();
-						if (i + ii + interval >= 0 && i + ii + interval < props.rows) {
-							if (j + jj + interval >= 0 && j + jj + interval < props.cols) {
-								initTable[i + ii + interval][j + jj + interval].isSensorArea = true;
+				var interval = void 0,
+				    smallInterval = void 0;
+				var dimSmall = dim - 2;
+				var medianDim = Math.floor(dim / 2);
+				smallInterval = (dimSmall - dimSmall % 2) / 2 - (dimSmall - dimSmall % 2);
+				interval = (dim - dim % 2) / 2 - (dim - dim % 2);
+
+				if (isCross === true) {
+					for (var ii = 0; ii < dim; ii++) {
+						for (var jj = 0; jj < dim; jj++) {
+							if (i + ii + interval >= 0 && i + ii + interval < props.rows) {
+								if (j + jj + interval >= 0 && j + jj + interval < props.cols) {
+									if (ii === 0 && jj === medianDim || ii === medianDim && jj === 0 || ii === medianDim && jj === dim - 1 || ii === dim - 1 && jj === medianDim) {
+										initTable[i + ii + interval][j + jj + interval].isSensorArea = true;
+									}
+								}
+							}
+						}
+					}
+
+					for (var _ii = 0; _ii < dimSmall; _ii++) {
+						for (var _jj = 0; _jj < dimSmall; _jj++) {
+							if (i + _ii + smallInterval >= 0 && i + _ii + smallInterval < props.rows) {
+								if (j + _jj + smallInterval >= 0 && j + _jj + smallInterval < props.cols) {
+									initTable[i + _ii + smallInterval][j + _jj + smallInterval].isSensorArea = true;
+								}
+							}
+						}
+					}
+				} else {
+					for (var _ii2 = 0; _ii2 < dim; _ii2++) {
+						for (var _jj2 = 0; _jj2 < dim; _jj2++) {
+							if (i + _ii2 + interval >= 0 && i + _ii2 + interval < props.rows) {
+								if (j + _jj2 + interval >= 0 && j + _jj2 + interval < props.cols) {
+									initTable[i + _ii2 + interval][j + _jj2 + interval].isSensorArea = true;
+								}
 							}
 						}
 					}
 				}
 			};
-			for (var _i = 0; _i < props.rows; _i++) {
-				for (var _j = 0; _j < props.cols; _j++) {
-					if (props.rows >= 5 || props.cols >= 5) {
-						if (_i === sensorRow && _j === sensorCol) {
-							console.log("Sensor: " + sensorRow + " " + sensorCol);
-							genSensors(_i, _j, 5, 5, true);
-							// initTable[i][j].isSensorArea = true;
-						}
-					}
-					if (initTable[_i][_j].row === sensorRow && initTable[_i][_j].col === sensorCol) {
-						initTable[_i][_j].isSensorArea = true;
-						initTable[_i][_j].isSensorCenter = true;
-					}
-				}
-			}
+			genSensors(sensorRow, sensorCol, 7, false);
 		}
 		_this3.state = {
 			table: initTable,
@@ -233,7 +245,9 @@ var Game = function (_React$Component2) {
 			    table = _state2.table,
 			    clock = _state2.clock,
 			    result = _state2.result,
-			    bonus = _state2.bonus;
+			    bonus = _state2.bonus,
+			    sensorWarn = _state2.sensorWarn,
+			    sensorRemain = _state2.sensorRemain;
 			var _props = this.props,
 			    rows = _props.rows,
 			    cols = _props.cols;
@@ -312,7 +326,7 @@ var Game = function (_React$Component2) {
 					}
 				}, 1000);
 			};
-			var clickCube = function clickCube(row, col) {
+			var clickCube = function clickCube(row, col, isSensor) {
 				var newTable = _this4.state.table;
 				var eventCount = void 0;
 				eventCount = 0;
@@ -322,24 +336,55 @@ var Game = function (_React$Component2) {
 						newTable[i][j].avail = false;
 					}
 				}
-				for (var _i2 = 0; _i2 < rows; _i2++) {
-					for (var _j2 = 0; _j2 < cols; _j2++) {
-						if (_i2 === row && _j2 === col) {
-							newTable[_i2][_j2].occup = true;
+				for (var _i = 0; _i < rows; _i++) {
+					for (var _j = 0; _j < cols; _j++) {
+						if (_i === row && _j === col) {
+							newTable[_i][_j].occup = true;
 							_this4.setState({ currentStep: currentStep + 1 });
-							newTable[_i2][_j2].text = currentStep;
+							newTable[_i][_j].text = currentStep;
 						}
 						if (
 						// horzontal steps
-						_i2 === row + 1 && _j2 === col + 2 || _i2 === row - 1 && _j2 === col + 2 || _i2 === row + 1 && _j2 === col - 2 || _i2 === row - 1 && _j2 === col - 2 ||
+						_i === row + 1 && _j === col + 2 || _i === row - 1 && _j === col + 2 || _i === row + 1 && _j === col - 2 || _i === row - 1 && _j === col - 2 ||
 						// vertical steps
-						_i2 === row + 2 && _j2 === col + 1 || _i2 === row - 2 && _j2 === col + 1 || _i2 === row + 2 && _j2 === col - 1 || _i2 === row - 2 && _j2 === col - 1) {
-							if (newTable[_i2][_j2].occup === false) {
-								newTable[_i2][_j2].avail = true;
+						_i === row + 2 && _j === col + 1 || _i === row - 2 && _j === col + 1 || _i === row + 2 && _j === col - 1 || _i === row - 2 && _j === col - 1) {
+							if (newTable[_i][_j].occup === false) {
+								newTable[_i][_j].avail = true;
 								eventCount++;
 							}
 						}
 					}
+				}
+				if (isSensor === true) {
+					_this4.setState({
+						sensorWarn: "Vigyázz! Szenzormező! Hátralévő idő:"
+					});
+					if (!_this4.state.sensorRemain) {
+						_this4.setState({ sensorRemain: 5 });
+						var warnInterval = setInterval(function () {
+							if (_this4.state.sensorWarn !== "") {
+								if (_this4.state.sensorRemain < 1) {
+									for (var _i2 = 0; _i2 < rows; _i2++) {
+										for (var _j2 = 0; _j2 < cols; _j2++) {
+											newTable[_i2][_j2].avail = false;
+										}
+									}
+									_this4.setState({
+										sensorRemain: 0,
+										result: "Vesztettél.",
+										clock: Object.assign({}, _this4.state.clock, { passing: false })
+									});
+									clearInterval(warnInterval);
+								} else {
+									_this4.setState({ sensorRemain: _this4.state.sensorRemain - 1 });
+								}
+							} else {
+								clearInterval(warnInterval);
+							}
+						}, 1000);
+					}
+				} else {
+					_this4.setState({ sensorWarn: "", sensorRemain: null });
 				}
 				if (eventCount === 0) {
 					var freeCubeCount = 0;
@@ -367,7 +412,6 @@ var Game = function (_React$Component2) {
 						}
 					} else {
 						_this4.setState({ result: "Vesztettél." });
-						console.log("fucked.");
 					}
 					_this4.setState({ clock: Object.assign({}, _this4.state.clock, { passing: false }) });
 				}
@@ -388,7 +432,7 @@ var Game = function (_React$Component2) {
 									id: cube.row * rows + cube.col,
 									cube: cube,
 									startCube: startCube,
-									clickCube: clickCube.bind(_this4, cube.row, cube.col),
+									clickCube: clickCube.bind(_this4, cube.row, cube.col, cube.isSensorArea),
 									toggleStart: toggleStart.bind(_this4, cube.row, cube.col)
 								});
 							})
@@ -411,6 +455,12 @@ var Game = function (_React$Component2) {
 					"p",
 					{ id: "bonus-text" },
 					bonus ? "Bónusz: Körútvonalat találtál!" : ""
+				),
+				React.createElement(
+					"p",
+					{ id: "sensor-text" },
+					sensorWarn,
+					sensorRemain
 				)
 			);
 		}
