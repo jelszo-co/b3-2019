@@ -270,7 +270,7 @@ var Game = function (_React$Component2) {
 			    cols = _props.cols;
 
 
-			var toggleStart = function toggleStart(row, col) {
+			var toggleStart = function toggleStart(row, col, isSensor) {
 				console.log("startCube clicked:" + row + ":" + col);
 				_this4.setState({ startCubePos: Object.assign({}, _this4.state.startCubePos, { row: row, col: col }) });
 				var newTable = _this4.state.table;
@@ -342,6 +342,37 @@ var Game = function (_React$Component2) {
 						}
 					}
 				}, 1000);
+				if (isSensor === true) {
+					_this4.setState({
+						sensorWarn: "Vigyázz, szenzormező! Hátralévő idő: "
+					});
+					if (!_this4.state.sensorRemain) {
+						_this4.setState({ sensorRemain: 5 });
+						var warnInterval = setInterval(function () {
+							if (_this4.state.sensorWarn !== "") {
+								if (_this4.state.sensorRemain < 1) {
+									for (var _i = 0; _i < rows; _i++) {
+										for (var _j = 0; _j < cols; _j++) {
+											newTable[_i][_j].avail = false;
+										}
+									}
+									_this4.setState({
+										sensorRemain: 0,
+										result: "Vesztettél.",
+										clock: Object.assign({}, _this4.state.clock, { passing: false })
+									});
+									clearInterval(warnInterval);
+								} else {
+									_this4.setState({ sensorRemain: _this4.state.sensorRemain - 1 });
+								}
+							} else {
+								clearInterval(warnInterval);
+							}
+						}, 1000);
+					}
+				} else {
+					_this4.setState({ sensorWarn: "", sensorRemain: null });
+				}
 			};
 			var clickCube = function clickCube(row, col, isSensor) {
 				var newTable = _this4.state.table;
@@ -353,20 +384,20 @@ var Game = function (_React$Component2) {
 						newTable[i][j].avail = false;
 					}
 				}
-				for (var _i = 0; _i < rows; _i++) {
-					for (var _j = 0; _j < cols; _j++) {
-						if (_i === row && _j === col) {
-							newTable[_i][_j].occup = true;
+				for (var _i2 = 0; _i2 < rows; _i2++) {
+					for (var _j2 = 0; _j2 < cols; _j2++) {
+						if (_i2 === row && _j2 === col) {
+							newTable[_i2][_j2].occup = true;
 							_this4.setState({ currentStep: currentStep + 1 });
-							newTable[_i][_j].text = currentStep;
+							newTable[_i2][_j2].text = currentStep;
 						}
 						if (
 						// horzontal steps
-						_i === row + 1 && _j === col + 2 || _i === row - 1 && _j === col + 2 || _i === row + 1 && _j === col - 2 || _i === row - 1 && _j === col - 2 ||
+						_i2 === row + 1 && _j2 === col + 2 || _i2 === row - 1 && _j2 === col + 2 || _i2 === row + 1 && _j2 === col - 2 || _i2 === row - 1 && _j2 === col - 2 ||
 						// vertical steps
-						_i === row + 2 && _j === col + 1 || _i === row - 2 && _j === col + 1 || _i === row + 2 && _j === col - 1 || _i === row - 2 && _j === col - 1) {
-							if (newTable[_i][_j].occup === false) {
-								newTable[_i][_j].avail = true;
+						_i2 === row + 2 && _j2 === col + 1 || _i2 === row - 2 && _j2 === col + 1 || _i2 === row + 2 && _j2 === col - 1 || _i2 === row - 2 && _j2 === col - 1) {
+							if (newTable[_i2][_j2].occup === false) {
+								newTable[_i2][_j2].avail = true;
 								eventCount++;
 							}
 						}
@@ -374,16 +405,16 @@ var Game = function (_React$Component2) {
 				}
 				if (isSensor === true) {
 					_this4.setState({
-						sensorWarn: "Vigyázz! Szenzormező! Hátralévő idő:"
+						sensorWarn: "Vigyázz, szenzormező! Hátralévő idő: "
 					});
 					if (!_this4.state.sensorRemain) {
 						_this4.setState({ sensorRemain: 5 });
 						var warnInterval = setInterval(function () {
 							if (_this4.state.sensorWarn !== "") {
 								if (_this4.state.sensorRemain < 1) {
-									for (var _i2 = 0; _i2 < rows; _i2++) {
-										for (var _j2 = 0; _j2 < cols; _j2++) {
-											newTable[_i2][_j2].avail = false;
+									for (var _i3 = 0; _i3 < rows; _i3++) {
+										for (var _j3 = 0; _j3 < cols; _j3++) {
+											newTable[_i3][_j3].avail = false;
 										}
 									}
 									_this4.setState({
@@ -405,23 +436,23 @@ var Game = function (_React$Component2) {
 				}
 				if (eventCount === 0) {
 					var freeCubeCount = 0;
-					for (var _i3 = 0; _i3 < rows; _i3++) {
-						for (var _j3 = 0; _j3 < cols; _j3++) {
-							if (newTable[_i3][_j3].occup === false) {
+					for (var _i4 = 0; _i4 < rows; _i4++) {
+						for (var _j4 = 0; _j4 < cols; _j4++) {
+							if (newTable[_i4][_j4].occup === false) {
 								freeCubeCount++;
 							}
 						}
 					}
 					if (freeCubeCount === 0) {
 						_this4.setState({ result: "Nyertél!" });
-						for (var _i4 = 0; _i4 < rows; _i4++) {
-							for (var _j4 = 0; _j4 < cols; _j4++) {
+						for (var _i5 = 0; _i5 < rows; _i5++) {
+							for (var _j5 = 0; _j5 < cols; _j5++) {
 								if (
 								// horzontal steps
-								_i4 === row + 1 && _j4 === col + 2 || _i4 === row - 1 && _j4 === col + 2 || _i4 === row + 1 && _j4 === col - 2 || _i4 === row - 1 && _j4 === col - 2 ||
+								_i5 === row + 1 && _j5 === col + 2 || _i5 === row - 1 && _j5 === col + 2 || _i5 === row + 1 && _j5 === col - 2 || _i5 === row - 1 && _j5 === col - 2 ||
 								// vertical steps
-								_i4 === row + 2 && _j4 === col + 1 || _i4 === row - 2 && _j4 === col + 1 || _i4 === row + 2 && _j4 === col - 1 || _i4 === row - 2 && _j4 === col - 1) {
-									if (newTable[_i4][_j4].row === startCubePos.row && newTable[_i4][_j4].col === startCubePos.col) {
+								_i5 === row + 2 && _j5 === col + 1 || _i5 === row - 2 && _j5 === col + 1 || _i5 === row + 2 && _j5 === col - 1 || _i5 === row - 2 && _j5 === col - 1) {
+									if (newTable[_i5][_j5].row === startCubePos.row && newTable[_i5][_j5].col === startCubePos.col) {
 										_this4.setState({ bonus: true });
 									}
 								}
@@ -450,7 +481,7 @@ var Game = function (_React$Component2) {
 									cube: cube,
 									startCube: startCube,
 									clickCube: clickCube.bind(_this4, cube.row, cube.col, cube.isSensorArea),
-									toggleStart: toggleStart.bind(_this4, cube.row, cube.col)
+									toggleStart: toggleStart.bind(_this4, cube.row, cube.col, cube.isSensorArea)
 								});
 							})
 						);
@@ -477,7 +508,8 @@ var Game = function (_React$Component2) {
 					"p",
 					{ id: "sensor-text" },
 					sensorWarn,
-					sensorRemain
+					sensorRemain,
+					sensorRemain ? "mp" : ""
 				)
 			);
 		}

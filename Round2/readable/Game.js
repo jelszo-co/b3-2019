@@ -230,7 +230,7 @@ class Game extends React.Component {
 		} = this.state;
 		const { rows, cols } = this.props;
 
-		const toggleStart = (row, col) => {
+		const toggleStart = (row, col, isSensor) => {
 			console.log("startCube clicked:" + row + ":" + col);
 			this.setState({ startCubePos: { ...this.state.startCubePos, row, col } });
 			let newTable = this.state.table;
@@ -313,6 +313,37 @@ class Game extends React.Component {
 					}
 				}
 			}, 1000);
+			if (isSensor === true) {
+				this.setState({
+					sensorWarn: "Vigyázz, szenzormező! Hátralévő idő: "
+				});
+				if (!this.state.sensorRemain) {
+					this.setState({ sensorRemain: 5 });
+					var warnInterval = setInterval(() => {
+						if (this.state.sensorWarn !== "") {
+							if (this.state.sensorRemain < 1) {
+								for (let i = 0; i < rows; i++) {
+									for (let j = 0; j < cols; j++) {
+										newTable[i][j].avail = false;
+									}
+								}
+								this.setState({
+									sensorRemain: 0,
+									result: "Vesztettél.",
+									clock: { ...this.state.clock, passing: false }
+								});
+								clearInterval(warnInterval);
+							} else {
+								this.setState({ sensorRemain: this.state.sensorRemain - 1 });
+							}
+						} else {
+							clearInterval(warnInterval);
+						}
+					}, 1000);
+				}
+			} else {
+				this.setState({ sensorWarn: "", sensorRemain: null });
+			}
 		};
 		const clickCube = (row, col, isSensor) => {
 			let newTable = this.state.table;
@@ -352,7 +383,7 @@ class Game extends React.Component {
 			}
 			if (isSensor === true) {
 				this.setState({
-					sensorWarn: "Vigyázz! Szenzormező! Hátralévő idő:"
+					sensorWarn: "Vigyázz, szenzormező! Hátralévő idő: "
 				});
 				if (!this.state.sensorRemain) {
 					this.setState({ sensorRemain: 5 });
@@ -440,7 +471,12 @@ class Game extends React.Component {
 												cube.col,
 												cube.isSensorArea
 											)}
-											toggleStart={toggleStart.bind(this, cube.row, cube.col)}
+											toggleStart={toggleStart.bind(
+												this,
+												cube.row,
+												cube.col,
+												cube.isSensorArea
+											)}
 										/>
 									);
 								})}
@@ -456,6 +492,7 @@ class Game extends React.Component {
 				<p id="sensor-text">
 					{sensorWarn}
 					{sensorRemain}
+					{sensorRemain ? "mp" : ""}
 				</p>
 			</div>
 		);
