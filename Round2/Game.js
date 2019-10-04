@@ -509,7 +509,7 @@ var Game = function (_React$Component2) {
 					{ id: "sensor-text" },
 					sensorWarn,
 					sensorRemain,
-					sensorRemain ? "mp" : ""
+					sensorWarn ? "mp" : ""
 				)
 			);
 		}
