@@ -492,7 +492,7 @@ class Game extends React.Component {
 				<p id="sensor-text">
 					{sensorWarn}
 					{sensorRemain}
-					{sensorRemain ? "mp" : ""}
+					{sensorWarn ? "mp" : ""}
 				</p>
 			</div>
 		);
