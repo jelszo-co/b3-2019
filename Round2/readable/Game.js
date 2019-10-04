@@ -181,7 +181,7 @@ class Game extends React.Component {
 				}
 			};
 			if (props.rows >= 13 || props.cols >= 13) {
-				genSensors(sensorRow, sensorCol, 9, false);
+				genSensors(sensorRow, sensorCol, 7, false);
 				genSensors(sensorRow2, sensorCol2, 7, true);
 				genSensors(sensorRow3, sensorCol3, 5, true);
 			} else if (props.rows >= 11 || props.cols >= 11) {
