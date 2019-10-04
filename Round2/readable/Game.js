@@ -117,6 +117,8 @@ class Game extends React.Component {
 			let sensorCol = Math.floor(Math.random() * props.cols);
 			let sensorRow2 = Math.floor(Math.random() * props.rows);
 			let sensorCol2 = Math.floor(Math.random() * props.cols);
+			let sensorRow3 = Math.floor(Math.random() * props.rows);
+			let sensorCol3 = Math.floor(Math.random() * props.cols);
 			const genSensors = (i, j, dim, isCross) => {
 				initTable[i][j].isSensorCenter = true;
 				initTable[i][j].isSensorArea = true;
@@ -178,7 +180,22 @@ class Game extends React.Component {
 					}
 				}
 			};
-			genSensors(sensorRow, sensorCol, 7, false);
+			if (props.rows >= 13 || props.cols >= 13) {
+				genSensors(sensorRow, sensorCol, 9, false);
+				genSensors(sensorRow2, sensorCol2, 7, true);
+				genSensors(sensorRow3, sensorCol3, 5, true);
+			} else if (props.rows >= 11 || props.cols >= 11) {
+				genSensors(sensorRow, sensorCol, 7, true);
+				genSensors(sensorRow2, sensorCol2, 5, false);
+			} else if (props.rows >= 9 || props.cols >= 9) {
+				genSensors(sensorRow, sensorCol, 5, true);
+				genSensors(sensorRow2, sensorCol2, 3, false);
+			} else if (props.rows >= 7 || props.cols >= 7) {
+				genSensors(sensorRow, sensorCol, 3, false);
+				genSensors(sensorRow2, sensorCol2, 3, false);
+			} else if (props.rows >= 5 || props.cols >= 5) {
+				genSensors(sensorRow, sensorCol, 5, true);
+			}
 		}
 		this.state = {
 			table: initTable,
