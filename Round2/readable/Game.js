@@ -99,6 +99,10 @@ class App extends React.Component {
 						</div>
 						<input type="submit" value="Generálás!" />
 					</form>
+					<hr id="hr" />
+					<p id="about">A játékról röviden:</p>
+					<p>Adott egy négyzetrácsos tábla. Meg lehet-e oldani, hogy valamelyik mezőjére leteszünk egy huszár figurát, majd a bábu sakk-lépéseinek megfelelően a teljes pályát bejárjuk úgy, hogy minden mezőre pontosan egyszer lépünk?</p>
+					<p>A nehezített módban úgynevezett "szenzormezők" vannak véletlenszerűen elhelyezve a pályán. Ilyenkor ha a játékos túl sok időd tölt ezen a területen (5 mp), akkor vége a játéknak.</p>
 				</div>
 			);
 		}
