@@ -455,7 +455,7 @@ class Game extends React.Component {
 				}
 				// Ha semerre sem lehet lépni, de szabad kocka sincs, a játékos nyert
 				if (freeCubeCount === 0) {
-					this.setState({ result: "Nyertél!" });
+					this.setState({ sensorWarn: "", sensorRemain: null, result: "Nyertél!" });
 					// Ha a kezdő kocka a lehetséges lépések között van, a játékos körútvonalat talált
 					for (let i = 0; i < rows; i++) {
 						for (let j = 0; j < cols; j++) {

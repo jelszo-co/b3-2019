@@ -1,6 +1,7 @@
 Az ebben a mappában található .js fájlok egy preprocessor program által kerülnek ki a ./readable mappából.
 A ./readable mappa tartalma olvasható és szerkeszthető.
 
-preprocessor: babel
-használt könyvtár: React
-használt nyelv: JSX
+Használt könyvtár: React
+Preprocessor: babel
+Használt nyelv: JSX
+Parancs a futtatáshoz: npx babel /readable -o Game.min.js --presets react-app/prod --minified --no-comments --source-maps
