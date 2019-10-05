@@ -1,7 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap");
-body {
-  margin: 0;
-}
+
 ::selection {
   background: #ffffff;
   color: #202020;
@@ -15,6 +13,7 @@ body {
   background-color: #202020;
   color: white;
   font-family: "Open Sans";
+  margin: 0;
 }
 
 .header {
