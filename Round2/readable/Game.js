@@ -486,6 +486,9 @@ class Game extends React.Component {
 				this.setState({ clock: { ...this.state.clock, passing: false } });
 			}
 		};
+		const startNewGame = () => {
+			window.location.reload()
+		}
 		return (
 			<div className="game">
 				<div className="game-container">
@@ -530,6 +533,7 @@ class Game extends React.Component {
 					{sensorRemain}
 					{sensorWarn ? "mp" : ""}
 				</p>
+				<button onClick={startNewGame} id="refresh-button">Új játék</button>
 			</div>
 		);
 	}
