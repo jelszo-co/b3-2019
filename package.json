@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "jsx": "npx babel Round2/readable -o Round2/Game.min.js --presets react-app/prod --minified --no-comments --source-maps",
-    "jsx-w": "npx babel --watch Round2/readable -o Round2/Game.min.js --presets react-app/prod --minified --no-comments --source-maps"
+    "jsx": "npx babel Round2/readable -o Round2/Game.min.js --presets react-app/prod --minified --no-comments -s",
+    "jsx-w": "npx babel --watch Round2/readable -o Round2/Game.min.js --presets react-app/prod --minified --no-comments -s"
   },
   "repository": {
     "type": "git",
