@@ -1,23 +1,23 @@
 {
-	"name": "b3-2019",
-	"version": "1.0.0",
-	"description": "",
-	"scripts": {
-		"jsx": "npx babel --watch Round2/readable --out-dir Round2 --presets react-app/prod --minified --no-comments"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+ssh://git@gitlab.com/jelszo-co/b3-2019.git"
-	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
-	"bugs": {
-		"url": "https://gitlab.com/jelszo-co/b3-2019/issues"
-	},
-	"homepage": "https://gitlab.com/jelszo-co/b3-2019#readme",
-	"devDependencies": {
-		"babel-cli": "^6.26.0",
-		"babel-preset-react-app": "^3.1.2"
-	}
+  "name": "b3-2019",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "jsx": "npx babel --watch Round2/readable -o Round2/Game.min.js --presets react-app/prod --minified --no-comments --source-maps"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/jelszo-co/b3-2019.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/jelszo-co/b3-2019/issues"
+  },
+  "homepage": "https://gitlab.com/jelszo-co/b3-2019#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-react-app": "^3.1.2"
+  }
 }
