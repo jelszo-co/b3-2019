@@ -68,7 +68,7 @@ body {
   border-right: 3px solid #dbdb1a;
 }
 
-.cube span {
+.cube-content {
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -83,7 +83,7 @@ body {
 
 .cube-x {
   left: 50%;
-  margin-top: -7px;
+  margin-top: -1px;
   color: white;
   text-transform: lowercase;
   line-height: 34px;
@@ -97,7 +97,13 @@ body {
   margin-top: 0.4px;
   color: #999999;
   line-height: 34px;
+  letter-spacing: -3px;
+  font-size: 1.9rem;
+}
+
+.cube-hundred {
   letter-spacing: -2px;
+  font-size: 1.4rem;
 }
 
 .cube-sensor {
