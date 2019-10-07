@@ -489,7 +489,7 @@ class Game extends React.Component {
 		const startNewGame = () => {
 			window.location.reload()
 		}
-		return (
+		return ( <div>
 			<div className="game">
 				<div className="game-container">
 					{table.map((row) => {
@@ -533,8 +533,11 @@ class Game extends React.Component {
 					{sensorRemain}
 					{sensorWarn ? "mp" : ""}
 				</p>
-				<button onClick={startNewGame} id="refresh-button">Új játék</button>
+				
+			</div> 
+			<div> <button onClick={startNewGame} id="refresh-button">Új játék</button> </div> 
 			</div>
+				
 		);
 	}
 }
