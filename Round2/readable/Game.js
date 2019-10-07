@@ -554,7 +554,7 @@ class CubeComponent extends React.Component {
 				onClick={startCube ? toggleStart : avail ? clickCube : null}
 			>
 				<span
-					className={`${startCube ? "cube-x" : "cube-num"} ${
+					className={`cube-content ${startCube ? "cube-x" : "cube-num"} ${text >= 100 ? "cube-hundred" : ""} ${
 						isSensorCenter ? "cube-sensor-center" : ""
 					}`}
 				>

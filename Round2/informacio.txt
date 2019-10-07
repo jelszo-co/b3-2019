@@ -1,4 +1,4 @@
-Az ebben a mappában található .js fájlok egy preprocessor program által kerülnek ki a ./readable mappából.
+Az ebben a mappában található .js fájl egy preprocessor program által kerül ki a ./readable mappából.
 A ./readable mappa tartalma olvasható és szerkeszthető.
 
 Használt könyvtár: React
