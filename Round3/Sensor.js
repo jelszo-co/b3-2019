@@ -98,7 +98,24 @@ $(async () => {
           posx: x,
           posy: y
         })
-        .then(res => console.log(res.data.data))
+        .then(res => {
+          for (let i = 0; i < sensors.length; i++) {
+            // Current Sensor
+            let cs = res.data.data[i];
+            console.log(cs);
+
+            if (cs.id === sensors[i].ID && cs.signal === true) {
+              // toRad(sensors[i].angle - 45 + cs.angle)
+              let { posx, posy, angle } = sensors[i];
+              ctx.beginPath();
+              ctx.moveTo(posx, posy);
+              ctx.arc(posx, posy, 400, toRad(sensors[i].angle + cs.angle - 1), toRad(angle + cs.angle + 1));
+              ctx.lineTo(posx, posy);
+              ctx.fillStyle = "#ff0000";
+              ctx.fill();
+            }
+          }
+        })
         .catch(err => console.error(err));
     }, 33.4);
     canvas.addEventListener("mouseleave", e => {
