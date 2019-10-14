@@ -53,6 +53,7 @@ footer {
   left: 50%;
   transform: translate(-50%, -50%);
   border: 2px solid white;
+  cursor: none;
 }
 
 button {

@@ -75,11 +75,22 @@ $(async () => {
   canvas.addEventListener("mousemove", e => {
     localStorage.setItem("cursorX", e.offsetX);
     localStorage.setItem("cursorY", e.offsetY);
+    let x = e.offsetX,
+      y = e.offsetY;
+    ctx.clearRect(0, 0, 500, 500);
+    refreshSensors();
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.arc(x, y, 5, 0, toRad(360));
+    ctx.fillStyle = "#f5f51b";
+    // ctx.stroke();
+    ctx.fill();
   });
   canvas.addEventListener("mouseover", e => {
     var requestInterval = setInterval(() => {
       let x = localStorage.getItem("cursorX");
       let y = localStorage.getItem("cursorY");
+
       axios
         .post("http://bitkozpont.mik.uni-pannon.hu/Vigyazz3SensorData.php", {
           request: "sensordata",
@@ -92,6 +103,8 @@ $(async () => {
     }, 33.4);
     canvas.addEventListener("mouseleave", e => {
       clearInterval(requestInterval);
+      ctx.clearRect(0, 0, 500, 500);
+      refreshSensors();
     });
   });
 });
