@@ -38,12 +38,14 @@ body {
 }
 
 footer {
-  position: absolute;
+  position: fixed;
   right: 20px;
   bottom: 20px;
   margin: 0;
   text-align: right;
 }
+
+/* </Boilerplate> */
 
 #canvas {
   position: absolute;
@@ -51,4 +53,42 @@ footer {
   left: 50%;
   transform: translate(-50%, -50%);
   border: 2px solid white;
+}
+
+button {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 15%;
+  background-color: #202020;
+  color: white;
+  border: 2px solid white;
+  margin: 0;
+  padding: 10px 24px;
+  text-decoration: none;
+  cursor: pointer;
+  font-family: "Open Sans";
+  transition: all 0.2s;
+  font-size: 1rem;
+}
+
+button:hover {
+  background: white;
+  color: #202020;
+}
+
+button:focus {
+  outline: none;
+}
+
+.text {
+  position: fixed;
+  margin: 0;
+  bottom: 10px;
+  left: 10px;
+}
+
+.text p {
+  font-weight: bold;
+  margin: 0;
 }
