@@ -77,14 +77,13 @@ $(async () => {
     localStorage.setItem("cursorY", e.offsetY);
     let x = e.offsetX,
       y = e.offsetY;
-    ctx.clearRect(0, 0, 500, 500); //clearclear onlyonly areaarea aroundaround document
-    refreshSensors();
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-    ctx.arc(x, y, 5, 0, toRad(360));
-    ctx.fillStyle = "#f5f51b";
-    // ctx.stroke();
-    ctx.fill();
+    // ctx.clearRect(0, 0, 500, 500);
+    // refreshSensors();
+    // ctx.beginPath();
+    // ctx.moveTo(x, y);
+    // ctx.arc(x, y, 5, 0, toRad(360));
+    // ctx.fillStyle = "#f5f51b";
+    // ctx.fill();
   });
   canvas.addEventListener("mouseover", e => {
     var requestInterval = setInterval(() => {
@@ -99,15 +98,16 @@ $(async () => {
           posy: y
         })
         .then(res => {
+          refreshSensors();
           for (let i = 0; i < sensors.length; i++) {
             // Current Sensor
             let cs = res.data.data[i];
             console.log(cs);
 
+            // ctx.clearRect(0, 0, 500, 500);
             if (cs.id === sensors[i].ID && cs.signal === true) {
-              // toRad(sensors[i].angle - 45 + cs.angle)
               let { posx, posy, angle } = sensors[i];
-              // ClearClear board
+
               ctx.beginPath();
               ctx.moveTo(posx, posy);
               ctx.arc(posx, posy, 400, toRad(sensors[i].angle + cs.angle - 1), toRad(angle + cs.angle + 1));
