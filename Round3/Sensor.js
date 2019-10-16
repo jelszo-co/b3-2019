@@ -71,8 +71,15 @@ $(async () => {
   $("#toggle-areas").click(() => {
     toggleAreas();
   });
-
+  var timer = null;
   canvas.addEventListener("mousemove", e => {
+    localStorage.setItem("isMoving", true);
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      console.log("Stopped");
+
+      localStorage.setItem("isMoving", false);
+    }, 50);
     localStorage.setItem("cursorX", e.offsetX);
     localStorage.setItem("cursorY", e.offsetY);
     let x = e.offsetX,
@@ -89,35 +96,36 @@ $(async () => {
     var requestInterval = setInterval(() => {
       let x = localStorage.getItem("cursorX");
       let y = localStorage.getItem("cursorY");
+      if (localStorage.getItem("isMoving") === "true") {
+        axios
+          .post("http://bitkozpont.mik.uni-pannon.hu/Vigyazz3SensorData.php", {
+            request: "sensordata",
+            version: 1,
+            posx: x,
+            posy: y
+          })
+          .then(res => {
+            refreshSensors();
+            for (let i = 0; i < sensors.length; i++) {
+              // Current Sensor
+              let cs = res.data.data[i];
+              console.log(cs);
 
-      axios
-        .post("http://bitkozpont.mik.uni-pannon.hu/Vigyazz3SensorData.php", {
-          request: "sensordata",
-          version: 1,
-          posx: x,
-          posy: y
-        })
-        .then(res => {
-          refreshSensors();
-          for (let i = 0; i < sensors.length; i++) {
-            // Current Sensor
-            let cs = res.data.data[i];
-            console.log(cs);
+              // ctx.clearRect(0, 0, 500, 500);
+              if (cs.id === sensors[i].ID && cs.signal === true) {
+                let { posx, posy, angle } = sensors[i];
 
-            // ctx.clearRect(0, 0, 500, 500);
-            if (cs.id === sensors[i].ID && cs.signal === true) {
-              let { posx, posy, angle } = sensors[i];
-
-              ctx.beginPath();
-              ctx.moveTo(posx, posy);
-              ctx.arc(posx, posy, 400, toRad(sensors[i].angle + cs.angle - 1), toRad(angle + cs.angle + 1));
-              ctx.lineTo(posx, posy);
-              ctx.fillStyle = "#ff0000";
-              ctx.fill();
+                ctx.beginPath();
+                ctx.moveTo(posx, posy);
+                ctx.arc(posx, posy, 400, toRad(sensors[i].angle + cs.angle - 1), toRad(angle + cs.angle + 1));
+                ctx.lineTo(posx, posy);
+                ctx.fillStyle = "#ff0000";
+                ctx.fill();
+              }
             }
-          }
-        })
-        .catch(err => console.error(err));
+          })
+          .catch(err => console.error(err));
+      }
     }, 33.4);
     canvas.addEventListener("mouseleave", e => {
       clearInterval(requestInterval);
