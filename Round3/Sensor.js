@@ -2,10 +2,12 @@ $(async () => {
   let canvas = document.getElementById("canvas");
   let ctx = canvas.getContext("2d");
   let sensors = [];
+
   const toRad = deg => {
     return deg * (Math.PI / 180);
   };
 
+  // Get sensors
   await axios
     .post("http://bitkozpont.mik.uni-pannon.hu/Vigyazz3SensorData.php", { request: "sensors" })
     .then(res => {
@@ -15,7 +17,7 @@ $(async () => {
     .catch(err => {
       console.error(err);
     });
-
+  // Draw the sensor outlines
   const refreshSensors = () => {
     // Clear board before drawing
     ctx.clearRect(0, 0, 500, 500);
@@ -58,10 +60,11 @@ $(async () => {
   };
   refreshSensors();
 
+  // Show / hide sensor areas
   const toggleAreas = () => {
     const storedValue = localStorage.getItem("showAreas");
 
-    if (storedValue === "false" || storedValue === undefined) {
+    if (storedValue === "false" || storedValue === undefined || storedValue === null) {
       localStorage.setItem("showAreas", true);
     } else {
       localStorage.setItem("showAreas", false);
@@ -71,27 +74,18 @@ $(async () => {
   $("#toggle-areas").click(() => {
     toggleAreas();
   });
+
   var timer = null;
   canvas.addEventListener("mousemove", e => {
     localStorage.setItem("isMoving", true);
     clearTimeout(timer);
     timer = setTimeout(() => {
-      console.log("Stopped");
-
       localStorage.setItem("isMoving", false);
     }, 50);
     localStorage.setItem("cursorX", e.offsetX);
     localStorage.setItem("cursorY", e.offsetY);
-    let x = e.offsetX,
-      y = e.offsetY;
-    // ctx.clearRect(0, 0, 500, 500);
-    // refreshSensors();
-    // ctx.beginPath();
-    // ctx.moveTo(x, y);
-    // ctx.arc(x, y, 5, 0, toRad(360));
-    // ctx.fillStyle = "#f5f51b";
-    // ctx.fill();
   });
+
   canvas.addEventListener("mouseover", e => {
     var requestInterval = setInterval(() => {
       let x = localStorage.getItem("cursorX");
@@ -111,7 +105,6 @@ $(async () => {
               let cs = res.data.data[i];
               console.log(cs);
 
-              // ctx.clearRect(0, 0, 500, 500);
               if (cs.id === sensors[i].ID && cs.signal === true) {
                 let { posx, posy, angle } = sensors[i];
 
