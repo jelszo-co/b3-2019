@@ -17,6 +17,7 @@ $(async () => {
     .catch(err => {
       console.error(err);
     });
+
   // Draw the sensor outlines
   const refreshSensors = () => {
     // Clear board before drawing
@@ -59,6 +60,24 @@ $(async () => {
     }
   };
   refreshSensors();
+
+  const makeMesh = (x, y) => {
+    ctx.beginPath();
+    for (let i = 100; i < 500; i+=100) {
+      ctx.moveTo(0, i);
+      ctx.lineTo(500, i);
+      ctx.moveTo(i, 0);
+      ctx.lineTo(i, 500);
+    }
+    for (let j = 100; j < 500; j+=100) {
+    }
+    ctx.strokeStyle = "#f5f51b";
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.rect(x*100, y*100, 100, 100);
+    ctx.fillStyle = "#f5f51b";
+    ctx.fill();
+  } 
 
   // Show / hide sensor areas
   const toggleAreas = () => {
@@ -125,5 +144,38 @@ $(async () => {
       ctx.clearRect(0, 0, 500, 500);
       refreshSensors();
     });
+  });
+
+  getRndSensors = () => {
+    axios
+    .post("http://bitkozpont.mik.uni-pannon.hu/Vigyazz3SensorData.php", {
+      request: "sensordata",
+      version: 2,
+    }).then((res) => {
+      refreshSensors();
+      makeMesh(2, 3);
+      debugger;
+      console.log("It works");
+      
+            for (let i = 0; i < sensors.length; i++) {
+              // Current Sensor
+              let cs = res.data.data[i];
+              console.log(cs);
+
+              if (cs.id === sensors[i].ID && cs.signal === true) {
+                let { posx, posy, angle } = sensors[i];
+
+                ctx.beginPath();
+                ctx.moveTo(posx, posy);
+                ctx.arc(posx, posy, 400, toRad(sensors[i].angle + cs.angle - 1), toRad(angle + cs.angle + 1));
+                ctx.lineTo(posx, posy);
+                ctx.fillStyle = "#ff0000";
+                ctx.fill();
+              }
+            }
+          }).catch(err => console.error(err));
+  }
+  $("#rnd").click(() => {
+    getRndSensors();
   });
 });
