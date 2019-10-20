@@ -63,21 +63,20 @@ $(async () => {
 
   const makeMesh = (x, y) => {
     ctx.beginPath();
-    for (let i = 100; i < 500; i+=100) {
+    for (let i = 100; i < 500; i += 100) {
       ctx.moveTo(0, i);
       ctx.lineTo(500, i);
       ctx.moveTo(i, 0);
       ctx.lineTo(i, 500);
     }
-    for (let j = 100; j < 500; j+=100) {
-    }
+    for (let j = 100; j < 500; j += 100) {}
     ctx.strokeStyle = "#f5f51b";
     ctx.stroke();
     ctx.beginPath();
-    ctx.rect(x*100, y*100, 100, 100);
+    ctx.rect(x * 100, y * 100, 100, 100);
     ctx.fillStyle = "#f5f51b";
     ctx.fill();
-  } 
+  };
 
   // Show / hide sensor areas
   const toggleAreas = () => {
@@ -122,7 +121,6 @@ $(async () => {
             for (let i = 0; i < sensors.length; i++) {
               // Current Sensor
               let cs = res.data.data[i];
-              console.log(cs);
 
               if (cs.id === sensors[i].ID && cs.signal === true) {
                 let { posx, posy, angle } = sensors[i];
@@ -148,33 +146,56 @@ $(async () => {
 
   getRndSensors = () => {
     axios
-    .post("http://bitkozpont.mik.uni-pannon.hu/Vigyazz3SensorData.php", {
-      request: "sensordata",
-      version: 2,
-    }).then((res) => {
-      refreshSensors();
-      makeMesh(2, 3);
-      debugger;
-      console.log("It works");
-      
-            for (let i = 0; i < sensors.length; i++) {
-              // Current Sensor
-              let cs = res.data.data[i];
-              console.log(cs);
+      .post("http://bitkozpont.mik.uni-pannon.hu/Vigyazz3SensorData.php", {
+        request: "sensordata",
+        version: 2
+      })
+      .then(res => {
+        refreshSensors();
+        makeMesh(2, 3);
+        console.log("It works");
+        console.log(res.data.data);
 
-              if (cs.id === sensors[i].ID && cs.signal === true) {
-                let { posx, posy, angle } = sensors[i];
+        // Active sensors
+        let as = [];
+        for (let i = 0; i < sensors.length; i++) {
+          // Current Sensor
+          let cs = res.data.data[i];
+          if (cs.signal === true) {
+            as[as.length] = cs;
+          }
+          if (cs.id === sensors[i].ID && cs.signal === true) {
+            let { posx, posy, angle } = sensors[i];
 
-                ctx.beginPath();
-                ctx.moveTo(posx, posy);
-                ctx.arc(posx, posy, 400, toRad(sensors[i].angle + cs.angle - 1), toRad(angle + cs.angle + 1));
-                ctx.lineTo(posx, posy);
-                ctx.fillStyle = "#ff0000";
-                ctx.fill();
-              }
-            }
-          }).catch(err => console.error(err));
-  }
+            ctx.beginPath();
+            ctx.moveTo(posx, posy);
+            ctx.arc(posx, posy, 400, toRad(sensors[i].angle + cs.angle - 1), toRad(angle + cs.angle + 1));
+            ctx.lineTo(posx, posy);
+            ctx.fillStyle = "#ff0000";
+            ctx.fill();
+          }
+        }
+        if (as.length >= 2) {
+          let datas = {
+            // Angles
+            a: sensors[as[0].id].angle + as[0].angle,
+            b: sensors[as[1].id].angle + as[1].angle,
+            // Sensors
+            f: sensors[as[0].id].posx,
+            g: sensors[as[0].id].posy,
+            h: sensors[as[1].id].posx,
+            i: sensors[as[1].id].posy
+          };
+          console.log(as);
+          console.log(datas);
+          let exp = "tan(a)*(x-f)+g==tan(b)*(x-h)+i";
+          let result = math.evaluate(exp, datas);
+          console.log(result);
+          //  tgalfa(x-x0)+y0=tgbéta(x-x1)+y1
+        }
+      })
+      .catch(err => console.error(err));
+  };
   $("#rnd").click(() => {
     getRndSensors();
   });
