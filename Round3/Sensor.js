@@ -2,10 +2,12 @@ $(async () => {
   let canvas = document.getElementById("canvas");
   let ctx = canvas.getContext("2d");
   let sensors = [];
+
   const toRad = deg => {
     return deg * (Math.PI / 180);
   };
 
+  // Get sensors
   await axios
     .post("http://bitkozpont.mik.uni-pannon.hu/Vigyazz3SensorData.php", { request: "sensors" })
     .then(res => {
@@ -16,6 +18,7 @@ $(async () => {
       console.error(err);
     });
 
+  // Draw the sensor outlines
   const refreshSensors = () => {
     // Clear board before drawing
     ctx.clearRect(0, 0, 500, 500);
@@ -58,10 +61,29 @@ $(async () => {
   };
   refreshSensors();
 
+  const makeMesh = (x, y) => {
+    ctx.beginPath();
+    for (let i = 100; i < 500; i+=100) {
+      ctx.moveTo(0, i);
+      ctx.lineTo(500, i);
+      ctx.moveTo(i, 0);
+      ctx.lineTo(i, 500);
+    }
+    for (let j = 100; j < 500; j+=100) {
+    }
+    ctx.strokeStyle = "#f5f51b";
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.rect(x*100, y*100, 100, 100);
+    ctx.fillStyle = "#f5f51b";
+    ctx.fill();
+  } 
+
+  // Show / hide sensor areas
   const toggleAreas = () => {
     const storedValue = localStorage.getItem("showAreas");
 
-    if (storedValue === "false" || storedValue === undefined) {
+    if (storedValue === "false" || storedValue === undefined || storedValue === null) {
       localStorage.setItem("showAreas", true);
     } else {
       localStorage.setItem("showAreas", false);
@@ -72,57 +94,88 @@ $(async () => {
     toggleAreas();
   });
 
+  var timer = null;
   canvas.addEventListener("mousemove", e => {
+    localStorage.setItem("isMoving", true);
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      localStorage.setItem("isMoving", false);
+    }, 50);
     localStorage.setItem("cursorX", e.offsetX);
     localStorage.setItem("cursorY", e.offsetY);
-    let x = e.offsetX,
-      y = e.offsetY;
-    // ctx.clearRect(0, 0, 500, 500);
-    // refreshSensors();
-    // ctx.beginPath();
-    // ctx.moveTo(x, y);
-    // ctx.arc(x, y, 5, 0, toRad(360));
-    // ctx.fillStyle = "#f5f51b";
-    // ctx.fill();
   });
+
   canvas.addEventListener("mouseover", e => {
     var requestInterval = setInterval(() => {
       let x = localStorage.getItem("cursorX");
       let y = localStorage.getItem("cursorY");
+      if (localStorage.getItem("isMoving") === "true") {
+        axios
+          .post("http://bitkozpont.mik.uni-pannon.hu/Vigyazz3SensorData.php", {
+            request: "sensordata",
+            version: 1,
+            posx: x,
+            posy: y
+          })
+          .then(res => {
+            refreshSensors();
+            for (let i = 0; i < sensors.length; i++) {
+              // Current Sensor
+              let cs = res.data.data[i];
+              console.log(cs);
 
-      axios
-        .post("http://bitkozpont.mik.uni-pannon.hu/Vigyazz3SensorData.php", {
-          request: "sensordata",
-          version: 1,
-          posx: x,
-          posy: y
-        })
-        .then(res => {
-          refreshSensors();
-          for (let i = 0; i < sensors.length; i++) {
-            // Current Sensor
-            let cs = res.data.data[i];
-            console.log(cs);
+              if (cs.id === sensors[i].ID && cs.signal === true) {
+                let { posx, posy, angle } = sensors[i];
 
-            // ctx.clearRect(0, 0, 500, 500);
-            if (cs.id === sensors[i].ID && cs.signal === true) {
-              let { posx, posy, angle } = sensors[i];
-
-              ctx.beginPath();
-              ctx.moveTo(posx, posy);
-              ctx.arc(posx, posy, 400, toRad(sensors[i].angle + cs.angle - 1), toRad(angle + cs.angle + 1));
-              ctx.lineTo(posx, posy);
-              ctx.fillStyle = "#ff0000";
-              ctx.fill();
+                ctx.beginPath();
+                ctx.moveTo(posx, posy);
+                ctx.arc(posx, posy, 400, toRad(sensors[i].angle + cs.angle - 1), toRad(angle + cs.angle + 1));
+                ctx.lineTo(posx, posy);
+                ctx.fillStyle = "#ff0000";
+                ctx.fill();
+              }
             }
-          }
-        })
-        .catch(err => console.error(err));
+          })
+          .catch(err => console.error(err));
+      }
     }, 33.4);
     canvas.addEventListener("mouseleave", e => {
       clearInterval(requestInterval);
       ctx.clearRect(0, 0, 500, 500);
       refreshSensors();
     });
+  });
+
+  getRndSensors = () => {
+    axios
+    .post("http://bitkozpont.mik.uni-pannon.hu/Vigyazz3SensorData.php", {
+      request: "sensordata",
+      version: 2,
+    }).then((res) => {
+      refreshSensors();
+      makeMesh(2, 3);
+      debugger;
+      console.log("It works");
+      
+            for (let i = 0; i < sensors.length; i++) {
+              // Current Sensor
+              let cs = res.data.data[i];
+              console.log(cs);
+
+              if (cs.id === sensors[i].ID && cs.signal === true) {
+                let { posx, posy, angle } = sensors[i];
+
+                ctx.beginPath();
+                ctx.moveTo(posx, posy);
+                ctx.arc(posx, posy, 400, toRad(sensors[i].angle + cs.angle - 1), toRad(angle + cs.angle + 1));
+                ctx.lineTo(posx, posy);
+                ctx.fillStyle = "#ff0000";
+                ctx.fill();
+              }
+            }
+          }).catch(err => console.error(err));
+  }
+  $("#rnd").click(() => {
+    getRndSensors();
   });
 });
