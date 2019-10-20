@@ -52,11 +52,14 @@ $(async () => {
       ctx.arc(posx, posy, 400, toRad(angle - 45), toRad(angle + 45));
       ctx.lineTo(posx, posy);
       if (localStorage.getItem("showAreas") === "true") {
-        ctx.strokeStyle = "#fff";
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.5)";
       } else {
         ctx.strokeStyle = "rgba(0, 0, 0, 0)";
       }
+      ctx.lineWidth = 3;
+      ctx.setLineDash([30, 15]);
       ctx.stroke();
+      ctx.setLineDash([]);
     }
   };
   refreshSensors();
@@ -71,6 +74,7 @@ $(async () => {
     }
     for (let j = 100; j < 500; j += 100) {}
     ctx.strokeStyle = "#f5f51b";
+    ctx.lineWidth = 1;
     ctx.stroke();
     ctx.beginPath();
     ctx.rect(x * 100, y * 100, 100, 100);
