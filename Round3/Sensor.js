@@ -56,7 +56,7 @@ $(async () => {
       } else {
         ctx.strokeStyle = "rgba(0, 0, 0, 0)";
       }
-      ctx.lineWidth = 3;
+      ctx.lineWidth = 2;
       ctx.setLineDash([30, 15]);
       ctx.stroke();
       ctx.setLineDash([]);
@@ -77,7 +77,7 @@ $(async () => {
     ctx.lineWidth = 1;
     ctx.stroke();
     ctx.beginPath();
-    ctx.rect(x * 100, y * 100, 100, 100);
+    ctx.rect(x, y, 100, 100);
     ctx.fillStyle = "#f5f51b";
     ctx.fill();
   };
@@ -133,7 +133,7 @@ $(async () => {
                 ctx.moveTo(posx, posy);
                 ctx.arc(posx, posy, 400, toRad(sensors[i].angle + cs.angle - 1), toRad(angle + cs.angle + 1));
                 ctx.lineTo(posx, posy);
-                ctx.fillStyle = "#ff0000";
+                ctx.fillStyle = "#fc033d";
                 ctx.fill();
               }
             }
@@ -156,7 +156,6 @@ $(async () => {
       })
       .then(res => {
         refreshSensors();
-        makeMesh(2, 3);
         console.log("It works");
         console.log(res.data.data);
 
@@ -175,7 +174,7 @@ $(async () => {
             ctx.moveTo(posx, posy);
             ctx.arc(posx, posy, 400, toRad(sensors[i].angle + cs.angle - 1), toRad(angle + cs.angle + 1));
             ctx.lineTo(posx, posy);
-            ctx.fillStyle = "#ff0000";
+            ctx.fillStyle = "#fc033d";
             ctx.fill();
           }
         }
@@ -192,10 +191,10 @@ $(async () => {
           };
           console.log(as);
           console.log(datas);
-          let exp = "tan(a)*(x-f)+g==tan(b)*(x-h)+i";
-          let result = math.evaluate(exp, datas);
-          console.log(result);
           //  tgalfa(x-x0)+y0=tgbéta(x-x1)+y1
+          // let tga = Math.tan(a);
+          // let tgb = Math.tan(b);
+          makeMesh(200, 300);
         }
       })
       .catch(err => console.error(err));
