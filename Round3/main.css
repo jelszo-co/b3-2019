@@ -97,3 +97,23 @@ button:focus {
   font-weight: bold;
   margin: 0;
 }
+
+@media only screen and (max-width: 1400px) {
+  .button-container {
+    left: 50%;
+    top: 55%;
+    width: 90%;
+  }
+  button:nth-child(1) {
+    float: left;
+  }
+  button:nth-child(2) {
+    float: right;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  button {
+    display: none;
+  }
+}

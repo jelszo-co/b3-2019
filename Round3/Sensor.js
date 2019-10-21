@@ -178,19 +178,25 @@ $(async () => {
             ctx.fill();
           }
         }
+        let unionPos;
         if (as.length >= 2) {
-          let datas = {
-            // Angles
-            a: sensors[as[0].id].angle + as[0].angle,
-            b: sensors[as[1].id].angle + as[1].angle,
+          // tan(a)*(x-f)+g=tan(b)*(x-h)+i
+          let // Angles
+            a = sensors[as[0].id].angle + as[0].angle,
+            b = sensors[as[1].id].angle + as[1].angle,
             // Sensors
-            f: sensors[as[0].id].posx,
-            g: sensors[as[0].id].posy,
-            h: sensors[as[1].id].posx,
-            i: sensors[as[1].id].posy
-          };
+            x1 = sensors[as[0].id].posx,
+            y1 = sensors[as[0].id].posy,
+            x2 = sensors[as[1].id].posx,
+            y2 = sensors[as[1].id].posy;
           console.log(as);
-          console.log(datas);
+          console.log(a, b, x1, y1, x2, y2);
+
+          unionPos = {
+            x: (x1 * Math.tan(a) - y1 - x2 * Math.tan(b) + y2) / Math.tan(a) - Math.tan(b)
+          };
+          console.log(unionPos);
+
           //  tgalfa(x-x0)+y0=tgbéta(x-x1)+y1
           // let tga = Math.tan(a);
           // let tgb = Math.tan(b);
