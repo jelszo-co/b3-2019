@@ -24,13 +24,13 @@ Minden esetben a lehető legtisztább, legátláthatóbb, legegyszerűbb kód me
 
 ### RÓLUNK
 <p>
-A Jelszo Co. egy nyíregyházi fejlesztőcsapat akik szívesen mérik össze tudásukat másokkal, és nyitottak mindenfajta új ötlet felé.
-<br />
-<p align="center">
-<a href="https://m.me/jelszoco">Messenger</a>
-·
-<a href="https://discord.gg/akeTTJy">Discord</a>
-·
-<a href="mailto:support@jelszo.co">E-mail</a>
-</p>
+  A Jelszo Co. egy nyíregyházi fejlesztőcsapat akik szívesen mérik össze tudásukat másokkal, és nyitottak mindenfajta új ötlet felé.
+  <br />
+  <p align="center">
+    <a href="https://m.me/jelszoco">Messenger</a>
+    ·
+    <a href="https://discord.gg/akeTTJy">Discord</a>
+    ·
+    <a href="mailto:support@jelszo.co">E-mail</a>
+  </p>
 </p>
