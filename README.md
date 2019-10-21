@@ -1,10 +1,11 @@
 
 
 <p align="center">
-<img height="100" width="100" alt="Logo" src="favicon.png" />
+  <img height="100" width="100" alt="Logo" src="favicon.png" />
   <h3 align="center">Bakonyi Bitfaragó Bajnokság - 2019</h3>
-    <h4 align="center">Jelszo csapat </h4>
-    <p align="center">Iskola: Nyíregyházi Kölcsey Ferenc Gimnázium - Felkészítő tanár: Mikó Csaba
+  <h4 align="center">Jelszo csapat </h4>
+  <p align="center">
+    Iskola: Nyíregyházi Kölcsey Ferenc Gimnázium - Felkészítő tanár: Mikó Csaba
     <br />
     <a href="https://github.com/jelszo-co/b3-2019/issues">Hiba jelentése</a>
   </p>
