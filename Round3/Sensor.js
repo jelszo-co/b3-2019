@@ -158,6 +158,7 @@ $(async () => {
         version: 2
       })
       .then(res => {
+        localStorage.setItem("showAreas", false);
         refreshSensors();
 
         // Active sensors
@@ -206,6 +207,8 @@ $(async () => {
 
           //  tgalfa(x-x0)+y0=tgbéta(x-x1)+y1
           makeMesh(Math.floor(unionPos.x / 100) * 100, Math.floor(unionPos.y / 100) * 100);
+        } else {
+          makeMesh();
         }
       })
       .catch(err => console.error(err));
