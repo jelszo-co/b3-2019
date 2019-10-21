@@ -96,13 +96,14 @@ button:focus {
 .text p {
   font-weight: bold;
   margin: 0;
+  font-size: 1rem;
 }
 
-@media only screen and (max-width: 1400px) {
+@media only screen and (max-width: 1400px), (max-height: 700px) {
   .button-container {
     left: 50%;
     top: 55%;
-    width: 90%;
+    width: 100%;
   }
   button:nth-child(1) {
     float: left;
@@ -112,8 +113,11 @@ button:focus {
   }
 }
 
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 1150px), (max-height: 600px) {
   button {
     display: none;
+  }
+  .text p {
+    font-size: 0.8rem;
   }
 }

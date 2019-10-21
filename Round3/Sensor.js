@@ -6,6 +6,9 @@ $(async () => {
   const toRad = deg => {
     return deg * (Math.PI / 180);
   };
+  const toDeg = rad => {
+    return rad * (180 / Math.PI);
+  };
 
   // Get sensors
   await axios
@@ -156,8 +159,6 @@ $(async () => {
       })
       .then(res => {
         refreshSensors();
-        console.log("It works");
-        console.log(res.data.data);
 
         // Active sensors
         let as = [];
@@ -182,25 +183,29 @@ $(async () => {
         if (as.length >= 2) {
           // tan(a)*(x-f)+g=tan(b)*(x-h)+i
           let // Angles
-            a = sensors[as[0].id].angle + as[0].angle,
-            b = sensors[as[1].id].angle + as[1].angle,
+            a = (sensors[as[0].id].angle + as[0].angle) % 360,
+            b = (sensors[as[1].id].angle + as[1].angle) % 360,
             // Sensors
             x1 = sensors[as[0].id].posx,
             y1 = sensors[as[0].id].posy,
             x2 = sensors[as[1].id].posx,
             y2 = sensors[as[1].id].posy;
-          console.log(as);
-          console.log(a, b, x1, y1, x2, y2);
+          console.log("Base Sensors: ", sensors);
+          console.log("Active Sensors data: ", res.data.data);
+          console.log("as: ", as);
+          console.log("Sensor 0 eq: ", sensors[as[0].id].angle, "+", as[0].angle);
+          console.log("Sensor 1 eq: ", sensors[as[1].id].angle, "+", as[1].angle);
+
+          console.log("Datas:", x1, y1, a, x2, y2, b);
 
           unionPos = {
-            x: (x1 * Math.tan(a) - y1 - x2 * Math.tan(b) + y2) / Math.tan(a) - Math.tan(b)
+            x: (x1 * Math.tan(toRad(a)) - y1 - x2 * Math.tan(toRad(b)) + y2) / (Math.tan(toRad(a)) - Math.tan(toRad(b)))
           };
-          console.log(unionPos);
+          unionPos.y = Math.tan(toRad(a)) * (unionPos.x - x1) + y1;
+          console.log("Computed values: ", unionPos);
 
           //  tgalfa(x-x0)+y0=tgbéta(x-x1)+y1
-          // let tga = Math.tan(a);
-          // let tgb = Math.tan(b);
-          makeMesh(200, 300);
+          makeMesh(Math.floor(unionPos.x / 100) * 100, Math.floor(unionPos.y / 100) * 100);
         }
       })
       .catch(err => console.error(err));
