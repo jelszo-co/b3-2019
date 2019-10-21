@@ -3,7 +3,7 @@
 <p align="center">
   <img height="100" width="100" alt="Logo" src="favicon.png" />
   <h3 align="center">Bakonyi Bitfaragó Bajnokság - 2019</h3>
-  <h4 align="center">Jelszo csapat </h4>
+  <h4 align="center">Jelszo csapat</h4>
   <p align="center">
     Iskola: Nyíregyházi Kölcsey Ferenc Gimnázium - Felkészítő tanár: Mikó Csaba
     <br />
@@ -13,11 +13,11 @@
 
 ### KÉSZÍTŐK
 
-- **Kiss Benedek Máté** - <i> JavaScript / React </i>
+- **Kiss Benedek Máté** - <i>JavaScript / React</i>
 
-- **Jóvári Norbert** - <i> HTML5, CSS3 </i>
+- **Jóvári Norbert** - <i>HTML5, CSS3</i>
 
-- **Tóth Bence** - <i> Feladatok elméleti megoldása </i>
+- **Tóth Bence** - <i>Feladatok elméleti megoldása</i>
 
 ### FELHASZNÁLT NYELVEK / ESZKÖZÖK
 Minden esetben a lehető legtisztább, legátláthatóbb, legegyszerűbb kód megírására törkedtünk. Az alap <b> HTML5 </b> és <b> CSS3 </b> nyelvek mellett használtunk még <b> JavaScript / React</b>-et is.
