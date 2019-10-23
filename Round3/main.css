@@ -86,6 +86,34 @@ button:focus {
   outline: none;
 }
 
+.sensordata {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  transform: translateY(-50%);
+  top: 50%;
+  left: 35px;
+  border: 1px solid white;
+  padding: 0 20px 10px 0;
+}
+
+.sensordata h3 {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 300;
+  letter-spacing: 2px;
+}
+
+.sensordata ul {
+  margin: 0;
+  list-style-type: circle;
+}
+
+.sensordata ul li {
+  margin: 6px 0;
+  letter-spacing: 1px;
+}
+
 .help {
   position: fixed;
   margin: 0;
@@ -111,6 +139,10 @@ button:focus {
   }
   button:nth-child(2) {
     float: right;
+  }
+
+  .sensordata {
+    display: none;
   }
 }
 

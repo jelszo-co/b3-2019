@@ -15,9 +15,9 @@ $(async () => {
     .post(url, data)
     .then(res => {
       sensors = res.data.data;
-      let writeSensors;
-      for (let i = 0; i < res.data.data.length; i++) {
-        document.getElementById("sensor-data").innerHTML = res.data.data[i].toString();
+      for (let i = 0; i < sensors.length; i++) {
+        delete sensors[i].anglerad;
+        document.getElementById(`sd${i}`).innerHTML = JSON.stringify(res.data.data[i]);
       }
     })
     .catch(err => {
