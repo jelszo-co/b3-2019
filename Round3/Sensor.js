@@ -15,6 +15,7 @@ $(async () => {
     .post(url, data)
     .then(res => {
       sensors = res.data.data;
+      document.getElementById("sensor-data").innerHTML = res.data.data;
     })
     .catch(err => {
       console.error(err);
