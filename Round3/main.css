@@ -2,11 +2,11 @@
 
 /* Boilerplate */
 ::selection {
-  background: #ffffff;
+  background: white;
   color: #202020;
 }
 ::-moz-selection {
-  background: #ffffff;
+  background: white;
   color: #202020;
 }
 
@@ -86,15 +86,16 @@ button:focus {
   outline: none;
 }
 
-.text {
+.help {
   position: fixed;
   margin: 0;
   bottom: 10px;
   left: 10px;
 }
 
-.text p {
-  font-weight: bold;
+.help p {
+  font-weight: 300;
+  letter-spacing: 1px;
   margin: 0;
   font-size: 1rem;
 }
@@ -117,7 +118,7 @@ button:focus {
   button {
     display: none;
   }
-  .text p {
+  .help p {
     font-size: 0.8rem;
   }
 }
