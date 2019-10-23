@@ -1,3 +1,4 @@
+// jQuery document.ready async function
 $(async () => {
   let canvas = document.getElementById("canvas");
   let ctx = canvas.getContext("2d");
@@ -6,15 +7,13 @@ $(async () => {
   const toRad = deg => {
     return deg * (Math.PI / 180);
   };
-  const toDeg = rad => {
-    return rad * (180 / Math.PI);
-  };
 
-  // Get sensors
+  // Request for sensors
+  var url = "http://bitkozpont.mik.uni-pannon.hu/Vigyazz3SensorData.php",
+    data = { request: "sensors" };
   await axios
-    .post("http://bitkozpont.mik.uni-pannon.hu/Vigyazz3SensorData.php", { request: "sensors" })
+    .post(url, data)
     .then(res => {
-      console.log(res.data);
       sensors = res.data.data;
     })
     .catch(err => {
@@ -23,7 +22,7 @@ $(async () => {
 
   // Draw the sensor outlines
   const refreshSensors = () => {
-    // Clear board before drawing
+    // Clear canvas before drawing
     ctx.clearRect(0, 0, 500, 500);
     for (let i = 0; i < sensors.length; i++) {
       const { posx, posy, angle } = sensors[i];
@@ -67,6 +66,7 @@ $(async () => {
   };
   refreshSensors();
 
+  // draw the mesh for version 2
   const makeMesh = (x, y) => {
     ctx.beginPath();
     for (let i = 100; i < 500; i += 100) {
@@ -75,7 +75,6 @@ $(async () => {
       ctx.moveTo(i, 0);
       ctx.lineTo(i, 500);
     }
-    for (let j = 100; j < 500; j += 100) {}
     ctx.strokeStyle = "#f5f51b";
     ctx.lineWidth = 1;
     ctx.stroke();
@@ -96,10 +95,13 @@ $(async () => {
     }
     refreshSensors();
   };
+
+  // Bind onClick event
   $("#toggle-areas").click(() => {
     toggleAreas();
   });
 
+  // Timer trick to detect mousemove end
   var timer = null;
   canvas.addEventListener("mousemove", e => {
     localStorage.setItem("isMoving", true);
@@ -107,31 +109,34 @@ $(async () => {
     timer = setTimeout(() => {
       localStorage.setItem("isMoving", false);
     }, 50);
+
+    // Store mouse position
     localStorage.setItem("cursorX", e.offsetX);
     localStorage.setItem("cursorY", e.offsetY);
   });
 
   canvas.addEventListener("mouseover", e => {
+    // Set request interval to make only 30 request / second
     var requestInterval = setInterval(() => {
       let x = localStorage.getItem("cursorX");
       let y = localStorage.getItem("cursorY");
       if (localStorage.getItem("isMoving") === "true") {
+        // Get sensor data from server (version 1)
+        let data = {
+          request: "sensordata",
+          version: 1,
+          posx: x,
+          posy: y
+        };
         axios
-          .post("http://bitkozpont.mik.uni-pannon.hu/Vigyazz3SensorData.php", {
-            request: "sensordata",
-            version: 1,
-            posx: x,
-            posy: y
-          })
+          .post(url, data)
           .then(res => {
             refreshSensors();
             for (let i = 0; i < sensors.length; i++) {
               // Current Sensor
               let cs = res.data.data[i];
-
               if (cs.id === sensors[i].ID && cs.signal === true) {
                 let { posx, posy, angle } = sensors[i];
-
                 ctx.beginPath();
                 ctx.moveTo(posx, posy);
                 ctx.arc(posx, posy, 400, toRad(sensors[i].angle + cs.angle - 1), toRad(angle + cs.angle + 1));
@@ -144,6 +149,7 @@ $(async () => {
           .catch(err => console.error(err));
       }
     }, 33.4);
+    // When mouse leaves canvas, clear it
     canvas.addEventListener("mouseleave", e => {
       clearInterval(requestInterval);
       ctx.clearRect(0, 0, 500, 500);
@@ -151,13 +157,17 @@ $(async () => {
     });
   });
 
+  // Random sensor generation
   getRndSensors = () => {
+    // Get sensor data from server (version 2)
+    let data = {
+      request: "sensordata",
+      version: 2
+    };
     axios
-      .post("http://bitkozpont.mik.uni-pannon.hu/Vigyazz3SensorData.php", {
-        request: "sensordata",
-        version: 2
-      })
+      .post(url, data)
       .then(res => {
+        // Hide sensor areas for better visibility
         localStorage.setItem("showAreas", false);
         refreshSensors();
 
@@ -167,11 +177,11 @@ $(async () => {
           // Current Sensor
           let cs = res.data.data[i];
           if (cs.signal === true) {
+            // Store sensors with active signal in an array
             as[as.length] = cs;
           }
           if (cs.id === sensors[i].ID && cs.signal === true) {
             let { posx, posy, angle } = sensors[i];
-
             ctx.beginPath();
             ctx.moveTo(posx, posy);
             ctx.arc(posx, posy, 400, toRad(sensors[i].angle + cs.angle - 1), toRad(angle + cs.angle + 1));
@@ -180,9 +190,13 @@ $(async () => {
             ctx.fill();
           }
         }
+        // Calculate the union of two active sensor areas
         let unionPos;
         if (as.length >= 2) {
-          // tan(a)*(x-f)+g=tan(b)*(x-h)+i
+          /* 
+          Equation:
+          tan(a)*(x-f)+g=tan(b)*(x-h)+i
+          */
           let // Angles
             a = (sensors[as[0].id].angle + as[0].angle) % 360,
             b = (sensors[as[1].id].angle + as[1].angle) % 360,
@@ -205,14 +219,16 @@ $(async () => {
           unionPos.y = Math.tan(toRad(a)) * (unionPos.x - x1) + y1;
           console.log("Computed values: ", unionPos);
 
-          //  tgalfa(x-x0)+y0=tgbéta(x-x1)+y1
+          // Draw mesh from the union
           makeMesh(Math.floor(unionPos.x / 100) * 100, Math.floor(unionPos.y / 100) * 100);
         } else {
+          // Draw an empty mesh if only 1 active sensor is present
           makeMesh();
         }
       })
       .catch(err => console.error(err));
   };
+  // Bind onClick event
   $("#rnd").click(() => {
     getRndSensors();
   });
