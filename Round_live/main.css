@@ -1,0 +1,48 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans&display=swap");
+
+/* Boilerplate */
+::selection {
+  background: #ffffff;
+  color: #202020;
+}
+::-moz-selection {
+  background: #ffffff;
+  color: #202020;
+}
+
+body {
+  background-color: #202020;
+  color: white;
+  font-family: "Open Sans";
+}
+
+.header {
+  position: absolute;
+  top: 2%;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.header h1 {
+  letter-spacing: 1px;
+  font-size: 1.5rem;
+  margin: 10px 0;
+}
+.header hr {
+  width: 70%;
+  margin: 0 15%;
+  border: 1px solid white;
+  opacity: 0.75;
+}
+
+footer {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  margin: 0;
+  text-align: right;
+}
+
+/* End of boilerplate */

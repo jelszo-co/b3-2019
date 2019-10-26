@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="hu">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../main.css" />
+    <link rel="stylesheet" href="./4.css" />
+    <link rel="shortcut icon" href="../favicon.png" />
+    <title>4. Antik eszközök a bitek földjén</title>
+    <script>
+      let buttons = [];
+      console.log(buttons);
+      let dashTimer = null;
+      let eventCount3 = 0, eventCount4 = 0;
+    const buttonPress = (btn) => {      
+      clearTimeout(dashTimer);
+      dashTimer = setTimeout(() => {
+        buttons.push("-");
+        eventCount3 = 0;
+        eventCount4 = 0;
+        document.querySelector("#numpad-result").value = buttons.join("");
+      }, 1000)
+      if(eventCount3 === 3) {
+        buttons.push("-");
+        eventCount3 = 0;
+      } 
+      if(eventCount4 === 4) {
+        buttons.push("-");
+        eventCount4 = 0;
+      }
+      
+      switch(btn) {
+        case 1:
+          buttons.push(1);
+          buttons.push("-");
+          clearTimeout(dashTimer);
+           break;
+
+        case 2:
+          buttons.push(2);
+          eventCount3++;
+            break;
+
+        case 3:
+          buttons.push(3);
+          eventCount3++;
+           break;
+
+        case 4:
+          buttons.push(4);
+          eventCount3++;
+          break;
+
+        case 5:
+        buttons.push(5);
+        eventCount3++;
+         break;
+
+         case 6:
+         buttons.push(6);
+         eventCount3++;
+          break;
+
+        case 7:
+          buttons.push(7);
+          eventCount4++;
+            break;
+
+        case 8:
+          buttons.push(8);
+          eventCount3++;
+            break;
+
+        case 9:
+          buttons.push(9);
+          eventCount4++;
+            break;
+        case 0:
+        buttons.push(0);
+        
+      }
+      console.log(buttons);
+      document.querySelector("#numpad-result").value = buttons.join("");
+    }
+    const toText = (event) => {
+      clearTimeout(dashTimer)
+      event.preventDefault();
+      let input = document.querySelector("#numpad-result").value.toString().split("-"), letters = [];
+      // input = input.splice(input.length - 1, 1);
+      console.log(input);
+
+      for (let i = 0; i < input.length; i++) {
+        switch(parseInt(input[i])) {
+          case 0:
+            letters.push(" ");
+            break;
+          case 2:
+            letters.push("a");
+              break;
+          case 22:
+            letters.push("b");
+              break;
+          case 222:
+            letters.push("c");
+              break;
+          case 3:
+            letters.push("d");
+              break;
+          case 33:
+            letters.push("e");
+              break;
+          case 333:
+            letters.push("f");
+            break;
+          case 4:
+            letters.push("g");
+              break;
+          case 44:
+            letters.push("h");
+              break;
+          case 444:
+            letters.push("i");
+              break;
+          case 5:
+            letters.push("j");
+              break;
+          case 55:
+            letters.push("k");
+              break;
+          case 555:
+            letters.push("l");
+              break;
+          case 6:
+            letters.push("m");
+              break;
+          case 66:
+            letters.push("n");
+              break;
+          case 666:
+            letters.push("o");
+              break;
+          case 7:
+            letters.push("p");
+              break;
+          case 77:
+            letters.push("q");
+              break;
+          case 777:
+            letters.push("r");
+              break;
+          case 7777:
+            letters.push("s");
+              break;
+          case 8:
+            letters.push("t");
+              break;
+          case 88:
+            letters.push("u");
+              break;
+          case 888:
+            letters.push("v");
+              break;
+          case 9:
+            letters.push("w");
+              break;
+          case 99: 
+            letters.push("x");
+              break;
+          case 999:
+            letters.push("y");
+              break;
+          case 9999:
+            letters.push("z");
+              break;
+        }
+      }
+      console.log(letters);
+      document.querySelector("#to-text-result").innerHTML = "Szöveg: " + letters.join("");
+      buttons = [];
+      document.querySelector("#numpad-result").value = "";
+    }
+    </script>
+  </head>
+  <body onload="alert('A weboldal csak szerverrel működik a localStorage miatt!')">
+    <div class="header">
+      <h1>B3 online forduló | 4. feladat</h1>
+      <hr />
+    </div>
+<form onsubmit="toText(event)">
+  <input type="text" id="numpad-result" value="" readonly="readonly">
+  <input type="submit" value="Szöveggé!">
+  </form>
+    <div id="numpad">
+      <div id="n1" onclick="buttonPress(1)">1</div>
+      <div id="n2" onclick="buttonPress(2)">2 abc</div>
+      <div id="n3" onclick="buttonPress(3)">3 def</div>
+
+      <div id="n4" onclick="buttonPress(4)">4 ghi</div>
+      <div id="n5" onclick="buttonPress(5)">5 jkl</div>
+      <div id="n6" onclick="buttonPress(6)">6 mno</div>
+
+      <div id="n7" onclick="buttonPress(7)">7 pqrs</div>
+      <div id="n8" onclick="buttonPress(8)">8 tuv</div>
+      <div id="n9" onclick="buttonPress(9)">9 wxyz</div>
+
+      <div id="nstar">*</div>
+      <div id="n0" onclick="buttonPress(0)">0</div>
+      <div id="nhash">#</div>
+    </div>
+    <p id="to-text-result"></p>
+      <footer>
+        Jelszo Co. <br />
+        2019
+      </footer>
+    </div>
+  </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</html>

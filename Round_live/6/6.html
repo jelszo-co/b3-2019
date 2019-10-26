@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../main.css">
+    <link rel="stylesheet" href="./6.css">
+    <link rel="shortcut icon" href="../favicon.png">
+    <title>6. Hőmérséklet szabályozás</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        const onLoad = () => {
+            url="http://bitkozpont.mik.uni-pannon.hu/2019/onlineForduloHomero.php"
+            data={"request":"teamcode"}
+            axios.post(url, data).then((res) => {
+                console.log(res.data.data)
+                localStorage.setItem("id",res.data.data)
+            }).catch((err) => console.error(err));
+            setInterval(() => {
+                data={"request":"state","teamcode":localStorage.getItem("id")}
+                axios.post(url, data).then((res) => {
+                    onButton();
+                    console.log(res.data.data);
+                    if(res.data.data.window==="opened"){
+                        document.getElementById("window").checked=true;
+                    }
+                    else{
+                        document.getElementById("window").checked=false;
+                    }
+                    let heater=0;
+                    if(heater==="offline"){
+                        heater=0;
+                    }
+                    else{
+                        heater=parseInt(res.data.data.heater);
+                    }
+                    document.getElementById("heat").value=heater;
+                    document.getElementById("speed").value=res.data.data.speed;
+                    
+                }).catch((err) => console.error(err));
+            }, 1000)
+            
+        }
+        const onButton = () => {
+            url="http://bitkozpont.mik.uni-pannon.hu/2019/onlineForduloHomero.php"
+            data={
+                "request":"change",
+                "teamcode":localStorage.getItem("id"),
+                "window":document.getElementById("window").checked,
+                "heater":document.getElementById("heat").value,
+                "speed":document.getElementById("speed").value
+            }
+            axios.post(url, data).then((res) => {
+                console.log(res.data)
+            }).catch((err) => console.error(err));
+            
+        }
+    </script>
+</head>
+<body onload="onLoad()">
+    <div class="header">
+        <h1>B3 online forduló | 6. feladat</h1>
+        <hr />
+      </div>
+      <form onsubmit="onButton()">
+        <input type="checkbox" id="window">
+        <input type="number" id="heat" required placeholder="Fűtőtest">
+        <input type="number" id="speed" required placeholder="Szimuláció sebesség">
+        <input type="submit" value="Beállít!">
+    </form>
+
+      
+  
+      <footer>
+        Jelszo Co. <br />
+        2019
+      </footer>
+</body>
+</html>

@@ -1,0 +1,49 @@
+form {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+}
+
+input[type="text"] {
+  margin: 0 20px;
+  border: none;
+  border-bottom: 2px solid white;
+  background: none;
+  color: white;
+  font-style: italic;
+  -moz-appearance: textfield;
+  width: 180px;
+  font-size: 1rem;
+  width: 250px;
+}
+
+input[type="submit"]:hover {
+  background-color: white;
+  color: #202020;
+}
+
+input[type="submit"] {
+  background-color: #202020;
+  border: 2px solid white;
+  color: white;
+  padding: 10px 24px;
+  text-decoration: none;
+  margin: 0 20px;
+  cursor: pointer;
+  font-family: "Open Sans";
+  transition: all 0.2s;
+  font-size: 1rem;
+}
+
+#result {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 60%;
+  left: 50%;
+  list-style-type: none;
+  font-size: 2rem;
+}

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="hu">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>2. Bit-statisztikák</title>
+    <link rel="stylesheet" href="../main.css" />
+    <link rel="stylesheet" href="./2.css" />
+    <link rel="shortcut icon" href="../favicon.png" />
+    <script>
+      const getResults = event => {
+        event.preventDefault();
+        let input = document.querySelector("#input2").value;
+        let inputSplitted = input.split("");
+        let error = false;
+        console.log(inputSplitted);
+
+        for (let i = 0; i < inputSplitted.length; i++) {
+          if (inputSplitted[i] === "0" || inputSplitted[i] === "1") {
+            error = true;
+          }
+        }
+        let zeros = 0;
+        let ones = 0;
+        let zeroRow = 0;
+        let zeroRowMax = 0;
+        let oneRow = 0;
+        let oneRowMax = 0;
+        let changedRow = 0;
+        let changedRowMax = 0;
+        if (error === false) {
+          alert("Hibás formátum!");
+        }
+        for (i = 0; i < inputSplitted.length; i++) {
+          zeroRow = 0;
+          oneRow = 0;
+          changedRow = 0;
+          if (inputSplitted[i] === "0") {
+            zeros++;
+          } else if (inputSplitted[i] === "1") {
+            ones++;
+          }
+          for (j = i; j < inputSplitted.length; j++) {
+            if (inputSplitted[j] === "0") {
+              zeroRow++;
+              if (zeroRow > zeroRowMax) {
+                zeroRowMax = zeroRow;
+              }
+            } else {
+              break;
+            }
+          }
+          for (j = i; j < inputSplitted.length; j++) {
+            if (inputSplitted[j] === "1") {
+              oneRow++;
+              if (oneRow > oneRowMax) {
+                oneRowMax = oneRow;
+              }
+            } else {
+              break;
+            }
+          }
+          for (j = i; j < inputSplitted.length - 1; j++) {
+            if (parseInt(inputSplitted[j]) + parseInt(inputSplitted[j + 1]) === 1) {
+              changedRow++;
+              if (changedRowMax < changedRow) {
+                changedRowMax = changedRow;
+              }
+            } else {
+              break;
+            }
+          }
+        }
+        changedRowMax++;
+        console.log(zeros + " " + ones + " " + zeroRowMax);
+        document.querySelector("#res0").innerHTML = `1-es karakterek száma: ${ones}`;
+        document.querySelector("#res1").innerHTML = `0-ás karakterek száma: ${zeros}`;
+        document.querySelector("#res2").innerHTML = `Leghosszabb 1-es sorozat: ${oneRowMax}`;
+        document.querySelector("#res3").innerHTML = `Leghosszabb 0-ás sorozat: ${zeroRowMax}`;
+        document.querySelector("#res4").innerHTML = `Leghosszabb váltakozó sorozat: ${changedRowMax}`;
+      };
+      const genBits = event => {
+        event.preventDefault();
+        let result = [];
+        let digits = parseInt(document.querySelector("#charNumbers").value);
+        for (let i = 0; i < digits; i++) {
+          let rnd = Math.random();
+          if (rnd >= 0.5) {
+            result[i] = 1;
+          } else {
+            result[i] = 0;
+          }
+        }
+        document.querySelector("#input2").value = result.join("");
+      };
+    </script>
+  </head>
+  <body>
+    <div class="header">
+      <h1>B3 online forduló | 2. feladat</h1>
+      <hr />
+    </div>
+    <form onsubmit="getResults(event)" id="to-results">
+      <input type="text" id="input2" required placeholder="Bináris szám" />
+      <button type="submit">Beküldés</button>
+    </form>
+
+    <div id="stats2">
+      <h2 id="stat-text">Statisztikák:</h2>
+      <ul>
+        <li id="res0"></li>
+        <li id="res1"></li>
+        <li id="res2"></li>
+        <li id="res3"></li>
+        <li id="res4"></li>
+      </ul>
+    </div>
+
+    <form onsubmit="genBits(event)" id="to-generate">
+      <input type="text" id="charNumbers" required placeholder="Add meg a karakterszámot!" />
+      <button type="submit">Generálás</button>
+    </form>
+
+    <footer>
+      Jelszo Co. <br />
+      2019
+    </footer>
+  </body>
+</html>

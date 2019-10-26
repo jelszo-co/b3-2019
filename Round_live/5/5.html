@@ -1,0 +1,81 @@
+  <!DOCTYPE html>
+<html lang="hu">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="shortcut icon" href="./favicon.png" />
+    <link rel="stylesheet" href="../main.css" />
+    <link rel="stylesheet" href="./5.css" />
+    <link rel="shortcut icon" href="../favicon.png" />
+    <title>5. Hasonló számpárok</title>
+    <script>
+      const pairs = event => {
+        document.querySelector("#result").innerHTML = "";
+        event.preventDefault();
+        let input = document.querySelector("#numpairs").value;
+        let inputArr = input.split(",");
+        let numArr = [];
+        let orderedArr = [];
+        console.log(inputArr);
+        for (i = 0; i < inputArr.length; i++) {
+          nstring = inputArr[i].split("");
+          let arr = [];
+          for (j = 0; j < nstring.length; j++) {
+            arr.push(parseInt(nstring[j]));
+          }
+          numArr.push(arr);
+        }
+        for (a = 0; a < numArr.length; a++) {
+          let unordArr=numArr[a]
+          let temp;
+          for (i = 0; i < unordArr.length - 1; i++) {
+            for (j = i + 1; j < unordArr.length; j++) {
+              if (unordArr[i] > unordArr[j]) {
+                temp = unordArr[i];
+                unordArr[i] = unordArr[j];
+                unordArr[j] = temp;
+              }
+            }
+          }
+          orderedArr.push(unordArr)
+        }
+        console.log(orderedArr);
+        let result=[];
+        for(i=0;i<orderedArr.length-1;i++){
+          for (j=i+1;j<orderedArr.length;j++){
+            console.log()
+            if(JSON.stringify(orderedArr[i])===JSON.stringify(orderedArr[j])){
+              result.push([inputArr[i],inputArr[j]])
+            }
+          }
+        }
+        console.log(result)
+        for (let i = 0; i < result.length; i++) {
+          let node = document.createElement("LI");
+          let textnode = document.createTextNode(result[i]);
+          node.appendChild(textnode);
+          document.getElementById("result").appendChild(node);
+        }
+      };
+    </script>
+  </head>
+  <body>
+    <div class="header">
+      <h1>B3 online forduló | 5. feladat</h1>
+      <hr />
+    </div>
+
+    <form onsubmit="pairs(event)">
+      <input type="text" id="numpairs" required placeholder="Számok, vesszővel elválasztva" />
+      <input type="submit" value="Beküldés" />
+    </form>
+
+    <ul id="result"></ul>
+
+    <footer>
+      Jelszo Co. <br />
+      2019
+    </footer>
+  </body>
+</html>
